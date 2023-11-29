@@ -18,27 +18,32 @@ const db = mysql.createPool({
     database : 'por_db'
 });
 
-app.post("/", (req, res) => {
+app.post("/login", (req, res) => {
     console.log()
     db.query(`SELECT * FROM users WHERE email='${req.body.email}' AND password='${req.body.password}';`, (err, result) => {
+
         if (err) {
             console.log(err)
-        } else {
-            console.log('success')
-            res.send(result);
         }
+        if (!result[0]) {
+            res.send('wrong')
+        } else {
+            res.send(result)
+        }
+
+        
     });
 });
 
-app.get("/:id", (req, res) => {
-    const id = req.params.id;
-    db.query("SELECT * FROM users WHERE id = ?", id,
-        (err, result) => {
-            if (err) {
-                console.log(err)
-            }
+app.post("/upload", (req, res) => {
+    db.query("INSERT INTO data (email, amount, file) VALUES (?,?,?)", [req.body.email, req.body.amount, req.body.file], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
             res.send(result)
-        });
+        }
+        console.log(result)
+    });
 });
 
 app.post('/signup', (req, res) => {

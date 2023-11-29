@@ -48,3 +48,19 @@ button {
   color: white;
   text-decoration: underline;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.amount-input, .file-input {
+  margin: 10px 0;
+}
+.drag-drop-area {
+  display: flex;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;;
+  border: 1px solid white;
+}
