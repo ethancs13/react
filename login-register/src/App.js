@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from './logo.svg';
 import FileUpload from "./FileUpload";
 import './App.css';
 import { Login } from "./Login";
