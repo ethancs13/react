@@ -1,37 +1,41 @@
 const express = require('express');
-// const db = require('./config/db');
+const db = require('./db');
 const cors = require('cors');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const app = express();
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-const db = mysql.createPool({
-    connectionLimit : 10,
-    host : 'localhost',
-    user : 'root',
-    password : 'root',
-    database : 'por_db'
-});
 
 app.post("/login", (req, res) => {
-    console.log()
     db.query(`SELECT * FROM users WHERE email='${req.body.email}' AND password='${req.body.password}';`, (err, result) => {
 
-        if (err) {
-            console.log(err)
-        }
+        if (err) { console.log(err) };
+
         if (!result[0]) {
             res.send('wrong')
         } else {
+            if(result[0].sid) {
+                console.log(sid)
+            }
+            db.query(`SELECT sid FROM Sessions;`,
+            (err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+                // Print out sid's
+                console.log(result[0].sid)
+            });
             res.send(result)
         }
 
-        
+
     });
 });
 
@@ -55,23 +59,15 @@ app.post('/signup', (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.send({email: email})
+            res.send({ email: email })
         }
         console.log(result)
     });
 });
 
-app.delete('/api/delete/:id', (req, res) => {
-    const id = req.params.id;
 
-    db.query("DELETE FROM users WHERE id= ?", id, (err, result) => {
-        if (err) {
-            console.log(err)
-        }
-    })
-})
-
+    
 app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`)
+    console.log(`Server is running on ${PORT}`)    
 });
 

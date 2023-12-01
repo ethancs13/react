@@ -8,7 +8,7 @@ import { Register } from "./Register";
 function App() {
 
   const [currentForm, setCurrentForm] = useState('login');
-  const [currentUser, setCurrentUser] = useState('loggedIn')
+  const [currentUser, setCurrentUser] = useState('')
 
   const toggleForm = (formName) => {
     console.log()

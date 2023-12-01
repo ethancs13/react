@@ -4,11 +4,10 @@ import axios from 'axios';
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-    const [currentUser, setCurrentUser] = useState('')
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         axios.post('http://localhost:3002/login', { email: email, password: pass })
             .then((data) => {
                 // console.log(data.data)
@@ -20,14 +19,12 @@ export const Login = (props) => {
                     setPass('');
                     props.onFormSwitch('fileupload')
                 } else {
-                    alert('WRONG')
+                    alert('Incorrect, please try again.')
                     return;
                 }
                 // if (email === '' || pass === '') {
                 //     alert('Incorrect')
                 // }
-
-
 
             })
 
@@ -43,7 +40,7 @@ export const Login = (props) => {
                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <button type="submit">Log In</button>
             </form>
-            <button className="link-btn" onClick={() => { props.onFormSwitch('register'); props.onLogin(email) }} >Don't have an account? Register here.</button>
+            <button className="link-btn" onClick={() => { props.onFormSwitch('register'); props.onLogin(props.sid) }} >Don't have an account? Register here.</button>
         </div>
     )
 }

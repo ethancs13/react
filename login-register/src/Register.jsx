@@ -13,8 +13,9 @@ export const Register = (props) => {
             console.log(data)
             setEmail('');
             setPass('');
+            props.onFormSwitch('login')
         })
-        console.log(email);
+        
     }
 
     return (
