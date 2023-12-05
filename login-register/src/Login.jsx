@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from 'axios';
 import './App.css'
 import { Register } from './Register'
+import FileUpload from './FileUpload';
+import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 
@@ -14,10 +16,11 @@ export const Login = () => {
 
         axios.post('http://localhost:3001/login', { email: email, password: pass })
             .then((data) => {
-
-                if (data.data !== 'wrong') {
+                console.log(data)
+                if (data.data.Status === "Success") {
                     setEmail('');
                     setPass('');
+                    return <Navigate to="/" />;
                 } else {
                     alert('Incorrect, please try again.')
                     return;
@@ -44,6 +47,7 @@ export const Login = () => {
                 <Routes>
                     {/* <Route exact path='/' element={< Login />}></Route> */}
                     <Route exact path='/signup' element={< Register />}></Route>
+                    <Route exact path='/upload' element={< FileUpload />}></Route>
                 </Routes>
             </div>
     )

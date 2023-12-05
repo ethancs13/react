@@ -22,30 +22,43 @@ db.connect((err) => {
     console.log('Connected to MySQL as ID ' + db.threadId);
 })
 
-
+let logged;
 app.post("/login", async (req, res) => {
-    db.query('USE por_db;', (err, selectDB) => {
-        console.log(selectDB)
-        db.query(`SELECT * FROM users WHERE email='${req.body.email}';`, async (err, final) => {
-            if(bcrypt.compare(req.body.password, final[0].password, 10)) {
-                return res.send(result)
+    db.query(`SELECT * FROM users WHERE email='${req.body.email}';`, async (err, user) => {
+        if (err) { 
+            console.log(err);
+            return res.status(500).send({ Status: "Error" });
+        }
+
+        if (user.length === 0) {
+            // User not found
+            return res.status(401).send({ Status: "Unauthorized" });
+        }
+
+        const hashedPassword = user[0].password;
+
+        bcrypt.compare(req.body.password, hashedPassword, (err, match) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send({ Status: "Error" });
             }
-            if (err) { console.log(err) };
 
-            if (!final[0]) {
-                console.log('account not found')
-                return res.send('wrong')
+            if (match) {
+                console.log('success');
+                logged = true;
+                return res.send({ Status: "Success" });
 
+            } else {
+                console.log('failure');
+                return;
             }
-            
-
-
         });
-    })
-
+    });
 });
 
+
 app.post("/upload", (req, res) => {
+    if (!logged){return;}
     db.query("INSERT INTO data (email, amount, file) VALUES (?,?,?)", [req.body.email, req.body.amount, req.body.file], (err, result) => {
         if (err) {
             console.log(err)
