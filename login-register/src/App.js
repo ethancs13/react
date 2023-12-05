@@ -3,29 +3,20 @@ import FileUpload from "./FileUpload";
 import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 
 function App() {
 
-  const [currentForm, setCurrentForm] = useState('login');
-  const [currentUser, setCurrentUser] = useState('')
-
-  const toggleForm = (formName) => {
-    console.log()
-    setCurrentForm(formName);
-  }
-
-  const updateUser = (user) => {
-    console.log(user)
-    setCurrentUser(user);
-  }
-
   return (
-    <div className="App">
-      {
-        currentForm === "fileupload" ? <FileUpload onFormSwitch={toggleForm} user={currentUser}/> :
-        currentForm === "login" ? <Login onFormSwitch={toggleForm} onLogin={updateUser}/> : <Register onFormSwitch={toggleForm} />
-      }
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<Login />} />
+        <Route path="/upload" element={<FileUpload />} />
+        <Route path="/signup" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

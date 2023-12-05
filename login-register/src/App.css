@@ -1,17 +1,30 @@
+html {
+  padding: 0;
+  margin: 0;
+  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+
 .App {
   text-align: center;
   display: flex;
-  min-height: 100vh;
+  min-height: 99vh;
   align-items: center;
   justify-content: center;
   color: white;
-  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D)
 }
 
 .auth-form-container, .login-form, .register-form {
   display: flex;
   flex-direction: column;
 }
+.auth-form-container h2 {
+  font-size: 32px;
+}
+
 
 @media screen and (min-width: 600px) {
   .auth-form-container {
@@ -25,6 +38,7 @@
 label {
   text-align: left;
   padding: 0.3rem 0;
+  font-size: 18px;
 }
 
 input {
@@ -32,21 +46,25 @@ input {
   padding: 1rem;
   border: none;
   border-radius: 10px;
+  font-size: 18px;
 }
 
-button {
+button, .link-btn {
   border: none;
   background-color: white;
   padding: 15px;
   border-radius: 10px;
   cursor: pointer;
   color: #7439db;
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .link-btn {
   background: none;
   color: white;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .container {

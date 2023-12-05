@@ -1,0 +1,18 @@
+DROP DATABASE IF EXISTS por_db;
+CREATE DATABASE por_db;
+
+USE por_db;
+
+CREATE TABLE userData(
+  id INT NOT NULL,
+  email VARCHAR(30) NOT NULL,
+  amount VARCHAR(30) NOT NULL,
+  doc_name VARCHAR(50),
+  doc_path VARCHAR(100)
+);
+
+CREATE TABLE users(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(30),
+    password VARCHAR(100)
+)

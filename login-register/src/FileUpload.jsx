@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
-
+import './App.css';
 
 
 const FileUpload = (props) => {
@@ -14,12 +14,11 @@ const FileUpload = (props) => {
       setUploadedFiles(acceptedFiles);
     },
   });
-  //TO DO : Customize and Style this Drag and Drop to Upload box as you want🧑‍💻😊
 
   const handleSubmit = (e) => {
     
     e.preventDefault();
-    axios.post('http://localhost:3002/upload', { email: props.user, amount: amount, file: JSON.stringify(uploadedFiles) })
+    axios.post('http://localhost:3001/upload', { email: props.user, amount: amount, file: JSON.stringify(uploadedFiles) })
       .then((data) => {
         setAmount('');
         setUploadedFiles([]);
