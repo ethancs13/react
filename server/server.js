@@ -32,7 +32,7 @@ db.connect((err) => {
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
-        return res.json({ Error: "You are not authenticated" });
+        return res.json({ Error: "You are not logged in." });
     } else {
         jwt.verify(token, "jwt-secret-key", (err, decoded) => {
             if (err) {
@@ -41,14 +41,12 @@ const verifyUser = (req, res, next) => {
                 req.email = decoded.name;
                 next();
             }
-
         })
     }
 }
 
 app.get('/', verifyUser, (req, res) => {
     const email = req.email;
-    // doesnt work
     console.log(email)
     return res.json({ status: "Success", name: email});
 })

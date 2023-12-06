@@ -62,15 +62,14 @@ const Home = (props) => {
       <nav>
         {
           auth ?
-            <div>
-              <h3>You are authorized --- {name}</h3>
-              <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+            <div className='logout_home'>
+              <h3>Welcome, {name}</h3>
+              <button className='btn btn-primary logout_home_btn' onClick={handleLogout}>Logout</button>
             </div>
             :
-            <div>
+            <div className='login_home'>
               <h3>{message}</h3>
-              <h3>Login Now</h3>
-              <Link to="/login" className="btn btn-primary">Login</Link>
+              <Link to="/login" className="btn btn-primary login_home_btn">Login</Link>
             </div>
         }
       </nav>
@@ -88,7 +87,7 @@ const Home = (props) => {
             ))}
           </ul>
         </div>
-        <button type="Submit" className='button'>Submit</button>
+        <button type="Submit" className='home_submit_btn btn'>Submit</button>
       </form>
     </div>
   );

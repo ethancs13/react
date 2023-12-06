@@ -3,10 +3,14 @@ import axios from 'axios';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Login } from './Login'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 export const Register = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
