@@ -1,35 +1,46 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Login } from './Login'
 
-export const Register = (props) => {
+
+
+export const Register = () => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-    const [name, setName] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3002/signup', {email: email, password: pass})
-        .then((data) => {
-            console.log(data)
-            setEmail('');
-            setPass('');
-        })
-        console.log(email);
+        axios.post('http://localhost:3001/signup', { email: email, password: pass })
+            .then((data) => {
+                setEmail('');
+                setPass('');
+            })
+
     }
 
     return (
+        <div className="App">
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+            </style>
             <div className="auth-form-container">
-                <h2>Login</h2>
+
+                <h2>Register</h2>
                 <form className="register-form" onSubmit={handleSubmit}>
-                    <label htmlFor="name">Full name</label>
-                    <input value={name} name="name" id="name" placeholder="full name" />
                     <label htmlFor="email">email</label>
-                    <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
                     <label htmlFor="password">password</label>
                     <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-                    <button type="submit">Log In</button>
+                    <button type="submit">Register</button>
                 </form>
-                <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
+                <Link to="/login" className="link-btn">Already have an account? Login here.</Link>
+
             </div>
+            <Routes>
+                <Route exact path='/login' element={< Login />}></Route>
+            </Routes>
+        </div>
     )
 }

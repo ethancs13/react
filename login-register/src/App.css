@@ -1,17 +1,28 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
+  font-family: 'Roboto', sans-serif;
+}
+
 .App {
   text-align: center;
   display: flex;
   min-height: 100vh;
+  width: 100%;
   align-items: center;
   justify-content: center;
   color: white;
-  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D)
 }
 
 .auth-form-container, .login-form, .register-form {
   display: flex;
   flex-direction: column;
 }
+.auth-form-container h2 {
+  font-size: 32px;
+}
+
 
 @media screen and (min-width: 600px) {
   .auth-form-container {
@@ -25,6 +36,7 @@
 label {
   text-align: left;
   padding: 0.3rem 0;
+  font-size: 18px;
 }
 
 input {
@@ -32,19 +44,39 @@ input {
   padding: 1rem;
   border: none;
   border-radius: 10px;
+  font-size: 18px;
 }
 
-button {
+button, .link-btn {
   border: none;
   background-color: white;
   padding: 15px;
   border-radius: 10px;
   cursor: pointer;
   color: #7439db;
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .link-btn {
   background: none;
   color: white;
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.amount-input, .file-input {
+  margin: 10px 0;
+}
+.drag-drop-area {
+  display: flex;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;;
+  border: 1px solid white;
 }
