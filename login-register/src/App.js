@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FileUpload from "./FileUpload";
+import Home from "./Home";
 import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
@@ -12,9 +12,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<Login />} />
-        <Route path="/upload" element={<FileUpload />} />
+        <Route path="*" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Register />} />
+        <Route path="/login/*" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from 'axios';
 import './App.css'
 import { Register } from './Register'
-import FileUpload from './FileUpload';
+import Home from './Home';
 import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 
@@ -11,19 +12,23 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
+    const navigate = useNavigate();
+
+
+    axios.defaults.withCredentials = true;
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         axios.post('http://localhost:3001/login', { email: email, password: pass })
-            .then((data) => {
-                console.log(data)
+            .then((data, err) => {
                 if (data.data.Status === "Success") {
                     setEmail('');
                     setPass('');
-                    return <Navigate to="/" />;
+                    navigate('/')
                 } else {
                     alert('Incorrect, please try again.')
-                    return;
+                    return err;
                 }
             })
     }
@@ -47,7 +52,7 @@ export const Login = () => {
                 <Routes>
                     {/* <Route exact path='/' element={< Login />}></Route> */}
                     <Route exact path='/signup' element={< Register />}></Route>
-                    <Route exact path='/upload' element={< FileUpload />}></Route>
+                    <Route exact path='/upload' element={< Home />}></Route>
                 </Routes>
             </div>
     )
