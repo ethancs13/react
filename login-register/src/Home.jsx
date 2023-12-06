@@ -1,32 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import './App.css';
 
-export const Login = (props) => {
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:3002/upload/', { email: email, password: pass})
-        .then((data) => {
-            console.log('Hello ' + email)
-            setEmail('');
-            setPass('');
-        })
-    }
-    
+const Home = (props) => {
 
-    return (
-        <div className="auth-form-container">
-            <h2>Login</h2> 
-            <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="email">Amount</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
-                <label htmlFor="password">File Upload</label>
-                <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-                <button type="submit">Log In</button>
-            </form>
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')} >Don't have an account? Register here.</button>
+  axios.defaults.withCredentials = true;
+
+
+  const navigate = useNavigate();
+
+  const [amount, setAmount] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const [auth, setAuth] = useState(false)
+  const [message, setMessage] = useState('')
+  const [name, setName] = useState('')
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/')
+      .then((res) => {
+        console.log(res)
+        if (res.data.Status === 'Success') {
+          setAuth(true);
+          setName(res.data.email)
+          navigate('/');
+        } else {
+          alert('Incorrect Login')
+          setAuth(false);
+          setMessage(res.data.Error)
+          navigate('/login');
+        }
+      })
+  }, [])
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      setUploadedFiles(acceptedFiles);
+    },
+  });
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3001/upload', { email: props.user, amount: amount, file: JSON.stringify(uploadedFiles) })
+      .then((data) => {
+        setAmount('');
+        setUploadedFiles([]);
+      })
+  }
+  const handleLogout = () => {
+
+  }
+
+  return (
+    <div>
+      <nav>
+        {
+          auth ?
+            <div>
+              <h3>You are authorized --- {name}</h3>
+              <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+            </div>
+            :
+            <div>
+              <h3>{message}</h3>
+              <h3>Login Now</h3>
+              <Link to="/login" className="btn btn-primary">Login</Link>
+            </div>
+        }
+      </nav>
+      <form className='container' onSubmit={handleSubmit}>
+        <label htmlFor="amount-input">Enter Amount</label>
+        <input className='amount-input' name="amount-input" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder='$120' />
+
+        <div className='drag-drop-area' {...getRootProps()}>
+          <label htmlFor="file-input"></label>
+          <input className='file-input' name="file-input" id='file-input' {...getInputProps()} />
+          <p>Drag and drop files here or click to browse.</p>
+          <ul>
+            {uploadedFiles.map((file) => (
+              <li key={file.name}>{file.name}</li>
+            ))}
+          </ul>
         </div>
-)
-}
+        <button type="Submit" className='button'>Submit</button>
+      </form>
+    </div>
+  );
+};
+
+export default Home;

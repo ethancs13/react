@@ -14,6 +14,11 @@ export const Register = () => {
         e.preventDefault();
         axios.post('http://localhost:3001/signup', { email: email, password: pass })
             .then((data) => {
+                if (data.data.Status === 'Success') {
+                    navigate('/login');
+                } else {
+                    alert('Error');
+                }
                 setEmail('');
                 setPass('');
             })
