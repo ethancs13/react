@@ -22,16 +22,14 @@ const Home = (props) => {
   useEffect(() => {
     axios.get('http://localhost:3001/')
       .then((res) => {
-        console.log(res)
-        if (res.data.Status === 'Success') {
+        if (res.data.status === 'Success') {
           setAuth(true);
-          setName(res.data.email)
+          setName(res.data.name)
           navigate('/');
         } else {
-          alert('Incorrect Login')
           setAuth(false);
           setMessage(res.data.Error)
-          navigate('/login');
+          navigate('/');
         }
       })
   }, [])
@@ -52,6 +50,10 @@ const Home = (props) => {
       })
   }
   const handleLogout = () => {
+    axios.get('http://localhost:3001/logout')
+    .then(res => {
+      location.reload(true);
+    }).catch(err => console.log(err));
 
   }
 

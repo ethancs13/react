@@ -38,7 +38,7 @@ const verifyUser = (req, res, next) => {
             if (err) {
                 return res.json({ Error: err });
             } else {
-                req.email = decoded.email;
+                req.email = decoded.name;
                 next();
             }
 
@@ -46,11 +46,11 @@ const verifyUser = (req, res, next) => {
     }
 }
 
-app.get('/*', verifyUser, (req, res) => {
+app.get('/', verifyUser, (req, res) => {
     const email = req.email;
     // doesnt work
     console.log(email)
-    return res.json({ status: "Success", email: email});
+    return res.json({ status: "Success", name: email});
 })
 
 app.post("/login", async (req, res) => {
@@ -125,6 +125,11 @@ app.post('/signup', (req, res) => {
             return res.json({ Status: "Success" });
         })
     })
+})
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    return res.json({Status: 'Success'})
 })
 
 // const auth = async function () {
