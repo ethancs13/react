@@ -78,10 +78,9 @@ const Home = (props) => {
               <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
             </div>
             :
-            <div>
+            <div className='login_home'>
               <h3>{message}</h3>
-              <h3>Login Now</h3>
-              <Link to="/login" className="btn btn-primary">Login</Link>
+              <Link to="/login" className="btn btn-primary login_home_btn">Login</Link>
             </div>
         }
       </nav>

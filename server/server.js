@@ -53,7 +53,7 @@ db.connect((err) => {
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
-        return res.json({ Error: "You are not authenticated" });
+        return res.json({ Error: "You are not logged in." });
     } else {
         // -TODO-
         // Change_secret_to_.env_var

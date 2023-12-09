@@ -4,7 +4,9 @@ html {
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
+
   font-family: 'Roboto', sans-serif;
+  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
 }
 
 .App {
@@ -26,8 +28,6 @@ html {
 }
 
 
-
-
 label {
   text-align: left;
   padding: 0.3rem 0;
@@ -42,7 +42,7 @@ input {
   font-size: 18px;
 }
 
-button, .link-btn {
+button, .btn, .link-btn {
   border: none;
   background-color: white;
   padding: 15px;
@@ -51,7 +51,6 @@ button, .link-btn {
   color: #7439db;
   font-weight: 500;
   font-size: 18px;
-  margin-top: 10px;
 }
 
 .link-btn {
@@ -74,6 +73,7 @@ button, .link-btn {
   border: solid white 1px;
   padding: 80px;
   border-radius: 15px;
+
 }
 
 .amount-input, .file-input {
@@ -124,4 +124,37 @@ button, .link-btn {
   .card {
     border: none;
   }
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;;
+  border: 1px solid white;
+}
+
+/* Home  */
+
+.logout_home, .login_home {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+.logout_home h3, .login_home h3 {
+  text-align: center;
+}
+
+.login_home_btn, .logout_home_btn {
+  text-decoration: none;
+  background-color: white;
+  color: #7439db;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+}
+
+.home_submit_btn {
+  display: flex;
+  justify-content: center;
+  width: 200px;
 }
