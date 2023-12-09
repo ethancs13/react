@@ -1,6 +1,8 @@
-html, body {
+html {
   margin: 0;
   padding: 0;
+  width: 100vw;
+  height: 100vh;
   background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
   font-family: 'Roboto', sans-serif;
 }
@@ -24,14 +26,7 @@ html, body {
 }
 
 
-@media screen and (min-width: 600px) {
-  .auth-form-container {
-    padding: 5rem;
-    border: 1px solid white;
-    border-radius: 10px;
-    margin: 0.5rem;
-  }
-}
+
 
 label {
   text-align: left;
@@ -68,15 +63,65 @@ button, .link-btn {
 .container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  border: solid white 1px;
+  padding: 80px;
+  border-radius: 15px;
 }
 
 .amount-input, .file-input {
   margin: 10px 0;
 }
-.drag-drop-area {
+.file-input::file-selector-button {
+  color: black;
+  border-radius: 20px;
+  padding: 0.5rem;
+  border: 0.1px solid black;
+  border-radius: 3px;
+  margin-right: 45px;
+}
+.file-area {
+  margin: 5px;
+  padding: 10px;
+  border: solid white 1px;
+  border-radius: 15px;
+}
+
+.nav div{
   display: flex;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;;
-  border: 1px solid white;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5vw;
+}
+.amount_header {
+  font-size: 24px;
+
+}
+.user_name {
+  font-size: 24px;
+}
+
+@media screen and (min-width: 600px) {
+  .auth-form-container {
+    padding: 5rem;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 0.5rem;
+  }
+  .card {
+    border: solid white 1px;
+  }
+}
+@media screen and (max-width: 600px) {
+
+  .card {
+    border: none;
+  }
 }
