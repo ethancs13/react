@@ -3,7 +3,6 @@ import axios from 'axios';
 import './App.css'
 import { Register } from './Register'
 import Home from './Home';
-import { Navigate } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
