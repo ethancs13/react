@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Login } from './Login'
 
@@ -9,6 +10,8 @@ import { Login } from './Login'
 export const Register = () => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();

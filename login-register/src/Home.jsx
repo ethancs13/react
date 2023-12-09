@@ -34,26 +34,44 @@ const Home = (props) => {
       })
   }, [])
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      setUploadedFiles(acceptedFiles);
-    },
-  });
+  // const { getRootProps, getInputProps } = useDropzone({
+  //   onDrop: (acceptedFiles) => {
+  //     setUploadedFiles(acceptedFiles);
+  //   },
+  // });
 
+  const setUploaded = function(file) {
+    setUploadedFiles(file.target.files);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/upload', { email: props.user, amount: amount, file: JSON.stringify(uploadedFiles) })
+    const formData = new FormData();
+    formData.append('email', name)
+    formData.append('amount', amount)
+    console.log(uploadedFiles)
+
+    for (let i = 0; i < uploadedFiles.length; i++) {
+      formData.append('files', uploadedFiles[i])
+    }
+    console.log(...formData)
+
+    axios({
+      method: "post",
+      url: "http://localhost:3001/upload",
+      data: formData,
+    })
       .then((data) => {
         setAmount('');
         setUploadedFiles([]);
+        console.log(data)
       })
   }
   const handleLogout = () => {
     axios.get('http://localhost:3001/logout')
-    .then(res => {
-      location.reload(true);
-    }).catch(err => console.log(err));
+      .then(res => {
+        location.reload(true);
+      }).catch(err => console.log(err));
 
   }
 
@@ -74,20 +92,21 @@ const Home = (props) => {
             </div>
         }
       </nav>
-      <form className='container' onSubmit={handleSubmit}>
+      <form enctype="multipart/form-data" className='container' onSubmit={handleSubmit}>
         <label htmlFor="amount-input">Enter Amount</label>
         <input className='amount-input' name="amount-input" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder='$120' />
 
-        <div className='drag-drop-area' {...getRootProps()}>
+        {/* <div className='drag-drop-area' {...getRootProps()}> */}
           <label htmlFor="file-input"></label>
-          <input className='file-input' name="file-input" id='file-input' {...getInputProps()} />
+          {/* <input type="file" className='file-input' name="file-input" id='file-input' {...getInputProps()} />
           <p>Drag and drop files here or click to browse.</p>
           <ul>
             {uploadedFiles.map((file) => (
               <li key={file.name}>{file.name}</li>
             ))}
-          </ul>
-        </div>
+          </ul> */}
+          <input type="file" className='file-input' name="file-input" id='file-input' onChange={setUploaded} multiple />
+        {/* </div> */}
         <button type="Submit" className='button'>Submit</button>
       </form>
     </div>

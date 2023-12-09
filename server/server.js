@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const sequelize = require('./config/connection');
 const salt = 10;
+const multer = require('multer');
 
 const app = express();
 app.use(express.json());
@@ -89,17 +90,34 @@ app.post("/login", async (req, res) => {
         });
     });
 });
+const storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function(req, file, callback) {
+        callback(null, file.originalname);
+    }
+})
+const uploads = multer({storage: storage});
 
+app.post("/upload", uploads.array('files'), (req, res) => {
+    console.log(req.files)
 
-app.post("/upload", (req, res) => {
-    db.query("INSERT INTO data (email, amount, file) VALUES (?,?,?)", [req.body.email, req.body.amount, req.body.file], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send(result)
-        }
-        console.log(result)
-    });
+    const sql = `INSERT INTO userData (email, amount, doc_name, doc_path) VALUES (?, ?, ?, ?)`
+    const values = []
+
+    for (let i = 0; i < req.files.length; i++) {
+        db.query(sql, [req.body.email, req.body.amount, req.files[i].filename, req.files[i].path], (err, result) => {
+            console.log(result)
+            if (err) {
+                console.log(err)
+            }
+        })
+    }
+
+    
+
+    res.json({status: "files received."})
 });
 
 app.post('/signup', (req, res) => {
