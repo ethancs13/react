@@ -84,7 +84,7 @@ const Home = () => {
   }
 
   const handleItemized = () => {
-    navigate('/upload')
+    navigate('/itemized')
   }
 
   return (
@@ -185,7 +185,7 @@ const Home = () => {
                 <div className='itemized__container'>
                   <div className="input_wrapper">
                     <label htmlFor='itemized_purchases' className='itemized_purchases__header'>Itemized purchases</label>
-                    <Link to="/upload" name="itemized_purchases" onClick={handleItemized}>itemized items</Link>
+                    <Link to="/itemized" name="itemized_purchases" onClick={handleItemized}>itemized items</Link>
                   </div>
                 </div>
 

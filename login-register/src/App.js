@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/upload" element={<Itemized />} />
+        <Route path="/itemized/*" element={<Itemized />} />
       </Routes>
     </BrowserRouter>
   );
