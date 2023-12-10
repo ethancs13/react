@@ -160,12 +160,16 @@ button,
 .form__content {
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin: 40px 0;
 }
 
 .left_aside,.right_aside {
   width: 50%;
+}
+.right_aside {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 /* containers for inputs */

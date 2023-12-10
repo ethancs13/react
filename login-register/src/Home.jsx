@@ -81,7 +81,10 @@ const Home = () => {
       .then(res => {
         location.reload(true);
       }).catch(err => console.log(err));
+  }
 
+  const handleItemized = () => {
+    navigate('/upload')
   }
 
   return (
@@ -104,184 +107,104 @@ const Home = () => {
         auth ?
 
         <div className='form__wrapper'>
-        <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
+          <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
 
-          <div className="form__content">
-            <div className="left_aside">
-              <div className='cellphone__container'>
-                <div className='input_wrapper'>
-                  <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
-                  <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} />
+            <div className="form__content">
+              <div className="left_aside">
+                <div className='cellphone__container'>
+                  <div className='input_wrapper'>
+                    <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
+                    <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} />
+                  </div>
+
+                  {/* checkbox */}
+                  <div className='checkbox__container'>
+                    <label htmlFor='billable' >Billable </label>
+                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                  </div>
                 </div>
 
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
+                <div className='landline__container'>
+                  <div className='input_wrapper'>
+                    <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
+                    <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} />
+                  </div>
 
-              <div className='landline__container'>
-                <div className='input_wrapper'>
-                  <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
-                  <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
-
-              <div className='longdist__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
-                  <input className='long_distance' name='long_distance' value={longdist} onChange={(e) => setDist(e.target.value)} />
+                  {/* checkbox */}
+                  <div className='checkbox__container'>
+                    <label htmlFor='billable' >Billable </label>
+                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                  </div>
                 </div>
 
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
+                <div className='longdist__container'>
+                  <div className="input_wrapper">
+                    <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
+                    <input className='long_distance' name='long_distance' value={longdist} onChange={(e) => setDist(e.target.value)} />
+                  </div>
 
-              <div className='broadband__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='broadband' className='broadband__header'>Broadband</label>
-                  <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
-
-              <div className='itemized__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='itemized_purchases' className='itemized_purchases__header'>Itemized purchases</label>
-                  <input className='itemized_purchases' name='itemized_purchases' value={itemized} onChange={(e) => setItemized(e.target.value)} />
+                  {/* checkbox */}
+                  <div className='checkbox__container'>
+                    <label htmlFor='billable' >Billable </label>
+                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                  </div>
                 </div>
 
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
+                <div className='broadband__container'>
+                  <div className="input_wrapper">
+                    <label htmlFor='broadband' className='broadband__header'>Broadband</label>
+                    <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} />
+                  </div>
 
-              <div className='entertainment__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
-                  <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
-            </div>
-
-
-            <div className="right_aside">
-              <div className='cellphone__container'>
-                <div className='input_wrapper'>
-                  <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
-                  <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} />
+                  {/* checkbox */}
+                  <div className='checkbox__container'>
+                    <label htmlFor='billable' >Billable </label>
+                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                  </div>
                 </div>
 
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+
+
+                <div className='entertainment__container'>
+                  <div className="input_wrapper">
+                    <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
+                    <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} />
+                  </div>
+
+                  {/* checkbox */}
+                  <div className='checkbox__container'>
+                    <label htmlFor='billable' >Billable </label>
+                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                  </div>
                 </div>
               </div>
 
-              <div className='landline__container'>
-                <div className='input_wrapper'>
-                  <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
-                  <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} />
+
+              <div className="right_aside">
+
+                <div className='itemized__container'>
+                  <div className="input_wrapper">
+                    <label htmlFor='itemized_purchases' className='itemized_purchases__header'>Itemized purchases</label>
+                    <Link to="/upload" name="itemized_purchases" onClick={handleItemized}>itemized items</Link>
+                  </div>
                 </div>
 
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
 
-              <div className='longdist__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
-                  <input className='long_distance' name='long_distance' value={longdist} onChange={(e) => setDist(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
-
-              <div className='broadband__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='broadband' className='broadband__header'>Broadband</label>
-                  <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
-
-              <div className='itemized__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='itemized_purchases' className='itemized_purchases__header'>Itemized purchases</label>
-                  <input className='itemized_purchases' name='itemized_purchases' value={itemized} onChange={(e) => setItemized(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
-              </div>
-
-              <div className='entertainment__container'>
-                <div className="input_wrapper">
-                  <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
-                  <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} />
-                </div>
-
-                {/* checkbox */}
-                <div className='checkbox__container'>
-                  <label htmlFor='billable' >Billable </label>
-                  <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
-                </div>
               </div>
             </div>
-          </div>
 
-          <label htmlFor='file-input'></label>
-          <div className='file-area'>
-            <input type='file' className='file-input' name='file-input' id='file-input' onChange={setUploaded} multiple />
-          </div>
-          <button type='Submit' className='button'>Submit</button>
-        </form>
-      </div>
-
+            <label htmlFor='file-input'></label>
+            <div className='file-area'>
+              <input type='file' className='file-input' name='file-input' id='file-input' onChange={setUploaded} multiple />
+            </div>
+            <button type='Submit' className='button'>Submit</button>
+          </form>
+        </div>
         :
         <div></div>
 
       }
-      
+
     </div>
   );
 };
