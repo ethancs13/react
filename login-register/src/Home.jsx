@@ -14,12 +14,15 @@ const Home = () => {
   const [landline, setLandline] = useState('');
   const [longdist, setDist] = useState('');
   const [broadband, setBroadband] = useState('');
-  const [itemized, setItemized] = useState('');
   const [entertainment, setEntertainment] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // billable
   const [cell_billable, setCellBillable] = useState(false)
+  const [landline_billable, setLandlineBillable] = useState(false)
+  const [longdist_billable, setDistBillable] = useState(false)
+  const [broadband_billable, setBroadbandBillable] = useState(false)
+  const [entertainment_billable, setEntertainmentBillable] = useState(false)
 
   const [auth, setAuth] = useState(false)
   const [message, setMessage] = useState('')
@@ -133,7 +136,7 @@ const Home = () => {
                   {/* checkbox */}
                   <div className='checkbox__container'>
                     <label htmlFor='billable' >Billable </label>
-                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                    <input type='checkbox' className='billable' name='billable' value={landline_billable} onChange={(e) => setLandlineBillable(e.target.value)} />
                   </div>
                 </div>
 
@@ -146,7 +149,7 @@ const Home = () => {
                   {/* checkbox */}
                   <div className='checkbox__container'>
                     <label htmlFor='billable' >Billable </label>
-                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                    <input type='checkbox' className='billable' name='billable' value={longdist_billable} onChange={(e) => setDistBillable(e.target.value)} />
                   </div>
                 </div>
 
@@ -159,7 +162,7 @@ const Home = () => {
                   {/* checkbox */}
                   <div className='checkbox__container'>
                     <label htmlFor='billable' >Billable </label>
-                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                    <input type='checkbox' className='billable' name='billable' value={broadband_billable} onChange={(e) => setBroadbandBillable(e.target.value)} />
                   </div>
                 </div>
 
@@ -174,7 +177,7 @@ const Home = () => {
                   {/* checkbox */}
                   <div className='checkbox__container'>
                     <label htmlFor='billable' >Billable </label>
-                    <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                    <input type='checkbox' className='billable' name='billable' value={entertainment_billable} onChange={(e) => setEntertainmentBillable(e.target.value)} />
                   </div>
                 </div>
               </div>
