@@ -12,7 +12,6 @@ export const Itemized = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
     }
-    render()
     return (
         <div>
             <div>Hello World to items!</div>
