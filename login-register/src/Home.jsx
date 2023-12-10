@@ -100,7 +100,10 @@ const Home = () => {
             </div>
         }
       </nav>
-      <div className='form__wrapper'>
+      {
+        auth ?
+
+        <div className='form__wrapper'>
         <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
 
           <div className="form__content">
@@ -273,6 +276,12 @@ const Home = () => {
           <button type='Submit' className='button'>Submit</button>
         </form>
       </div>
+
+        :
+        <div></div>
+
+      }
+      
     </div>
   );
 };
