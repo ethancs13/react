@@ -1,63 +1,45 @@
-import { useState } from "react/cjs/react.development"
+import React, { useState } from "react";
 import TableRows from "./tableRows"
 
-function AddDeleteTableRows(){
+function AddDeleteTableRows() {
 
     const [rowsData, setRowsData] = useState([]);
- 
-    const addTableRows = ()=>{
-  
-        const rowsInput={
-            fullName:'',
-            emailAddress:'',
-            salary:''  
-        } 
+    const [test, setTest] = useState('');
+
+    const addTableRows = () => {
+
+        const rowsInput = {
+            test: test
+        }
         setRowsData([...rowsData, rowsInput])
-      
     }
-   const deleteTableRows = (index)=>{
+
+    const deleteTableRows = (index) => {
         const rows = [...rowsData];
         rows.splice(index, 1);
         setRowsData(rows);
-   }
- 
-   const handleChange = (index, evnt)=>{
-    
-    const { name, value } = evnt.target;
-    const rowsInput = [...rowsData];
-    rowsInput[index][name] = value;
-    setRowsData(rowsInput);
-  
- 
- 
-}
-    return(
-        <div className="container">
-            <div className="row">
-                <div className="col-sm-8">
+    }
 
-                <table className="table">
-                    <thead>
-                      <tr>
-                          <th>Full Name</th>
-                          <th>Email Address</th>
-                          <th>Salary</th>
-                          <th><button className="btn btn-outline-success" onClick={addTableRows} >+</button></th>
-                      </tr>
+    const handleChange = (index, evnt) => {
 
-                    </thead>
-                   <tbody>
+        const { name, value } = evnt.target;
+        const rowsInput = [...rowsData];
+        rowsInput[index][name] = value;
+        setRowsData(rowsInput);
+    }
+    return (
+        <div className="itemized__content">
 
-                   <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
+            <div className="table_row">
+                <div><input type="text" value={test} onChange={(e) => setTest(e.target.value)} /></div>
+                <div><input type="text" name="emailAddress" className="form-control" /> </div>
+                <div><input type="text" name="salary" className="form-control" /> </div>
 
-                   </tbody> 
-                </table>
-
-                </div>
-                <div className="col-sm-4">
-
-                </div>
+                <div><button className="btn btn-outline-success" onClick={addTableRows} >+</button></div>
             </div>
+
+            <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
+
         </div>
     )
 

@@ -12,16 +12,12 @@ export const Itemized = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
     }
-    render()
+    
     return (
         <div>
             <div>Hello World to items!</div>
             <Link to="/">Back to form</Link>
-            
             <AddDeleteTableRows />
-            <form onSubmit={handleSubmit}>
-
-            </form>
         </div>
 
     )
