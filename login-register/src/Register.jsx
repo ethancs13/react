@@ -4,28 +4,27 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Login } from './Login'
-import { useNavigate } from 'react-router-dom';
-
-
 
 
 export const Register = () => {
     const navigate = useNavigate();
 
+    const [fn, setFn] = useState('')
+    const [ln, setLn] = useState('')
     const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
-
-    const navigate = useNavigate();
+    const [password, setPass] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/signup', { email: email, password: pass })
+        axios.post('http://localhost:3001/signup', { fn: fn, ln: ln, email: email, password: password })
             .then((data) => {
                 if (data.data.Status === 'Success') {
                     navigate('/login');
                 } else {
                     alert('Error');
                 }
+                setFn('');
+                setLn('');
                 setEmail('');
                 setPass('');
             })
@@ -41,10 +40,14 @@ export const Register = () => {
 
                 <h2>Register</h2>
                 <form className="register-form" onSubmit={handleSubmit}>
+                    <label htmlFor="fn">first name</label>
+                    <input value={fn} onChange={(e) => setFn(e.target.value)} type="text" placeholder="John" id="fn" name="fn" />
+                    <label htmlFor="ln">last name</label>
+                    <input value={ln} onChange={(e) => setLn(e.target.value)} type="text" placeholder="Doe" id="ln" name="ln" />
                     <label htmlFor="email">email</label>
                     <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
                     <label htmlFor="password">password</label>
-                    <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+                    <input value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                     <button type="submit">Register</button>
                 </form>
                 <Link to="/login" className="link-btn">Already have an account? Login here.</Link>

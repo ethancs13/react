@@ -1,28 +1,29 @@
 html {
   margin: 0;
   padding: 0;
-  width: 100vw;
   height: 100vh;
   background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
-
   font-family: 'Roboto', sans-serif;
-  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
 }
 
 .App {
   text-align: center;
   display: flex;
-  min-height: 100vh;
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 99vh;
   align-items: center;
   justify-content: center;
   color: white;
 }
 
-.auth-form-container, .login-form, .register-form {
+.auth-form-container,
+.login-form,
+.register-form {
   display: flex;
   flex-direction: column;
 }
+
 .auth-form-container h2 {
   font-size: 32px;
 }
@@ -42,7 +43,9 @@ input {
   font-size: 18px;
 }
 
-button, .btn, .link-btn {
+button,
+.btn,
+.link-btn {
   border: none;
   background-color: white;
   padding: 15px;
@@ -67,18 +70,12 @@ button, .btn, .link-btn {
   justify-content: center;
   align-items: center;
 }
-.card {
-  display: flex;
-  flex-direction: column;
-  border: solid white 1px;
-  padding: 80px;
-  border-radius: 15px;
 
-}
-
-.amount-input, .file-input {
+.amount-input,
+.file-input {
   margin: 10px 0;
 }
+
 .file-input::file-selector-button {
   color: black;
   border-radius: 20px;
@@ -87,6 +84,7 @@ button, .btn, .link-btn {
   border-radius: 3px;
   margin-right: 45px;
 }
+
 .file-area {
   margin: 5px;
   padding: 10px;
@@ -94,16 +92,18 @@ button, .btn, .link-btn {
   border-radius: 15px;
 }
 
-.nav div{
+.nav div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0 5vw;
 }
+
 .amount_header {
   font-size: 24px;
 
 }
+
 .user_name {
   font-size: 24px;
 }
@@ -115,35 +115,26 @@ button, .btn, .link-btn {
     border-radius: 10px;
     margin: 0.5rem;
   }
-  .card {
-    border: solid white 1px;
-  }
-}
-@media screen and (max-width: 600px) {
-
-  .card {
-    border: none;
-  }
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;;
-  border: 1px solid white;
 }
 
 /* Home  */
 
-.logout_home, .login_home {
+.logout_home,
+.login_home {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 50px;
 }
-.logout_home h3, .login_home h3 {
+
+.logout_home h3,
+.login_home h3 {
   text-align: center;
 }
 
-.login_home_btn, .logout_home_btn {
+.login_home_btn,
+.logout_home_btn {
   text-decoration: none;
   background-color: white;
   color: #7439db;
@@ -157,4 +148,125 @@ button, .btn, .link-btn {
   display: flex;
   justify-content: center;
   width: 200px;
+}
+
+/* ----------------- Form Styling ------------------ */
+
+/* wrapper (around form) */
+.form__wrapper {
+}
+
+/* form container */
+.form__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.left_aside,.right_aside {
+  width: 50%;
+}
+
+/* containers for inputs */
+.cellphone__container,
+.landline__container,
+.longdist__container,
+.broadband__container,
+.itemized__container,
+.entertainment__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  outline: solid white 1px;
+  padding: 10px 20px 10px 0;
+}
+
+/* inputs */
+.cellphone__header,
+.business_landline__header,
+.long_distance__header,
+.broadband__header,
+.itemized_purchases__header,
+.entertainment__header {
+
+  padding: 0 20px;
+
+}
+
+/* file input */
+.file-input {
+
+}
+
+.input_wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+.input_wrapper label {
+  
+}
+
+/* ---------------- Checkbox Styling ------------------ */
+
+/* Customize the label */
+.checkbox__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 20%;
+}
+.checkbox__container label {
+  padding: 0 10px;
+  font-size: 20px;
+}
+input[type="checkbox"] {
+
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(--form-background);
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset .5em .5em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(2);
+}
+
+input[type="checkbox"]:disabled {
+  --form-control-color: var(--form-control-disabled);
+
+  color: var(--form-control-disabled);
+  cursor: not-allowed;
 }

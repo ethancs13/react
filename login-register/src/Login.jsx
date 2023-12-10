@@ -13,7 +13,6 @@ export const Login = () => {
 
     const navigate = useNavigate();
 
-
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (e) => {

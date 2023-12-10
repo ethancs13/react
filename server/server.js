@@ -61,7 +61,9 @@ const verifyUser = (req, res, next) => {
             if (err) {
                 return res.json({ Error: err });
             } else {
-                req.email = decoded.name;
+                req.email = decoded.email;
+                req.fn = (decoded.fn).charAt(0).toUpperCase() + decoded.fn.slice(1);;
+                req.ln = (decoded.ln).charAt(0).toUpperCase() + decoded.ln.slice(1);;
                 next();
             };
 
@@ -71,10 +73,12 @@ const verifyUser = (req, res, next) => {
 // verify_user_route
 app.get('/', verifyUser, (req, res) => {
     const email = req.email;
+    const fn = req.fn;
+    const ln = req.ln;
 
-    console.log(`User with email: ${email}, verified password.`)
+    console.log(`${fn} ${ln} has verified their password using ${email}.`)
 
-    return res.json({ status: "Success", name: email });
+    return res.json({ status: "Success", email: email, fn: req.fn, ln: req.ln });
 });
 // AUTH LOGIC
 // ----------------------------------------------------
@@ -105,9 +109,11 @@ app.post("/login", async (req, res) => {
             // Success
             if (match) {
                 console.log('Password Matched Successfully');
-                const name = user[0].email;
+                const fn = user[0].fn;
+                const ln = user[0].ln;
+                const email = user[0].email;
                 // sign_token_to_cookies
-                const token = jwt.sign({ name: name }, "jwt-secret-key", { expiresIn: '1d' });
+                const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
                 res.cookie('token', token);
                 // send 'Success'
                 return res.send({ Status: "Success" });
@@ -128,33 +134,37 @@ app.post("/login", async (req, res) => {
 // ----------------------------------------------------
 // setup_storage_config
 const storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, __dirname + "/uploads");
+    destination: function (req, file, cb) {
+        cb(null, __dirname + "/uploads");
     },
-    filename: function (req, file, callback) {
-        callback(null, file.originalname);
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
     }
 })
 // set_location_to_storage_config
 const uploads = multer({ storage: storage });
 // upload POST route to get files
 app.post("/upload", uploads.array('files'), (req, res) => {
-    console.log(req.files)
+
+    if(!req.body.email){
+        res.json({ status: "log in first." })
+        return;
+    }
+
     // mysql query
     const sql = `INSERT INTO userData (email, amount, doc_name, doc_path) VALUES (?, ?, ?, ?)`;
-    const values = [req.body.email, req.body.amount, req.files[i].filename, req.files[i].path];
+
     // add each file to mysql db
     for (let i = 0; i < req.files.length; i++) {
-        db.query(sql, [values], (err, result) => {
-            // console log query confirmation
-            console.log(result)
+        db.query(sql, [req.body.email, req.body.amount, req.files[i].filename, req.files[i].path], (err, result) => {
+            // Fail
             if (err) {
                 console.log(err)
             }
         })
     }
-    // Success
-    res.json({ status: "files received." })
+        // Success
+        res.json({ status: "files received." })
 });
 // MULTER STORAGE
 // ----------------------------------------------------
@@ -167,17 +177,19 @@ app.post("/upload", uploads.array('files'), (req, res) => {
 app.post('/signup', (req, res) => {
 
     // store_email_and_password
+    const fn = req.body.fn;
+    const ln = req.body.ln;
     const email = req.body.email;
     const password = req.body.password;
     // query_string
-    const sql = "INSERT INTO users (email, password) VALUES (?)";
+    const sql = "INSERT INTO users (fn, ln, email, password) VALUES (?)";
     // hash_password
     bcrypt.hash(password, salt, (err, hash) => {
         if (err) {
             return res.json({ Error: "Error when hashing password --- " + err })
         }
         // query_values
-        const values = [email, hash]
+        const values = [fn, ln, email, hash]
 
         db.query(sql, [values], (err, result) => {
             if (err) {
