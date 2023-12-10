@@ -270,3 +270,15 @@ input[type="checkbox"]:disabled {
   color: var(--form-control-disabled);
   cursor: not-allowed;
 }
+
+@media screen and (max-width: 1180px) {
+  html {
+    height: auto;
+  }
+  .form__content {
+    flex-direction: column;
+  }
+  .left_aside,.right_aside {
+    width: 100%;
+  }
+}
