@@ -17,6 +17,7 @@ const Home = () => {
   const [entertainment, setEntertainment] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
+  const [billable, setBillable] = useState([])
   // billable
   const [cell_billable, setCellBillable] = useState(false)
   const [landline_billable, setLandlineBillable] = useState(false)

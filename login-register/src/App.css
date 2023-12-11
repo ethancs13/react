@@ -35,15 +35,9 @@ label {
   font-size: 18px;
 }
 
-input {
-  margin: 0.25rem 0;
-  padding: 0.5rem;
-  border: none;
-  font-size: 12px;
+.btn {
+  height: 20px;
 }
-
-button,
-.btn,
 .link-btn {
   border: none;
   background-color: white;
@@ -220,18 +214,14 @@ button,
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 20%;
+  font-size: 12px;
 }
 .checkbox__container label {
   padding: 0 10px;
-  font-size: 20px;
+  font-size: 12px;
 }
 input[type="checkbox"] {
-
+  cursor: pointer;
   -webkit-appearance: none;
   /* Remove most all native input styles */
   appearance: none;
@@ -264,7 +254,7 @@ input[type="checkbox"]::before {
 }
 
 input[type="checkbox"]:checked::before {
-  transform: scale(2);
+  transform: scale(1);
 }
 
 input[type="checkbox"]:disabled {
@@ -304,12 +294,59 @@ input[type="checkbox"]:disabled {
 .table_row {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  font-size: 10px;
   width: 100%;
 }
+.table_row>* {
+  border-left: solid black 1px;
+  width: 100px;
+  text-align: center;
+}
+.table_row div {
+  padding: 10px;
+}
+
 .itemized__content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
   justify-content: center;
+}
+.form-control {
+  border: none;
+  padding: 0;
+  margin: 0;
+  height: 20px;
+  margin: 2.25px;
+}
+
+/* Buttons */
+.btn_add, .btn_del {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+  height: 30px;
+  width: 30px;
+}
+.btn_add {
+  font-size: 20px;
+  align-items: flex-start;
+  background-color: rgb(102, 139, 230);
+}
+.btn_add:hover {
+  background-color: rgb(70, 112, 221);
+
+}
+.btn_del {
+  background-color: rgba(255, 255, 255, 0.739);
+  width: 30px;
+}
+.btn_del:hover {
+  background-color: white;
+  color: black;
 }

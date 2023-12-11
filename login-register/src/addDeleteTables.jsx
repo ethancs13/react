@@ -31,11 +31,17 @@ function AddDeleteTableRows() {
         <div className="itemized__content">
 
             <div className="table_row">
-                <div><input type="text" value={test} onChange={(e) => setTest(e.target.value)} /></div>
-                <div><input type="text" name="emailAddress" className="form-control" /> </div>
-                <div><input type="text" name="salary" className="form-control" /> </div>
-
-                <div><button className="btn btn-outline-success" onClick={addTableRows} >+</button></div>
+                <div>Item</div>
+                <div>Purchase Date</div>
+                <div>Subtotal</div>
+                <div>City Tax</div>
+                <div>Tax %</div>
+                <div>Total</div>
+                <div>Source</div>
+                <div>Retailer City/State or Internet</div>
+                <div>City, State shipped To</div>
+                <div>Billable</div>
+                <div><button className="btn btn_add" onClick={addTableRows} >+</button></div>
             </div>
 
             <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />

@@ -4,7 +4,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
     return (
 
         rowsData.map((data, index) => {
-            const { item, date, subTotal, cityTax, taxPercent, total, source, location, shippedTo } = data;
+            const { item, date, subTotal, cityTax, taxPercent, total, source, location, shippedTo, billable } = data;
             return (
 
                 <div key={index} className="table_row">
@@ -20,11 +20,10 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                     <input type="text" value={shippedTo} onChange={(evnt) => (handleChange(index, evnt))} name="shippedTo" className="form-control" />
 
                     <div className='checkbox__container'>
-                        <label htmlFor='billable' >Billable </label>
-                        <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                        <input type='checkbox' className='billable' name='billable' value={billable} onChange={(evnt) => (handleChange(index, evnt))} />
                     </div>
 
-                    <button className="btn btn-outline-danger" onClick={() => (deleteTableRows(index))}>x</button>
+                    <button className="btn btn_del" onClick={() => (deleteTableRows(index))}>❌</button>
                 </div>
 
             )
