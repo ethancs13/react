@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useState } from "react"
-=======
-import React, { useState } from "react";
->>>>>>> d75c243634412e5348c6d35c2581c8961480a068
 import TableRows from "./tableRows"
 
 function AddDeleteTableRows() {
