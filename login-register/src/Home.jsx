@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import AddDeleteTableRows from "./addDeleteTables";
 import axios from 'axios';
 import './App.css';
 
@@ -54,7 +55,6 @@ const Home = () => {
     formData.append('fn', fn)
     formData.append('ln', ln)
     formData.append('email', email)
-    formData.append('amount', amount)
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       formData.append('files', uploadedFiles[i])
@@ -71,7 +71,6 @@ const Home = () => {
           alert("Login or Sign up!")
           navigate('/login')
         } else {
-          setAmount('');
           setUploadedFiles([]);
         }
       })
@@ -183,10 +182,7 @@ const Home = () => {
               <div className="right_aside">
 
                 <div className='itemized__container'>
-                  <div className="input_wrapper">
-                    <label htmlFor='itemized_purchases' className='itemized_purchases__header'>Itemized purchases</label>
-                    <Link to="/itemized" name="itemized_purchases" onClick={handleItemized}>itemized items</Link>
-                  </div>
+                  <AddDeleteTableRows />
                 </div>
 
 

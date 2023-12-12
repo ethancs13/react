@@ -152,11 +152,11 @@ app.post("/upload", uploads.array('files'), (req, res) => {
     }
 
     // mysql query
-    const sql = `INSERT INTO userData (email, amount, doc_name, doc_path) VALUES (?, ?, ?, ?)`;
+    const sql = `INSERT INTO userData (email, doc_name, doc_path) VALUES (?)`;
 
     // add each file to mysql db
     for (let i = 0; i < req.files.length; i++) {
-        db.query(sql, [req.body.email, req.body.amount, req.files[i].filename, req.files[i].path], (err, result) => {
+        db.query(sql, [req.body.email, req.files[i].filename, req.files[i].path], (err, result) => {
             // Fail
             if (err) {
                 console.log(err)

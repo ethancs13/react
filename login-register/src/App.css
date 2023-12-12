@@ -264,7 +264,7 @@ input[type="checkbox"]:disabled {
   cursor: not-allowed;
 }
 
-@media screen and (max-width: 1180px) {
+@media screen and (min-width: 1180px) {
   html {
     height: auto;
   }
@@ -303,9 +303,18 @@ input[type="checkbox"]:disabled {
   width: 100px;
   text-align: center;
 }
-.table_row div {
-  padding: 10px;
+.checkbox__container {
+  width: 50px;
 }
+.table_row div {
+  padding: 0 1.5px;
+  padding: 0 1.5px;
+}
+ /* input values for row */
+td input {
+  width: 96px;
+}
+
 
 .itemized__content {
   display: flex;
@@ -349,4 +358,27 @@ input[type="checkbox"]:disabled {
 .btn_del:hover {
   background-color: white;
   color: black;
+}
+
+
+.billable_col {
+  width: 50px;
+}
+.total_col, .total_col__item,
+.taxpercent_col, .taxpercent_col__item,
+.citytax_col, .citytax_col__item,
+.subtotal_col, .subtotal_col__item {
+  width: 60px;
+}
+.total_col__item input,
+.taxpercent_col__item input,
+.citytax_col__item input,
+.subtotal_col__item input {
+  width: 50px;
+}
+
+/* dropdown for location */
+
+.stdropdown-container {
+  width: 200px;
 }

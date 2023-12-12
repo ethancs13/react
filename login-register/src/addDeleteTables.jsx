@@ -4,12 +4,11 @@ import TableRows from "./tableRows"
 function AddDeleteTableRows() {
 
     const [rowsData, setRowsData] = useState([]);
-    const [test, setTest] = useState('');
 
     const addTableRows = () => {
 
         const rowsInput = {
-            test: test
+            
         }
         setRowsData([...rowsData, rowsInput])
     }
@@ -30,19 +29,19 @@ function AddDeleteTableRows() {
     return (
         <div className="itemized__content">
 
-            <div className="table_row">
-                <div>Item</div>
-                <div>Purchase Date</div>
-                <div>Subtotal</div>
-                <div>City Tax</div>
-                <div>Tax %</div>
-                <div>Total</div>
-                <div>Source</div>
-                <div>Retailer City/State or Internet</div>
-                <div>City, State shipped To</div>
-                <div>Billable</div>
-                <div><button className="btn btn_add" onClick={addTableRows} >+</button></div>
-            </div>
+            <tr className="table_row">
+                <th>Item</th>
+                <th>Purchase Date</th>
+                <th className="subtotal_col">Subtotal</th>
+                <th className="citytax_col">City Tax</th>
+                <th className="taxpercent_col">Tax %</th>
+                <th className="total_col">Total</th>
+                <th>Source</th>
+                <th>Retailer City/State or Internet</th>
+                <th>City, State shipped To</th>
+                <th className="billable_col">Billable</th>
+                <th><button className="btn btn_add" onClick={addTableRows} >+</button></th>
+            </tr>
 
             <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
 
