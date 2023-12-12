@@ -312,9 +312,11 @@ input[type="checkbox"]:disabled {
 }
  /* input values for row */
 td input {
-  width: 96px;
+  width: 50px;
 }
-
+td > input {
+  width :96px;
+}
 
 .itemized__content {
   display: flex;
@@ -377,8 +379,6 @@ td input {
   width: 50px;
 }
 
-/* dropdown for location */
-
-.stdropdown-container {
-  width: 200px;
+.stdropdown-input, .stsearch-box {
+  width: 80px;
 }

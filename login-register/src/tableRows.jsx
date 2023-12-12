@@ -33,16 +33,14 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                     <td><input type="text" value={source} onChange={(evnt) => (handleChange(index, evnt))} name="source" className="form-control" /></td>
                     <td><input type="text" value={location} onChange={(evnt) => (handleChange(index, evnt))} name="location" className="form-control" /></td>
                     <td>
-                        <div>
-                            <h6>Country</h6>
+                        <div className="test">
                             <CountrySelect
                             className='country_dropdown__input'
                                 onChange={(e) => {
                                     setCountryid(e.id);
                                 }}
-                                placeHolder="Select Country"
+                                placeHolder="Country"
                             />
-                            <h6>State</h6>
                             <StateSelect
                             className='state_dropdown__input'
 
@@ -50,9 +48,8 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                                 onChange={(e) => {
                                     setstateid(e.id);
                                 }}
-                                placeHolder="Select State"
+                                placeHolder="State"
                             />
-                            <h6>City</h6>
                             <CitySelect
                             className='city_dropdown__input'
 
@@ -61,7 +58,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                                 onChange={(e) => {
                                     console.log(e);
                                 }}
-                                placeHolder="Select City"
+                                placeHolder="City"
                             />
                         </div>
                     </td>
