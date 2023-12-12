@@ -92,12 +92,12 @@ const Home = () => {
         {
           auth ?
             <div>
-              <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div>
+              {/* <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div> */}
               <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
             </div>
             :
             <div className='login_home'>
-              <h3>{message}</h3>
+              {/* <h3>{message}</h3> */}
               <Link to='/login' className='btn btn-primary login_home_btn'>Login</Link>
             </div>
         }
