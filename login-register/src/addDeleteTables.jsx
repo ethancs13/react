@@ -1,9 +1,11 @@
 import { useState } from "react"
 import TableRows from "./tableRows"
 
-function AddDeleteTableRows() {
+function AddDeleteTableRows({ update }) {
 
     const [rowsData, setRowsData] = useState([]);
+
+    update(rowsData)
 
     const addTableRows = () => {
 
@@ -18,7 +20,6 @@ function AddDeleteTableRows() {
     }
 
     const handleChange = (index, evnt) => {
-
         const { name, value } = evnt.target;
         const rowsInput = [...rowsData];
         rowsInput[index][name] = value;

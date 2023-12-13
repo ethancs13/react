@@ -151,12 +151,36 @@ app.post("/upload", uploads.array('files'), (req, res) => {
         return;
     }
 
+    const rowsData = JSON.parse(req.body.rowsData);
+    console.log(rowsData)
+
     // mysql query
-    const sql = `INSERT INTO userData (email, doc_name, doc_path) VALUES (?)`;
+    const sql = `INSERT INTO userData (fn, ln, email, cellphone, landline, longdist, broadband, entertainment, item, date, subtotal, cityTax, taxPercent, total, source, location, doc_name, doc_path) VALUES (?, ?, ?, ? ,? ,? ,? ,?, ?, ?, ?, ? ,? ,? ,? ,?, ?, ?)`;
+
+    // data array
+    const data = [
+        req.body.fn,
+        req.body.ln,
+        req.body.email,
+        req.body.cellphone,
+        req.body.landline,
+        req.body.longdist,
+        req.body.broadband,
+        req.body.entertainment,
+        rowsData.item,
+        rowsData.date,
+        rowsData.subtotal,
+        rowsData.cityTax,
+        rowsData.taxPercent,
+        rowsData.total,
+        rowsData.source,
+        rowsData.location,
+    ]
 
     // add each file to mysql db
     for (let i = 0; i < req.files.length; i++) {
-        db.query(sql, [req.body.email, req.files[i].filename, req.files[i].path], (err, result) => {
+        db.query(sql, [...data, req.files[i].filename, req.files[i].path], (err, result) => {
+            console.log(result)
             // Fail
             if (err) {
                 console.log(err)
