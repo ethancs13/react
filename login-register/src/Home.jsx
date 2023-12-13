@@ -15,7 +15,6 @@ const Home = () => {
   const [landline, setLandline] = useState('');
   const [longdist, setDist] = useState('');
   const [broadband, setBroadband] = useState('');
-  const [itemized, setItemized] = useState('');
   const [entertainment, setEntertainment] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
@@ -55,6 +54,11 @@ const Home = () => {
     formData.append('fn', fn)
     formData.append('ln', ln)
     formData.append('email', email)
+    // formData.append('cellphone', cellphone)
+    // formData.append('landline', landline)
+    // formData.append('longdist', longdist)
+    // formData.append('broadband', broadband)
+    // formData.append('entertainment', entertainment)
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       formData.append('files', uploadedFiles[i])
@@ -82,22 +86,18 @@ const Home = () => {
       }).catch(err => console.log(err));
   }
 
-  const handleItemized = () => {
-    navigate('/itemized')
-  }
-
   return (
     <div>
       <nav className='nav'>
         {
           auth ?
             <div>
-              {/* <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div> */}
+              <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div>
               <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
             </div>
             :
             <div className='login_home'>
-              {/* <h3>{message}</h3> */}
+              <h3>{message}</h3>
               <Link to='/login' className='btn btn-primary login_home_btn'>Login</Link>
             </div>
         }

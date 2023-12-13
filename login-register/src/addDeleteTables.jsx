@@ -7,9 +7,7 @@ function AddDeleteTableRows() {
 
     const addTableRows = () => {
 
-        const rowsInput = {
-            
-        }
+        const rowsInput = {}
         setRowsData([...rowsData, rowsInput])
     }
 

@@ -1,6 +1,5 @@
 import {
     CitySelect,
-    CountrySelect,
     StateSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -9,15 +8,13 @@ import { useState } from 'react';
 
 function TableRows({ rowsData, deleteTableRows, handleChange }) {
 
-
-    const [countryid, setCountryid] = useState(0);
     const [stateid, setstateid] = useState(0);
-
+    const [cityid, setcityid] = useState(0);
 
     return (
 
         rowsData.map((data, index) => {
-            const { item, date, subTotal, cityTax, taxPercent, total, source, location, shippedTo, billable } = data;
+            const { item, date, subTotal, cityTax, taxPercent, total, source, location, billable } = data;
 
 
             return (
@@ -34,17 +31,10 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                     <td><input type="text" value={location} onChange={(evnt) => (handleChange(index, evnt))} name="location" className="form-control" /></td>
                     <td>
                         <div className="test">
-                            <CountrySelect
-                            className='country_dropdown__input'
-                                onChange={(e) => {
-                                    setCountryid(e.id);
-                                }}
-                                placeHolder="Country"
-                            />
                             <StateSelect
                             className='state_dropdown__input'
 
-                                countryid={countryid}
+                                countryid={233}
                                 onChange={(e) => {
                                     setstateid(e.id);
                                 }}
@@ -53,10 +43,10 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                             <CitySelect
                             className='city_dropdown__input'
 
-                                countryid={countryid}
+                                countryid={233}
                                 stateid={stateid}
                                 onChange={(e) => {
-                                    console.log(e);
+                                    setcityid(e.id)
                                 }}
                                 placeHolder="City"
                             />

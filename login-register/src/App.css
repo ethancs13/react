@@ -147,22 +147,31 @@ label {
 
 /* wrapper (around form) */
 .form__wrapper {
+  margin: 50px;
 }
 
 /* form container */
 .form__content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 40px 0;
 }
 
 .left_aside,.right_aside {
-  width: 50%;
+  display: flex;
+  width: 100%;
+}
+.left_aside {
+  flex-direction: column;
+  align-items: center;
 }
 .right_aside {
-  display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
+  padding: 0;
+  margin: 0;
 }
 
 /* containers for inputs */
@@ -170,13 +179,21 @@ label {
 .landline__container,
 .longdist__container,
 .broadband__container,
-.itemized__container,
 .entertainment__container {
   display: flex;
-  flex-direction: row;
+  width: 80%;
   align-items: center;
+  justify-content: center;
+  flex-direction: row;
   outline: solid white 1px;
   padding: 10px 20px 10px 0;
+}
+.itemized__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 20px;
 }
 
 /* inputs */
@@ -264,17 +281,6 @@ input[type="checkbox"]:disabled {
   cursor: not-allowed;
 }
 
-@media screen and (min-width: 1180px) {
-  html {
-    height: auto;
-  }
-  .form__content {
-    flex-direction: column;
-  }
-  .left_aside,.right_aside {
-    width: 100%;
-  }
-}
 
 /* ----------------- Itemized Form Styling ---------------- */
 .item__container {
@@ -299,12 +305,11 @@ input[type="checkbox"]:disabled {
   width: 100%;
 }
 .table_row>* {
-  border-left: solid black 1px;
   width: 100px;
   text-align: center;
 }
 .checkbox__container {
-  width: 50px;
+  width: 80px;
 }
 .table_row div {
   padding: 0 1.5px;
@@ -315,7 +320,7 @@ td input {
   width: 50px;
 }
 td > input {
-  width :96px;
+  width: 96px;
 }
 
 .itemized__content {
@@ -343,10 +348,11 @@ td > input {
   font-size: 10px;
   height: 30px;
   width: 30px;
+
 }
 .btn_add {
-  font-size: 20px;
-  align-items: flex-start;
+  font-size: 30px;
+  align-items: center;
   background-color: rgb(102, 139, 230);
 }
 .btn_add:hover {
@@ -364,7 +370,7 @@ td > input {
 
 
 .billable_col {
-  width: 50px;
+  width: 80px;
 }
 .total_col, .total_col__item,
 .taxpercent_col, .taxpercent_col__item,
