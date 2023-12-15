@@ -9,7 +9,20 @@ function AddDeleteTableRows({ update }) {
 
     const addTableRows = () => {
 
-        const rowsInput = {}
+        const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable } = rowsData;
+
+        const rowsInput = {
+            item: item,
+            date: date,
+            subTotal: subTotal,
+            cityTax: cityTax,
+            taxPercent: taxPercent,
+            total: total,
+            source: source,
+            shippedFrom: shippedFrom,
+            shippedTo: shippedTo,
+            billable: billable,
+        }
         setRowsData([...rowsData, rowsInput])
     }
 
@@ -17,6 +30,7 @@ function AddDeleteTableRows({ update }) {
         const rows = [...rowsData];
         rows.splice(index, 1);
         setRowsData(rows);
+
     }
 
     const handleChange = (index, evnt) => {
@@ -25,8 +39,9 @@ function AddDeleteTableRows({ update }) {
         rowsInput[index][name] = value;
         setRowsData(rowsInput);
     }
+    
     return (
-        <div className="itemized__content">
+        <tbody className="itemized__content">
 
             <tr className="table_row">
                 <th>Item</th>
@@ -44,7 +59,7 @@ function AddDeleteTableRows({ update }) {
 
             <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
 
-        </div>
+        </tbody>
     )
 
 }

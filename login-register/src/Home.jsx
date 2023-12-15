@@ -15,13 +15,17 @@ const Home = () => {
 
   const [cellphone, setCell] = useState('');
   const [landline, setLandline] = useState('');
-  const [longdist, setDist] = useState('');
+  const [dist, setDist] = useState('');
   const [broadband, setBroadband] = useState('');
   const [entertainment, setEntertainment] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // billable
-  const [cell_billable, setCellBillable] = useState(false)
+  const [cellBillable, setCellBillable] = useState(false)
+  const [landlineBillable, setLandlineBillable] = useState(false)
+  const [distBillable, setDistBillable] = useState(false)
+  const [broadbandBillable, setBroadbandBillable] = useState(false)
+  const [entertainmentBillable, setEntertainmentBillable] = useState(false)
 
   const [auth, setAuth] = useState(false)
   const [message, setMessage] = useState('')
@@ -56,16 +60,30 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append('fn', fn)
     formData.append('ln', ln)
     formData.append('email', email)
     formData.append('cellphone', cellphone)
+    formData.append('cellBillable', cellBillable)
     formData.append('landline', landline)
-    formData.append('longdist', longdist)
+    formData.append('landlineBillable', landlineBillable)
+    formData.append('longdist', dist)
+    formData.append('longdistBillable', distBillable)
     formData.append('broadband', broadband)
-    formData.append('entertainment', entertainment)
+    formData.append('broadbandBillable', broadbandBillable)
+    formData.append('entertainment', entertainment  )
+    formData.append('entertainmentBillable', entertainmentBillable)
     console.log(rowsData)
+
+    // check for undefined billable
+    for (let j = 0; j < rowsData.length; j++) {
+      const row = rowsData[j];
+      let state = row.billable;
+      
+      state ? state = state : state = false;
+    }
 
     for (let f = 0; f < rowsData.length; f++) {
       formData.append('rowsData', JSON.stringify(rowsData[f]))
@@ -130,7 +148,7 @@ const Home = () => {
                     {/* checkbox */}
                     <div className='checkbox__container'>
                       <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                      <input type='checkbox' className='billable' name='billable' onClick={(e) => setCellBillable(cellBillable ? false : true)} />
                     </div>
                   </div>
 
@@ -143,20 +161,20 @@ const Home = () => {
                     {/* checkbox */}
                     <div className='checkbox__container'>
                       <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setLandlineBillable(landlineBillable ? false : true)} />
                     </div>
                   </div>
 
                   <div className='longdist__container'>
                     <div className="input_wrapper">
                       <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
-                      <input className='long_distance' name='long_distance' value={longdist} onChange={(e) => setDist(e.target.value)} />
+                      <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} />
                     </div>
 
                     {/* checkbox */}
                     <div className='checkbox__container'>
                       <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setDistBillable(distBillable ? false : true)} />
                     </div>
                   </div>
 
@@ -169,7 +187,7 @@ const Home = () => {
                     {/* checkbox */}
                     <div className='checkbox__container'>
                       <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setBroadbandBillable(broadbandBillable ? false : true)} />
                     </div>
                   </div>
 
@@ -184,7 +202,7 @@ const Home = () => {
                     {/* checkbox */}
                     <div className='checkbox__container'>
                       <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' value={cell_billable} onChange={(e) => setCellBillable(e.target.value)} />
+                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setEntertainmentBillable(entertainmentBillable ? false : true)} />
                     </div>
                   </div>
                 </div>
@@ -192,9 +210,9 @@ const Home = () => {
 
                 <div className="right_aside">
 
-                  <div className='itemized__container'>
+                  <table className='itemized__container'>
                     <AddDeleteTableRows data={rowsData} update={updateRowsData} />
-                  </div>
+                  </table>
 
 
                 </div>
@@ -204,7 +222,7 @@ const Home = () => {
               <div className='file-area'>
                 <input type='file' className='file-input' name='file-input' id='file-input' onChange={setUploaded} multiple />
               </div>
-              <button type='Submit' className='button'>Submit</button>
+              <button type='Submit' className='button' onSubmit={handleSubmit}>Submit</button>
             </form>
           </div>
           :

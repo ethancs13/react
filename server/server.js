@@ -151,7 +151,7 @@ app.post("/upload", uploads.array('files'), (req, res) => {
         return;
     }
 
-    const rowsData = JSON.parse(req.body.rowsData);
+    const rowsData = req.body.rowsData;
     console.log(rowsData)
 
     // mysql query
