@@ -1,16 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import TableRows from "./tableRows"
 
 function AddDeleteTableRows({ update }) {
 
     const [rowsData, setRowsData] = useState([]);
 
-    try {
-        update(rowsData)
+    update(rowsData)
 
-    } catch (err) {
-        console.log(err)
-    }
 
     const addTableRows = () => {
 

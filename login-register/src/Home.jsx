@@ -132,19 +132,6 @@ const Home = () => {
       }).catch(err => console.log(err));
   }
 
-  const UserInformation = ({ fn, handleLogout }) => (
-    <div>
-      <div>
-        <div>
-          <h3>Welcome, <span className='user_name'>{fn}</span></h3>
-        </div>
-        <div>
-          <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
-        </div>
-      </div>
-      {/* Rest of the user information display */}
-    </div>
-  );
 
   return (
     <div>
@@ -155,6 +142,7 @@ const Home = () => {
             rootUser ?
               <div>
                 <header><h1>Welcome, David Sroka</h1></header>
+                <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
                 <table>
                   <tbody>
                     < Admin data={adminData} update={updateAdminData} />
@@ -266,7 +254,7 @@ const Home = () => {
               </div>
             :
             <div className='login_home'>
-              <h3>{message}</h3>
+              {/* <h3>{message}</h3> */}
               <Link to='/login' className='btn btn-primary login_home_btn'>Login</Link>
             </div>
         }

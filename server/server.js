@@ -77,7 +77,7 @@ app.get('/', verifyUser, (req, res) => {
     const ln = req.ln;
 
     console.log(`${fn} ${ln} has verified their password using ${email}.`)
-    console.log('email')
+
     if (email === 'test@test.com') {
         console.log('root user logged in')
         return res.json({ status: "rootUser", email: email, fn: req.fn, ln: req.ln });
@@ -222,8 +222,39 @@ app.get('/fetch', (req, res) => {
     })
 })
 
+// initial fetch for users
+app.post('/fetch/info', (req, res) => {
+    console.log('Request Body:', req.body);
 
+    const userId = req.body.email + 1;
 
+    db.query('SELECT * FROM users WHERE id = ?', [userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            console.log('Query Result:', result);
+            res.json(result);
+        }
+    });
+});
+
+// fetch data from specific user
+
+app.get('/fetch/info/:email', (req, res) => {
+    console.log('Request Body:', req.body);
+
+    const userEmail = req.params.email;
+
+    db.query(`SELECT * FROM userData WHERE email=${userEmail}`, (err, result) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('Query Result:', result);
+            res.json(result)
+        }
+    })
+})
 
 
 // FETCH DATA FROM BACKEND

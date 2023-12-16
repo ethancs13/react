@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function Admin({ update }) {
+function Admin () {
+
+    const navigate = useNavigate();
 
     const [adminData, setAdminData] = useState([])
 
+    const handleGetInfo = function (email) {
+        const requestBody = { email: email };
+        console.log('Request Body:', requestBody);
+
+        axios.post('http://localhost:3001/fetch/info', requestBody)
+            .then((res) => {
+                console.log('Response data:', res.data);
+                navigate(`/info/${email}`);
+            })
+            .catch((error) => {
+                console.error('Error fetching info:', error);
+            });
+    };
 
     const fetchData = function () {
         axios.get('http://localhost:3001/fetch')
             .then((res) => {
-                console.log(res.data)
                 setAdminData(res.data)
             })
     }
@@ -26,7 +41,9 @@ function Admin({ update }) {
             return (
                 <tr key={index}>
                     <td>
-                        {fn} {ln} {email}
+                        <button onClick={() => handleGetInfo(email)}>
+                            {fn} {ln} {email}
+                        </button>
                     </td>
                 </tr>
             )
@@ -35,6 +52,6 @@ function Admin({ update }) {
     )
 
 }
-// <button onClick={fetchData}>click to fetch</button>
+
 export default Admin
 
