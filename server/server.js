@@ -77,6 +77,11 @@ app.get('/', verifyUser, (req, res) => {
     const ln = req.ln;
 
     console.log(`${fn} ${ln} has verified their password using ${email}.`)
+    console.log('email')
+    if (email === 'test@test.com') {
+        console.log('root user logged in')
+        return res.json({ status: "rootUser", email: email, fn: req.fn, ln: req.ln });
+    }
 
     return res.json({ status: "Success", email: email, fn: req.fn, ln: req.ln });
 });
@@ -146,7 +151,7 @@ const uploads = multer({ storage: storage });
 // upload POST route to get files
 app.post("/upload", uploads.array('files'), (req, res) => {
 
-    if(!req.body.email){
+    if (!req.body.email) {
         res.json({ status: "log in first." })
         return;
     }
@@ -187,11 +192,43 @@ app.post("/upload", uploads.array('files'), (req, res) => {
             }
         })
     }
-        // Success
-        res.json({ status: "files received." })
+    // Success
+    res.json({ status: "files received." })
 });
 // MULTER STORAGE
 // ----------------------------------------------------
+
+
+
+
+
+
+// FETCH DATA FROM BACKEND
+// ----------------------------------------------------
+
+app.get('/fetch', (req, res) => {
+
+    const sql = `SELECT * FROM users;`;
+
+    db.query(sql, (err, result) => {
+
+        console.log(result);
+
+        res.send(result)
+
+        if(err) {
+            console.error(err)
+        }
+    })
+})
+
+
+
+
+
+// FETCH DATA FROM BACKEND
+// ----------------------------------------------------
+
 
 
 

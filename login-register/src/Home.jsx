@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AddDeleteTableRows from "./addDeleteTables";
+import Admin from "./Admin"
 import axios from 'axios';
 import './App.css';
 
@@ -11,7 +12,8 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const [rowsData, setRowsData] = useState('')
+  const [rowsData, setRowsData] = useState([])
+  const [adminData, setAdminData] = useState([]);
 
   const [cellphone, setCell] = useState('');
   const [landline, setLandline] = useState('');
@@ -28,6 +30,7 @@ const Home = () => {
   const [entertainmentBillable, setEntertainmentBillable] = useState(false)
 
   const [auth, setAuth] = useState(false)
+  const [rootUser, setRootUser] = useState(false);
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
   const [fn, setFn] = useState('')
@@ -42,7 +45,17 @@ const Home = () => {
           setFn(res.data.fn);
           setLn(res.data.ln);
           navigate('/');
+        }
+        else if (res.data.status === 'rootUser') {
+          setRootUser(true);
+          setAuth(true);
+          setEmail(res.data.email);
+          setFn(res.data.fn);
+          setLn(res.data.ln);
+          navigate('/');
+
         } else {
+          setRootUser(false)
           setAuth(false);
           setMessage(res.data.Error)
           navigate('/');
@@ -56,6 +69,9 @@ const Home = () => {
 
   const updateRowsData = function (data) {
     setRowsData(data);
+  }
+  const updateAdminData = function (data) {
+    setAdminData(data);
   }
 
   const handleSubmit = (e) => {
@@ -73,7 +89,7 @@ const Home = () => {
     formData.append('longdistBillable', distBillable)
     formData.append('broadband', broadband)
     formData.append('broadbandBillable', broadbandBillable)
-    formData.append('entertainment', entertainment  )
+    formData.append('entertainment', entertainment)
     formData.append('entertainmentBillable', entertainmentBillable)
     console.log(rowsData)
 
@@ -81,7 +97,7 @@ const Home = () => {
     for (let j = 0; j < rowsData.length; j++) {
       const row = rowsData[j];
       let state = row.billable;
-      
+
       state ? state = state : state = false;
     }
 
@@ -104,6 +120,7 @@ const Home = () => {
           alert("Login or Sign up!")
           navigate('/login')
         } else {
+
           setUploadedFiles([]);
         }
       })
@@ -115,15 +132,138 @@ const Home = () => {
       }).catch(err => console.log(err));
   }
 
+  const UserInformation = ({ fn, handleLogout }) => (
+    <div>
+      <div>
+        <div>
+          <h3>Welcome, <span className='user_name'>{fn}</span></h3>
+        </div>
+        <div>
+          <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+        </div>
+      </div>
+      {/* Rest of the user information display */}
+    </div>
+  );
+
   return (
     <div>
       <nav className='nav'>
         {
           auth ?
-            <div>
-              <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div>
-              <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
-            </div>
+            // if root user
+            rootUser ?
+              <div>
+                <header><h1>Welcome, David Sroka</h1></header>
+                <table>
+                  <tbody>
+                    < Admin data={adminData} update={updateAdminData} />
+                  </tbody>
+                </table>
+              </div>
+
+              // else
+              :
+              
+              <div>
+                <div>
+                  <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div>
+                  <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
+                  
+                </div>
+
+                <div className='form__wrapper'>
+                  <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
+
+                    <div className="form__content">
+                      <div className="left_aside">
+                        <div className='cellphone__container'>
+                          <div className='input_wrapper'>
+                            <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
+                            <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} />
+                          </div>
+
+                          {/* checkbox */}
+                          <div className='checkbox__container'>
+                            <label htmlFor='billable' >Billable </label>
+                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setCellBillable(cellBillable ? false : true)} />
+                          </div>
+                        </div>
+
+                        <div className='landline__container'>
+                          <div className='input_wrapper'>
+                            <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
+                            <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} />
+                          </div>
+
+                          {/* checkbox */}
+                          <div className='checkbox__container'>
+                            <label htmlFor='billable' >Billable </label>
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setLandlineBillable(landlineBillable ? false : true)} />
+                          </div>
+                        </div>
+
+                        <div className='longdist__container'>
+                          <div className="input_wrapper">
+                            <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
+                            <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} />
+                          </div>
+
+                          {/* checkbox */}
+                          <div className='checkbox__container'>
+                            <label htmlFor='billable' >Billable </label>
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setDistBillable(distBillable ? false : true)} />
+                          </div>
+                        </div>
+
+                        <div className='broadband__container'>
+                          <div className="input_wrapper">
+                            <label htmlFor='broadband' className='broadband__header'>Broadband</label>
+                            <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} />
+                          </div>
+
+                          {/* checkbox */}
+                          <div className='checkbox__container'>
+                            <label htmlFor='billable' >Billable </label>
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setBroadbandBillable(broadbandBillable ? false : true)} />
+                          </div>
+                        </div>
+
+
+
+                        <div className='entertainment__container'>
+                          <div className="input_wrapper">
+                            <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
+                            <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} />
+                          </div>
+
+                          {/* checkbox */}
+                          <div className='checkbox__container'>
+                            <label htmlFor='billable' >Billable </label>
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setEntertainmentBillable(entertainmentBillable ? false : true)} />
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div className="right_aside">
+
+                        <table className='itemized__container'>
+                          <AddDeleteTableRows data={rowsData} update={updateRowsData} />
+                        </table>
+
+
+                      </div>
+                    </div>
+
+                    <label htmlFor='file-input'></label>
+                    <div className='file-area'>
+                      <input type='file' className='file-input' name='file-input' id='file-input' onChange={setUploaded} multiple />
+                    </div>
+                    <button type='Submit' className='button' onSubmit={handleSubmit}>Submit</button>
+                  </form>
+                </div>
+              </div>
             :
             <div className='login_home'>
               <h3>{message}</h3>
@@ -131,104 +271,6 @@ const Home = () => {
             </div>
         }
       </nav>
-      {
-        auth ?
-
-          <div className='form__wrapper'>
-            <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
-
-              <div className="form__content">
-                <div className="left_aside">
-                  <div className='cellphone__container'>
-                    <div className='input_wrapper'>
-                      <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
-                      <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} />
-                    </div>
-
-                    {/* checkbox */}
-                    <div className='checkbox__container'>
-                      <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' onClick={(e) => setCellBillable(cellBillable ? false : true)} />
-                    </div>
-                  </div>
-
-                  <div className='landline__container'>
-                    <div className='input_wrapper'>
-                      <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
-                      <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} />
-                    </div>
-
-                    {/* checkbox */}
-                    <div className='checkbox__container'>
-                      <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setLandlineBillable(landlineBillable ? false : true)} />
-                    </div>
-                  </div>
-
-                  <div className='longdist__container'>
-                    <div className="input_wrapper">
-                      <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
-                      <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} />
-                    </div>
-
-                    {/* checkbox */}
-                    <div className='checkbox__container'>
-                      <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setDistBillable(distBillable ? false : true)} />
-                    </div>
-                  </div>
-
-                  <div className='broadband__container'>
-                    <div className="input_wrapper">
-                      <label htmlFor='broadband' className='broadband__header'>Broadband</label>
-                      <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} />
-                    </div>
-
-                    {/* checkbox */}
-                    <div className='checkbox__container'>
-                      <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setBroadbandBillable(broadbandBillable ? false : true)} />
-                    </div>
-                  </div>
-
-
-
-                  <div className='entertainment__container'>
-                    <div className="input_wrapper">
-                      <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
-                      <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} />
-                    </div>
-
-                    {/* checkbox */}
-                    <div className='checkbox__container'>
-                      <label htmlFor='billable' >Billable </label>
-                      <input type='checkbox' className='billable' name='billable' onChange={(e) => setEntertainmentBillable(entertainmentBillable ? false : true)} />
-                    </div>
-                  </div>
-                </div>
-
-
-                <div className="right_aside">
-
-                  <table className='itemized__container'>
-                    <AddDeleteTableRows data={rowsData} update={updateRowsData} />
-                  </table>
-
-
-                </div>
-              </div>
-
-              <label htmlFor='file-input'></label>
-              <div className='file-area'>
-                <input type='file' className='file-input' name='file-input' id='file-input' onChange={setUploaded} multiple />
-              </div>
-              <button type='Submit' className='button' onSubmit={handleSubmit}>Submit</button>
-            </form>
-          </div>
-          :
-          <div></div>
-
-      }
 
     </div>
   );

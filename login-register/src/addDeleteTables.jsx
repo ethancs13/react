@@ -5,7 +5,12 @@ function AddDeleteTableRows({ update }) {
 
     const [rowsData, setRowsData] = useState([]);
 
-    update(rowsData)
+    try {
+        update(rowsData)
+
+    } catch (err) {
+        console.log(err)
+    }
 
     const addTableRows = () => {
 
