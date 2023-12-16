@@ -108,6 +108,12 @@ const Home = () => {
     for (let i = 0; i < uploadedFiles.length; i++) {
       formData.append('files', uploadedFiles[i])
     }
+
+    for (let l = 0; l < adminData.length; l++) {
+      const element = adminData[l];
+      formData.append('items', JSON.stringify(element))
+    }
+    
     console.log(...formData)
 
     axios({

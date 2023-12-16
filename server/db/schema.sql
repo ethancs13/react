@@ -11,15 +11,21 @@ CREATE DATABASE por_db;
 	password VARCHAR(100) NOT NULL
  );
 
- CREATE TABLE userData (
+CREATE TABLE userData (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fn VARCHAR(50) NOT NULL,
     ln VARCHAR(50),
 	email VARCHAR(60) NOT NULL,
 	cellphone VARCHAR(100) NOT NULL,
-	landline VARCHAR(100) NOT NULL,
-	broadband VARCHAR(100) NOT NULL,
-	entertainment VARCHAR(100) NOT NULL,
+    cellBillable BOOLEAN NOT NULL,
+    landline VARCHAR(100) NOT NULL,
+    landlineBillable BOOLEAN NOT NULL,
+    longdist VARCHAR(100) NOT NULL,
+    longdistBillable BOOLEAN NOT NULL,
+    broadband VARCHAR(100) NOT NULL,
+    broadbandBillable BOOLEAN NOT NULL,
+    entertainment VARCHAR(100) NOT NULL,
+    entertainmentBillable BOOLEAN NOT NULL,
 	doc_name VARCHAR(100) NOT NULL,
 	doc_path VARCHAR(100) NOT NULL
 );
