@@ -74,47 +74,80 @@ const Home = () => {
     setAdminData(data);
   }
 
+
+  // -------------------- Handle Submit Function --------------------
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('fn', fn)
-    formData.append('ln', ln)
-    formData.append('email', email)
-    formData.append('cellphone', cellphone)
-    formData.append('cellBillable', cellBillable)
-    formData.append('landline', landline)
-    formData.append('landlineBillable', landlineBillable)
-    formData.append('longdist', dist)
-    formData.append('longdistBillable', distBillable)
-    formData.append('broadband', broadband)
-    formData.append('broadbandBillable', broadbandBillable)
-    formData.append('entertainment', entertainment)
-    formData.append('entertainmentBillable', entertainmentBillable)
-    console.log(rowsData)
-
-    // check for undefined billable
-    for (let j = 0; j < rowsData.length; j++) {
-      const row = rowsData[j];
-      let state = row.billable;
-
-      state ? state = state : state = false;
-    }
-
-    for (let f = 0; f < rowsData.length; f++) {
-      formData.append('rowsData', JSON.stringify(rowsData[f]))
-    }
-
-    for (let i = 0; i < uploadedFiles.length; i++) {
-      formData.append('files', uploadedFiles[i])
-    }
-
-    for (let l = 0; l < adminData.length; l++) {
-      const element = adminData[l];
-      formData.append('items', JSON.stringify(element))
+    // helper function for form creation
+    const createFormData = (data, prefix = '') => {
+      const formData = new FormData();
+    
+      Object.entries(data).forEach(([key, value]) => {
+        const fieldName = prefix ? `${prefix}[${key}]` : key;
+    
+        if (value instanceof FileList) {
+          // Handle FileList (uploadedFiles)
+          Array.from(value).forEach((file, index) => {
+            formData.append(`${fieldName}[${index}]`, file);
+          });
+        } else if (typeof value === 'object' && value !== null) {
+          // Handle nested objects (rowsData, adminData)
+          createFormData(value, fieldName);
+        } else {
+          // Handle primitive values (fn, ln, email, etc.)
+          formData.append(fieldName, value);
+        }
+      });
+      return formData;
+    };
+    
+    const formData = createFormData({
+      fn,
+      ln,
+      email,
+      cellphone,
+      cellBillable,
+      landline,
+      landlineBillable,
+      dist,
+      distBillable,
+      broadband,
+      broadbandBillable,
+      entertainment,
+      entertainmentBillable,
+    });
+    
+    console.log(rowsData);
+    
+    // Check for undefined billable
+    rowsData.forEach((row) => {
+      row.billable = 1 || 0;
+    });
+    
+    // Append rowsData to formData
+    rowsData.forEach((row, index) => {
+      formData.append(`rowsData[${index}]`, JSON.stringify(row));
+    });
+    
+    if (uploadedFiles.length > 1) {
+      // Append uploadedFiles to formData
+    uploadedFiles.forEach((file, index) => {
+      formData.append(`files[${index}]`, file);
+    })
+    } else {
+      formData.append(`files`, uploadedFiles)
     }
     
-    console.log(...formData)
+    
+    // Append adminData to formData
+    adminData.forEach((element, index) => {
+      formData.append(`items[${index}]`, JSON.stringify(element));
+    });
+    
+    console.log(...formData);
+
+    // --------------------------------------------------------------
 
     axios({
       method: 'post',
@@ -180,7 +213,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setCellBillable(cellBillable ? false : true)} />
+                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setCellBillable(cellBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -193,7 +226,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setLandlineBillable(landlineBillable ? false : true)} />
+                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setLandlineBillable(landlineBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -206,7 +239,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setDistBillable(distBillable ? false : true)} />
+                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setDistBillable(distBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -219,7 +252,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setBroadbandBillable(broadbandBillable ? false : true)} />
+                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setBroadbandBillable(broadbandBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -234,7 +267,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setEntertainmentBillable(entertainmentBillable ? false : true)} />
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setEntertainmentBillable(entertainmentBillable ? 0 : 1)} />
                           </div>
                         </div>
                       </div>

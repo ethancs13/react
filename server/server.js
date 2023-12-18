@@ -148,59 +148,57 @@ const storage = multer.diskStorage({
 })
 // set_location_to_storage_config
 const uploads = multer({ storage: storage });
-// upload POST route to get files
-app.post("/upload", uploads.array('files'), (req, res) => {
-    if (!req.body.email) {
-        res.json({ status: "log in first." });
-        return;
+
+app.post("/upload", uploads.array('files'), async (req, res) => {
+    try {
+        if (!req.body.email) {
+            return res.json({ status: "log in first." });
+        }
+
+        const itemData = req.body.items;
+        console.log('Item Data:', itemData);
+
+        const rowsData = req.body.rowsData;
+        console.log('Rows Data: ', rowsData);
+
+        const sql = `INSERT INTO userData (id, fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        const data = [
+            req.body.fn,
+            req.body.ln,
+            req.body.email,
+            req.body.cellphone,
+            req.body.cellBillable,
+            req.body.landline,
+            req.body.landlineBillable,
+            req.body.dist,
+            req.body.distBillable,
+            req.body.broadband,
+            req.body.broadbandBillable,
+            req.body.entertainment,
+            req.body.entertainmentBillable,
+        ];
+        console.log('data object: ',data)
+        console.log
+
+        db.query(sql, [...data, 'test', 'test'], (err, results) => {
+            console.log(err)
+        })
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
-
-    const itemData = req.body.items;
-    console.log(itemData);
-
-    const rowsData = req.body.rowsData;
-    console.log(rowsData);
-
-    // mysql query
-    const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-    // data array
-    const data = [
-        req.body.fn,
-        req.body.ln,
-        req.body.email,
-        req.body.cellphone,
-        req.body.cellBillable,
-        req.body.landline,
-        req.body.landlineBillable,
-        req.body.longdist,
-        req.body.longdistBillable,
-        req.body.broadband,
-        req.body.broadbandBillable,
-        req.body.entertainment,
-        req.body.entertainmentBillable,
-    ];
-
-    // add each file to mysql db
-    for (let i = 0; i < req.files.length; i++) {
-        db.query(sql, [...data, req.files[i].filename, req.files[i].path], (err, result) => {
-            console.log(result);
-            // Fail
-            if (err) {
-                console.log(err);
-            }
-        });
-    }
-    // Success
-    res.json({ status: "files received." })
 });
 
 
-    // add each item to items table
-    // for (let f = 0; f < array.length; f++) {
-    //     const element = array[f];
-        
-    // }
+
+
+// add each item to items table
+// for (let f = 0; f < array.length; f++) {
+//     const element = array[f];
+
+// }
 
 
 
@@ -225,7 +223,7 @@ app.get('/fetch', (req, res) => {
 
         res.send(result)
 
-        if(err) {
+        if (err) {
             console.error(err)
         }
     })

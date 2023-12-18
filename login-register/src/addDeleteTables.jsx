@@ -8,6 +8,7 @@ function AddDeleteTableRows({ update }) {
     update(rowsData)
 
 
+
     const addTableRows = () => {
 
         const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable } = rowsData;
