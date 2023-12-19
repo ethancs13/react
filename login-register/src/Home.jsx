@@ -23,11 +23,11 @@ const Home = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // billable
-  const [cellBillable, setCellBillable] = useState(false)
-  const [landlineBillable, setLandlineBillable] = useState(false)
-  const [distBillable, setDistBillable] = useState(false)
-  const [broadbandBillable, setBroadbandBillable] = useState(false)
-  const [entertainmentBillable, setEntertainmentBillable] = useState(false)
+  const [cellBillable, setCellBillable] = useState(0)
+  const [landlineBillable, setLandlineBillable] = useState(0)
+  const [distBillable, setDistBillable] = useState(0)
+  const [broadbandBillable, setBroadbandBillable] = useState(0)
+  const [entertainmentBillable, setEntertainmentBillable] = useState(0)
 
   const [auth, setAuth] = useState(false)
   const [rootUser, setRootUser] = useState(false);
@@ -63,9 +63,6 @@ const Home = () => {
       })
   }, [])
 
-  const setUploaded = function (file) {
-    setUploadedFiles(file.target.files);
-  }
 
   const updateRowsData = function (data) {
     setRowsData(data);
@@ -82,10 +79,10 @@ const Home = () => {
     // helper function for form creation
     const createFormData = (data, prefix = '') => {
       const formData = new FormData();
-    
+
       Object.entries(data).forEach(([key, value]) => {
         const fieldName = prefix ? `${prefix}[${key}]` : key;
-    
+
         if (value instanceof FileList) {
           // Handle FileList (uploadedFiles)
           Array.from(value).forEach((file, index) => {
@@ -101,7 +98,7 @@ const Home = () => {
       });
       return formData;
     };
-    
+
     const formData = createFormData({
       fn,
       ln,
@@ -117,34 +114,27 @@ const Home = () => {
       entertainment,
       entertainmentBillable,
     });
-    
-    console.log(rowsData);
-    
-    // Check for undefined billable
-    rowsData.forEach((row) => {
-      row.billable = 1 || 0;
-    });
-    
+
     // Append rowsData to formData
     rowsData.forEach((row, index) => {
       formData.append(`rowsData[${index}]`, JSON.stringify(row));
     });
-    
+
     if (uploadedFiles.length > 1) {
       // Append uploadedFiles to formData
-    uploadedFiles.forEach((file, index) => {
-      formData.append(`files[${index}]`, file);
-    })
+      uploadedFiles.forEach((file, index) => {
+        formData.append(`files`, file);
+      })
     } else {
       formData.append(`files`, uploadedFiles)
     }
-    
-    
+
+
     // Append adminData to formData
     adminData.forEach((element, index) => {
       formData.append(`items[${index}]`, JSON.stringify(element));
     });
-    
+
     console.log(...formData);
 
     // --------------------------------------------------------------
@@ -191,12 +181,12 @@ const Home = () => {
 
               // else
               :
-              
+
               <div>
                 <div>
                   <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div>
                   <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
-                  
+
                 </div>
 
                 <div className='form__wrapper'>
@@ -213,7 +203,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setCellBillable(cellBillable ? 0 : 1)} />
+                            <input type='checkbox' className='billable' name='billable' checked={cellBillable === 1} onChange={(e) => setCellBillable(cellBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -226,7 +216,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setLandlineBillable(landlineBillable ? 0 : 1)} />
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setLandlineBillable(landlineBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -239,7 +229,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setDistBillable(distBillable ? 0 : 1)} />
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setDistBillable(distBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -252,7 +242,7 @@ const Home = () => {
                           {/* checkbox */}
                           <div className='checkbox__container'>
                             <label htmlFor='billable' >Billable </label>
-                            <input type='checkbox' className='billable' name='billable' onClick={(e) => setBroadbandBillable(broadbandBillable ? 0 : 1)} />
+                            <input type='checkbox' className='billable' name='billable' onChange={(e) => setBroadbandBillable(broadbandBillable ? 0 : 1)} />
                           </div>
                         </div>
 
@@ -285,7 +275,25 @@ const Home = () => {
 
                     <label htmlFor='file-input'></label>
                     <div className='file-area'>
-                      <input type='file' className='file-input' name='file-input' id='file-input' onChange={setUploaded} multiple />
+                      <input
+                        type='file'
+                        className='file-input'
+                        name='file-input'
+                        id='file-input'
+                        onChange={(e) => {
+                          // Log the FileList object
+                          console.log('Selected Files:', e.target.files);
+
+                          // Convert FileList to an array for easier inspection
+                          const filesArray = Array.from(e.target.files);
+                          console.log('Files as Array:', filesArray);
+
+                          // Update state with the files
+                          setUploadedFiles(filesArray);
+                        }}
+                        multiple
+                      />
+
                     </div>
                     <button type='Submit' className='button' onSubmit={handleSubmit}>Submit</button>
                   </form>

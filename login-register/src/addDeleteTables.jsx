@@ -7,8 +7,6 @@ function AddDeleteTableRows({ update }) {
 
     update(rowsData)
 
-
-
     const addTableRows = () => {
 
         const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable } = rowsData;
@@ -23,7 +21,7 @@ function AddDeleteTableRows({ update }) {
             source: source,
             shippedFrom: shippedFrom,
             shippedTo: shippedTo,
-            billable: billable,
+            billable: 0,
         }
         setRowsData([...rowsData, rowsInput])
     }
@@ -36,11 +34,13 @@ function AddDeleteTableRows({ update }) {
     }
 
     const handleChange = (index, evnt) => {
-        const { name, value } = evnt.target;
+        const { name, value, type } = evnt.target;
+        const newValue = type === 'checkbox' ? (evnt.target.checked ? 1 : 0) : value;
         const rowsInput = [...rowsData];
-        rowsInput[index][name] = value;
+        rowsInput[index][name] = newValue;
         setRowsData(rowsInput);
-    }
+    };
+    
     
     return (
         <tbody className="itemized__content">
