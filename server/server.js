@@ -163,6 +163,10 @@ app.post("/upload", uploads.array('files'), (req, res) => {
 
     // mysql query
     const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    // query for userData items           userData ID
+    const itemsQuery = `INSERT INTO items ( entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?) `;
+
+    // -------------------------------
 
     // data array
     const data = [
@@ -173,8 +177,8 @@ app.post("/upload", uploads.array('files'), (req, res) => {
         req.body.cellBillable,
         req.body.landline,
         req.body.landlineBillable,
-        req.body.longdist,
-        req.body.longdistBillable,
+        req.body.dist,
+        req.body.distBillable,
         req.body.broadband,
         req.body.broadbandBillable,
         req.body.entertainment,
@@ -191,16 +195,49 @@ app.post("/upload", uploads.array('files'), (req, res) => {
             }
         });
     }
+
+    // ------------------------------------------
+
+    // data array for items
+    const itemsData = [
+        req.body.fn,
+        req.body.ln,
+        req.body.email
+    ]
+    // add each item to mysql db
+    for (let i = 0; i < 1; i++) {
+        db.query(itemsQuery, [
+           db.query('SELECT TOP id FROM userData ORDER BY id DESC;'), 
+            ...itemsData,
+            req.rowsData[i].item,
+            req.rowsData[i].date,
+            req.rowsData[i].subTotal,
+            req.rowsData[i].cityTax,
+            req.rowsData[i].taxPercent,
+            req.rowsData[i].total,
+            req.rowsData[i].source,
+            req.rowsData[i].shippedFrom,
+            req.rowsData[i].shippedTo,
+            billable
+        ], (err, result) => {
+            console.log(result);
+            // Fail
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
     // Success
     res.json({ status: "files received." })
+
 });
 
 
-    // add each item to items table
-    // for (let f = 0; f < array.length; f++) {
-    //     const element = array[f];
-        
-    // }
+// add each item to items table
+// for (let f = 0; f < array.length; f++) {
+//     const element = array[f];
+
+// }
 
 
 
@@ -225,7 +262,7 @@ app.get('/fetch', (req, res) => {
 
         res.send(result)
 
-        if(err) {
+        if (err) {
             console.error(err)
         }
     })

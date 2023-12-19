@@ -116,23 +116,38 @@ const Home = () => {
     });
 
     // Append rowsData to formData
-    rowsData.forEach((row, index) => {
-      formData.append(`rowsData[${index}]`, JSON.stringify(row));
-    });
+    try {
+      rowsData.forEach((row, index) => {
+        formData.append(`rowsData`, JSON.stringify(row));
+      });
+    } catch (error) {
+      console.log('Error getting rows data: ', error);
+    }
 
+    // if more than one file
     if (uploadedFiles.length > 1) {
       // Append uploadedFiles to formData
-      uploadedFiles.forEach((file, index) => {
-        formData.append(`files`, file);
-      })
+      try {
+        uploadedFiles.forEach((file, index) => {
+          formData.append(`files`, file);
+        })
+      } catch (error) {
+        console.log('Error getting uploadedFiles: ', error);
+      }
     } else {
-      formData.append(`files`, uploadedFiles)
+      // if one file
+      try {
+        // Append uploadedFile to formData
+        formData.append(`files`, uploadedFiles)
+      } catch (error) {
+        console.log('Error getting uploadedFile: ', error);
+      }
     }
 
 
     // Append adminData to formData
     adminData.forEach((element, index) => {
-      formData.append(`items[${index}]`, JSON.stringify(element));
+      formData.append(`items`, JSON.stringify(element));
     });
 
     console.log(...formData);
@@ -266,7 +281,15 @@ const Home = () => {
                       <div className="right_aside">
 
                         <table className='itemized__container'>
-                          <AddDeleteTableRows data={rowsData} update={updateRowsData} />
+                          <AddDeleteTableRows data={rowsData} update={updateRowsData} onChange={
+                            (e) => {
+                              // Log the FileList object
+                              console.log('Selected Files:', e.target.data);
+
+                              // Convert FileList to an array for easier inspection
+                              const filesArray = Array.from(e.target.data);
+                              console.log('Files as Array:', filesArray);
+                            }} />
                         </table>
 
 
