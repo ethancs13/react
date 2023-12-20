@@ -227,7 +227,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
             }
         }
 
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < parsedData.length; i++) {
             const result = await queryAsync(itemsQuery, [
                 latestUserData.id,
                 ...itemsData,
