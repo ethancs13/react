@@ -7,8 +7,8 @@ function AddDeleteTableRows({ update }) {
 
     update(rowsData)
 
-    const addTableRows = () => {
-
+    const addTableRows = (e) => {
+        e.preventDefault();
         const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable } = rowsData;
 
         const rowsInput = {
@@ -26,7 +26,9 @@ function AddDeleteTableRows({ update }) {
         setRowsData([...rowsData, rowsInput])
     }
 
-    const deleteTableRows = (index) => {
+    const deleteTableRows = (evnt, index) => {
+        evnt.preventDefault();
+        
         const rows = [...rowsData];
         rows.splice(index, 1);
         setRowsData(rows);
@@ -34,6 +36,7 @@ function AddDeleteTableRows({ update }) {
     }
 
     const handleChange = (index, evnt) => {
+        evnt.preventDefault();
         const { name, value, type } = evnt.target;
         const newValue = type === 'checkbox' ? (evnt.target.checked ? 1 : 0) : value;
         const rowsInput = [...rowsData];
@@ -56,7 +59,7 @@ function AddDeleteTableRows({ update }) {
                 <th>Retailer City/State or Internet</th>
                 <th>City, State shipped To</th>
                 <th className="billable_col">Billable</th>
-                <th><button className="btn btn_add" onClick={addTableRows} >+</button></th>
+                <th><button className="btn btn_add" onClick={(e) => addTableRows(e)} >+</button></th>
             </tr>
 
             <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />

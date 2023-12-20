@@ -212,7 +212,7 @@ const Home = () => {
                         <div className='cellphone__container'>
                           <div className='input_wrapper'>
                             <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
-                            <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} />
+                            <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
@@ -225,7 +225,7 @@ const Home = () => {
                         <div className='landline__container'>
                           <div className='input_wrapper'>
                             <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
-                            <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} />
+                            <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
@@ -238,7 +238,7 @@ const Home = () => {
                         <div className='longdist__container'>
                           <div className="input_wrapper">
                             <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
-                            <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} />
+                            <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
@@ -251,7 +251,7 @@ const Home = () => {
                         <div className='broadband__container'>
                           <div className="input_wrapper">
                             <label htmlFor='broadband' className='broadband__header'>Broadband</label>
-                            <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} />
+                            <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
@@ -266,7 +266,7 @@ const Home = () => {
                         <div className='entertainment__container'>
                           <div className="input_wrapper">
                             <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
-                            <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} />
+                            <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
@@ -315,6 +315,7 @@ const Home = () => {
                           setUploadedFiles(filesArray);
                         }}
                         multiple
+                        required
                       />
 
                     </div>
