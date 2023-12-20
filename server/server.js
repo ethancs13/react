@@ -11,6 +11,7 @@ const salt = 10;
 // utils
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+const { promisify } = require('util');
 
 // sequelize
 const sequelize = require('./config/connection');
@@ -46,6 +47,8 @@ db.connect((err) => {
     if (err) { console.log(err); return; }
     console.log('Connected to MySQL as ID ' + db.threadId);
 })
+
+const queryAsync = promisify(db.query).bind(db);
 
 // AUTH LOGIC
 // ----------------------------------------------------
@@ -93,42 +96,29 @@ app.get('/', verifyUser, (req, res) => {
 // LOGIN ROUTES
 // ----------------------------------------------------
 app.post("/login", async (req, res) => {
-    // query_to_mysql_db
-    db.query(`SELECT * FROM users WHERE email='${req.body.email}';`, async (err, user) => {
-        if (err) {
-            console.log(err);
-            return res.send({ Status: "Error" });
-        }
-
-        // User_not_found
+    try {
+        const user = await queryAsync(`SELECT * FROM users WHERE email='${req.body.email}';`);
         if (user.length === 0) return res.send({ Status: "Unauthorized" });
 
-        // password_from_mysql_db
         const hashedPassword = user[0].password;
-        // compare_user_input_to_hashed_password
-        bcrypt.compare(req.body.password, hashedPassword, (err, match) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).send({ Status: "Error" });
-            }
-            // Success
-            if (match) {
-                console.log('Password Matched Successfully');
-                const fn = user[0].fn;
-                const ln = user[0].ln;
-                const email = user[0].email;
-                // sign_token_to_cookies
-                const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
-                res.cookie('token', token);
-                // send 'Success'
-                return res.send({ Status: "Success" });
-                // Error
-            } else {
-                console.log('failure');
-                return;
-            }
-        });
-    });
+        const match = await bcrypt.compare(req.body.password, hashedPassword);
+
+        if (match) {
+            console.log('Password Matched Successfully');
+            const fn = user[0].fn;
+            const ln = user[0].ln;
+            const email = user[0].email;
+            const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
+            res.cookie('token', token);
+            return res.send({ Status: "Success" });
+        } else {
+            console.log('Failure');
+            return res.status(401).send({ Status: "Unauthorized" });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ Status: "Error" });
+    }
 });
 // LOGIN ROUTES
 // ----------------------------------------------------
@@ -149,17 +139,17 @@ const storage = multer.diskStorage({
 // set_location_to_storage_config
 const uploads = multer({ storage: storage });
 // upload POST route to get files
-app.post("/upload", uploads.array('files'), (req, res) => {
+app.post("/upload", uploads.array('files'), async (req, res) => {
     if (!req.body.email) {
         res.json({ status: "log in first." });
         return;
     }
 
     const itemData = req.body.items;
-    console.log(itemData);
+    console.log('Item Data:', itemData);
 
     const rowsData = req.body.rowsData;
-    console.log(rowsData);
+    console.log('Rows Data:', rowsData);
 
     // mysql query
     const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -184,17 +174,20 @@ app.post("/upload", uploads.array('files'), (req, res) => {
         req.body.entertainment,
         req.body.entertainmentBillable,
     ];
-    console.log(req.files)
+
     // add each file to mysql db
-    for (let i = 0; i < req.files.length; i++) {
-        db.query(sql, [...data, req.files[i].filename, req.files[i].path], (err, result) => {
-            console.log(result);
-            // Fail
-            if (err) {
-                console.log(err);
-            }
-        });
+    try {
+        for (let i = 0; i < req.files.length; i++) {
+            const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
+            console.log("Insert into userData successful:", result);
+        }
+    } catch (error) {
+        console.log('failed for multiple files');
+        const result = await queryAsync(sql, [...data, req.files.filename, req.files.path]);
+        console.log("Insert into userData successful:", result);
     }
+
+
 
     // ------------------------------------------
 
@@ -205,44 +198,64 @@ app.post("/upload", uploads.array('files'), (req, res) => {
         req.body.email
     ]
     // add each item to mysql db
-    for (let i = 0; i < 1; i++) {
-        db.query(itemsQuery, [
-           db.query('SELECT TOP id FROM userData ORDER BY id DESC;'), 
-            ...itemsData,
-            req.rowsData[i].item,
-            req.rowsData[i].date,
-            req.rowsData[i].subTotal,
-            req.rowsData[i].cityTax,
-            req.rowsData[i].taxPercent,
-            req.rowsData[i].total,
-            req.rowsData[i].source,
-            req.rowsData[i].shippedFrom,
-            req.rowsData[i].shippedTo,
-            billable
-        ], (err, result) => {
-            console.log(result);
-            // Fail
-            if (err) {
-                console.log(err);
-            }
-        });
-    }
-    // Success
-    res.json({ status: "files received." })
+    // Perform SELECT query to get the latest userData
+    try {
+        for (let i = 0; i < req.files.length; i++) {
+            const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
+            console.log("Insert into userData successful:", result);
+        }
 
+        const userDataResult = await queryAsync('SELECT * FROM userData ORDER BY id DESC LIMIT 1;');
+
+        // Before accessing the property, check if the variable is defined
+        if (userDataResult && userDataResult.length > 0) {
+            // Now you can safely access properties of userDataResult
+            var latestUserData = userDataResult[0];
+            console.log('userData Success')
+        } else {
+            console.error("userDataResult is undefined or empty");
+        }
+
+        let parsedData = []
+        for (const jsonString of req.body.rowsData) {
+            try {
+                parsedData.push(JSON.parse(jsonString));
+                console.log('Parsed Data:', parsedData);
+                // Continue with your logic using parsedData...
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        }
+
+        for (let i = 0; i < 1; i++) {
+            const result = await queryAsync(itemsQuery, [
+                latestUserData.id,
+                ...itemsData,
+                parsedData[i].item,
+                parsedData[i].date,
+                parsedData[i].subTotal,
+                parsedData[i].cityTax,
+                parsedData[i].taxPercent,
+                parsedData[i].total,
+                parsedData[i].source,
+                parsedData[i].shippedFrom,
+                parsedData[i].shippedTo,
+                parsedData[i].billable
+            ]);
+            console.log(result)
+        }
+        // Success
+        res.json({ status: "files received." })
+
+    } catch (error) {
+        console.log('Error:', error);
+        res.status(500).json({ status: "Error" });
+    }
 });
 
 
-// add each item to items table
-// for (let f = 0; f < array.length; f++) {
-//     const element = array[f];
-
-// }
-
-
-
-// MULTER STORAGE
-// ----------------------------------------------------
+// // MULTER STORAGE
+// // ----------------------------------------------------
 
 
 
@@ -283,22 +296,22 @@ app.post('/fetch/info', (req, res) => {
             res.json(result);
         }
     });
-});
 
-// fetch data from specific user
+    // fetch data from specific user
 
-app.get('/fetch/info/:email', (req, res) => {
-    console.log('Request Body:', req.body);
+    app.get('/fetch/info/:email', (req, res) => {
+        console.log('Request Body:', req.body);
 
-    const userEmail = req.params.email;
+        const userEmail = req.params.email;
 
-    db.query(`SELECT * FROM userData WHERE email=${userEmail}`, (err, result) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Query Result:', result);
-            res.json(result)
-        }
+        db.query(`SELECT * FROM userData WHERE email=${userEmail}`, (err, result) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log('Query Result:', result);
+                res.json(result)
+            }
+        })
     })
 })
 
