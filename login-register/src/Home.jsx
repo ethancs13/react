@@ -209,53 +209,53 @@ const Home = () => {
 
                     <div className="form__content">
                       <div className="left_aside">
-                        <div className='cellphone__container'>
+                        <div className='cellphone__container top-items' >
                           <div className='input_wrapper'>
                             <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
                             <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container'>
+                          <div className='checkbox__container top-items'>
                             <label htmlFor='billable' >Billable </label>
                             <input type='checkbox' className='billable' name='billable' checked={cellBillable === 1} onChange={(e) => setCellBillable(cellBillable ? 0 : 1)} />
                           </div>
                         </div>
 
-                        <div className='landline__container'>
+                        <div className='landline__container top-items' >
                           <div className='input_wrapper'>
                             <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
                             <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container'>
+                          <div className='checkbox__container top-items' >
                             <label htmlFor='billable' >Billable </label>
                             <input type='checkbox' className='billable' name='billable' onChange={(e) => setLandlineBillable(landlineBillable ? 0 : 1)} />
                           </div>
                         </div>
 
-                        <div className='longdist__container'>
+                        <div className='longdist__container top-items'> 
                           <div className="input_wrapper">
                             <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
                             <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container'>
+                          <div className='checkbox__container top-items'> 
                             <label htmlFor='billable' >Billable </label>
                             <input type='checkbox' className='billable' name='billable' onChange={(e) => setDistBillable(distBillable ? 0 : 1)} />
                           </div>
                         </div>
 
-                        <div className='broadband__container'>
+                        <div className='broadband__container top-items'> 
                           <div className="input_wrapper">
                             <label htmlFor='broadband' className='broadband__header'>Broadband</label>
                             <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container'>
+                          <div className='checkbox__container top-items'> 
                             <label htmlFor='billable' >Billable </label>
                             <input type='checkbox' className='billable' name='billable' onChange={(e) => setBroadbandBillable(broadbandBillable ? 0 : 1)} />
                           </div>
@@ -263,14 +263,14 @@ const Home = () => {
 
 
 
-                        <div className='entertainment__container'>
+                        <div className='entertainment__container top-items'> 
                           <div className="input_wrapper">
                             <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
                             <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container'>
+                          <div className='checkbox__container top-items'> 
                             <label htmlFor='billable' >Billable </label>
                             <input type='checkbox' className='billable' name='billable' onChange={(e) => setEntertainmentBillable(entertainmentBillable ? 0 : 1)} />
                           </div>

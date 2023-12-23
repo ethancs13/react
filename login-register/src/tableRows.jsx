@@ -5,15 +5,15 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
 
             return (
                 <tr key={index} className="table_row">
-                    <td><input type="text" value={item} onChange={(evnt) => (handleChange(index, evnt))} name="item" className="form-control" required /></td>
-                    <td><input type="date" value={date} onChange={(evnt) => (handleChange(index, evnt))} name="date" className="form-control" required /></td>
-                    <td className="subtotal_col__item"><input type="text" value={subTotal} onChange={(evnt) => (handleChange(index, evnt))} name="subTotal" className="form-control" required /></td>
-                    <td className="citytax_col__item"><input type="text" value={cityTax} onChange={(evnt) => (handleChange(index, evnt))} name="cityTax" className="form-control" required /></td>
-                    <td className="taxpercent_col__item"><input type="text" value={taxPercent} onChange={(evnt) => (handleChange(index, evnt))} name="taxPercent" className="form-control" required /></td>
-                    <td className="total_col__item"><input type="text" value={total} onChange={(evnt) => (handleChange(index, evnt))} name="total" className="form-control" required /></td>
-                    <td><input type="text" value={source} onChange={(evnt) => (handleChange(index, evnt))} name="source" className="form-control" required /></td>
-                    <td><input type="text" value={shippedFrom} onChange={(evnt) => (handleChange(index, evnt))} name="shippedFrom" className="form-control" required /></td>
-                    <td><input type="text" value={shippedTo} onChange={(evnt) => (handleChange(index, evnt))} name="shippedTo" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={item} onChange={(evnt) => (handleChange(index, evnt))} name="item" className="form-control" required /></td>
+                    <td className="bot-items"><input type="date" value={date} onChange={(evnt) => (handleChange(index, evnt))} name="date" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={subTotal} onChange={(evnt) => (handleChange(index, evnt))} name="subTotal" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={cityTax} onChange={(evnt) => (handleChange(index, evnt))} name="cityTax" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={taxPercent} onChange={(evnt) => (handleChange(index, evnt))} name="taxPercent" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={total} onChange={(evnt) => (handleChange(index, evnt))} name="total" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={source} onChange={(evnt) => (handleChange(index, evnt))} name="source" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={shippedFrom} onChange={(evnt) => (handleChange(index, evnt))} name="shippedFrom" className="form-control" required /></td>
+                    <td className="bot-items"><input type="text" value={shippedTo} onChange={(evnt) => (handleChange(index, evnt))} name="shippedTo" className="form-control" required /></td>
 
                     <td className='checkbox__container'>
                         <input

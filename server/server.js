@@ -151,6 +151,9 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     const rowsData = req.body.rowsData;
     console.log('Rows Data:', rowsData);
 
+    const filesData = req.body.files;
+    console.log('Files Data:', filesData);
+
     // mysql query
     const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     // query for userData items           userData ID
@@ -176,16 +179,16 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     ];
 
     // add each file to mysql db
-    try {
-        for (let i = 0; i < req.files.length; i++) {
-            const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
-            console.log("Insert into userData successful:", result);
-        }
-    } catch (error) {
-        console.log('failed for multiple files');
-        const result = await queryAsync(sql, [...data, req.files.filename, req.files.path]);
-        console.log("Insert into userData successful:", result);
-    }
+    // try {
+    //     for (let i = 0; i < req.files.length; i++) {
+    //         const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
+    //         console.log("Insert into userData successful:", result);
+    //     }
+    // } catch (error) {
+    //     console.log('failed for multiple files');
+    //     const result = await queryAsync(sql, [...data, req.files.filename, req.files.path]);
+    //     console.log("Insert into userData successful:", result);
+    // }
 
 
 
@@ -200,6 +203,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     // add each item to mysql db
     // Perform SELECT query to get the latest userData
     try {
+        console.log('before userData query', req.files)
         for (let i = 0; i < req.files.length; i++) {
             const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
             console.log("Insert into userData successful:", result);
@@ -211,21 +215,23 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         if (userDataResult && userDataResult.length > 0) {
             // Now you can safely access properties of userDataResult
             var latestUserData = userDataResult[0];
-            console.log('userData Success')
+            console.log('userData Success', latestUserData)
         } else {
             console.error("userDataResult is undefined or empty");
         }
 
-        let parsedData = []
-        for (const jsonString of req.body.rowsData) {
-            try {
-                parsedData.push(JSON.parse(jsonString));
-                console.log('Parsed Data:', parsedData);
-                // Continue with your logic using parsedData...
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-            }
-        }
+        // let parsedData = []
+        // for (const jsonString of req.body.rowsData) {
+        //     try {
+        //         parsedData.push(JSON.parse(jsonString));
+        //         console.log('Parsed Data:', parsedData);
+        //         // Continue with your logic using parsedData...
+        //     } catch (error) {
+        //         console.error('Error parsing JSON:', error);
+        //     }
+        // }
+        let parsedData = [...latestUserData]
+        console.log(parsedData)
 
         for (let i = 0; i < parsedData.length; i++) {
             const result = await queryAsync(itemsQuery, [
