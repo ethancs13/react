@@ -1,21 +1,41 @@
-const Sequelize = require('sequelize');
-require('dotenv').config();
+const mysql = require('mysql');
 
-let sequelize;
+// Create a connection pool
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'por_db'
+});
 
-if (process.env.JAWSDB_URL) {
-  sequelize = new Sequelize(process.env.JAWSDB_URL);
-} else {
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-      host: 'localhost',
-      dialect: 'mysql',
-      port: 3306
-    }
-  );
+// Wrap the pool.query function in a promise for asynchronous handling
+const queryAsync = (sql, values) => {
+  return new Promise((resolve, reject) => {
+    pool.query(sql, values, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
+// Example usage
+async function exampleUsage() {
+  try {
+    const result = await queryAsync('SELECT * FROM your_table');
+    console.log(result);
+  } catch (error) {
+    console.error('Error executing query:', error);
+  }
 }
 
-module.exports = sequelize;
+// Close the pool when your application exits
+process.on('exit', () => {
+  pool.end();
+});
+
+// Export the queryAsync function for use in other files
+module.exports = { queryAsync };

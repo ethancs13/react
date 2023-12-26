@@ -13,12 +13,10 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const { promisify } = require('util');
 
-// sequelize
-const sequelize = require('./config/connection');
-
 // storage
 const multer = require('multer');
 // --------------------------------------------
+
 
 
 // ------------- app_setup -------------
@@ -97,18 +95,18 @@ app.get('/', verifyUser, (req, res) => {
 // ----------------------------------------------------
 app.post("/login", async (req, res) => {
     try {
-        const user = await queryAsync(`SELECT * FROM users WHERE email='${req.body.email}';`);
-        if (user.length === 0) return res.send({ Status: "Unauthorized" });
+        const [user] = await queryAsync('SELECT * FROM users WHERE email = ?', [req.body.email]);
 
-        const hashedPassword = user[0].password;
-        const match = await bcrypt.compare(req.body.password, hashedPassword);
+        if (!user) {
+            return res.status(401).send({ Status: "Unauthorized" });
+        }
+
+        const match = await bcrypt.compare(req.body.password, user.password);
 
         if (match) {
             console.log('Password Matched Successfully');
-            const fn = user[0].fn;
-            const ln = user[0].ln;
-            const email = user[0].email;
-            const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
+            const { fn, ln, email } = user;
+            const token = jwt.sign({ fn, ln, email }, "jwt-secret-key", { expiresIn: '1d' });
             res.cookie('token', token);
             return res.send({ Status: "Success" });
         } else {
@@ -219,21 +217,23 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         } else {
             console.error("userDataResult is undefined or empty");
         }
+        console.log('-----------------------------',rowsData)
+        if (req.body.rowsData) {
+            let parsedData = []
+            for (const jsonString of req.body.rowsData) {
+                try {
+                    parsedData.push(JSON.parse(jsonString));
+                    console.log('Parsed Data:', parsedData);
+                    // Continue with your logic using parsedData...
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                }
+            }
+            parsedData = [...latestUserData]
+            console.log(parsedData)
+        }
 
-        // let parsedData = []
-        // for (const jsonString of req.body.rowsData) {
-        //     try {
-        //         parsedData.push(JSON.parse(jsonString));
-        //         console.log('Parsed Data:', parsedData);
-        //         // Continue with your logic using parsedData...
-        //     } catch (error) {
-        //         console.error('Error parsing JSON:', error);
-        //     }
-        // }
-        let parsedData = [...latestUserData]
-        console.log(parsedData)
-
-        for (let i = 0; i < parsedData.length; i++) {
+        for (let i = 0; i < latestUserData.length; i++) {
             const result = await queryAsync(itemsQuery, [
                 latestUserData.id,
                 ...itemsData,
@@ -372,18 +372,7 @@ app.get('/logout', (req, res) => {
 // ----------------------------------------------------
 
 
-// check for connection
-const auth = async function () {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-auth()
 
-// app listen after sequelize sync
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
