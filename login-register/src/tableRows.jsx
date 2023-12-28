@@ -1,4 +1,8 @@
+import { useState } from "react";
 function TableRows({ rowsData, deleteTableRows, handleChange }) {
+
+    const [billable, setBillable] = useState(0);
+
     return (
         rowsData.map((data, index) => {
             const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable } = data;
@@ -15,15 +19,10 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                     <td className="bot-items"><input type="text" value={shippedFrom} onChange={(evnt) => (handleChange(index, evnt))} name="shippedFrom" className="form-control" required /></td>
                     <td className="bot-items"><input type="text" value={shippedTo} onChange={(evnt) => (handleChange(index, evnt))} name="shippedTo" className="form-control" required /></td>
 
-                    <td className='checkbox__container'>
-                        <input
-                            type='checkbox'
-                            className='billable'
-                            name='billable'
-                            checked={billable === 1}
-                            onChange={(evnt) => handleChange(index, evnt)}
-                        />
-                    </td>
+                    {/* checkbox */}
+        <td className='checkbox__container'>
+          <input type='checkbox' className='billable' name='billable' onChange={(e) => setBillable(e.target.checked ? 1 : 0)} />
+        </td>
 
                     <td>
                         <button className="btn btn_del" onClick={() => deleteTableRows(index)}>❌</button>

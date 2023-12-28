@@ -98,7 +98,7 @@ app.post("/login", async (req, res) => {
         const [user] = await queryAsync('SELECT * FROM users WHERE email = ?', [req.body.email]);
 
         if (!user) {
-            return res.status(401).send({ Status: "Unauthorized" });
+            return res.send({ Status: "Unauthorized" });
         }
 
         const match = await bcrypt.compare(req.body.password, user.password);
@@ -111,11 +111,11 @@ app.post("/login", async (req, res) => {
             return res.send({ Status: "Success" });
         } else {
             console.log('Failure');
-            return res.status(401).send({ Status: "Unauthorized" });
+            return res.send({ Status: "Unauthorized" });
         }
     } catch (error) {
-        console.log(error);
-        return res.status(500).send({ Status: "Error" });
+        console.error(error);
+        return res.status(500).send({ Status: "Error", Error: "Database error" });
     }
 });
 // LOGIN ROUTES
