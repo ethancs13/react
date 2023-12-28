@@ -13,11 +13,18 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const { promisify } = require('util');
 
+// sequelize
+const sequelize = require('./config/connection');
+
 // storage
 const multer = require('multer');
+const { parse } = require('path');
 // --------------------------------------------
 
-
+//models
+const userDataModel = require('./models/userDataModel');
+const itemsModel = require('./models/itemsModel');
+const userModel = require('./models/usersModel');
 
 // ------------- app_setup -------------
 const app = express();
@@ -105,8 +112,10 @@ app.post("/login", async (req, res) => {
 
         if (match) {
             console.log('Password Matched Successfully');
-            const { fn, ln, email } = user;
-            const token = jwt.sign({ fn, ln, email }, "jwt-secret-key", { expiresIn: '1d' });
+            const fn = user[0].fn;
+            const ln = user[0].ln;
+            const email = user[0].email;
+            const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
             res.cookie('token', token);
             return res.send({ Status: "Success" });
         } else {
@@ -149,7 +158,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     const rowsData = req.body.rowsData;
     console.log('Rows Data:', rowsData);
 
-    const filesData = req.body.files;
+    const filesData = req.files;
     console.log('Files Data:', filesData);
 
     // mysql query
@@ -176,66 +185,45 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         req.body.entertainmentBillable,
     ];
 
-    // add each file to mysql db
-    // try {
-    //     for (let i = 0; i < req.files.length; i++) {
-    //         const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
-    //         console.log("Insert into userData successful:", result);
-    //     }
-    // } catch (error) {
-    //     console.log('failed for multiple files');
-    //     const result = await queryAsync(sql, [...data, req.files.filename, req.files.path]);
-    //     console.log("Insert into userData successful:", result);
-    // }
-
-
-
     // ------------------------------------------
-
     // data array for items
     const itemsData = [
         req.body.fn,
         req.body.ln,
         req.body.email
     ]
-    // add each item to mysql db
-    // Perform SELECT query to get the latest userData
+
+    // Perform SELECT query to get the user ID
     try {
-        console.log('before userData query', req.files)
-        for (let i = 0; i < req.files.length; i++) {
-            const result = await queryAsync(sql, [...data, req.files[i].filename, req.files[i].path]);
-            console.log("Insert into userData successful:", result);
-        }
-
-        const userDataResult = await queryAsync('SELECT * FROM userData ORDER BY id DESC LIMIT 1;');
-
-        // Before accessing the property, check if the variable is defined
-        if (userDataResult && userDataResult.length > 0) {
-            // Now you can safely access properties of userDataResult
-            var latestUserData = userDataResult[0];
-            console.log('userData Success', latestUserData)
-        } else {
-            console.error("userDataResult is undefined or empty");
-        }
-        console.log('-----------------------------',rowsData)
-        if (req.body.rowsData) {
-            let parsedData = []
-            for (const jsonString of req.body.rowsData) {
-                try {
-                    parsedData.push(JSON.parse(jsonString));
-                    console.log('Parsed Data:', parsedData);
-                    // Continue with your logic using parsedData...
-                } catch (error) {
-                    console.error('Error parsing JSON:', error);
+        // Fetch user ID
+        const userID = await new Promise((resolve, reject) => {
+            userModel.getUserID('user@test.com', (error, results) => {
+                if (error) {
+                    console.error('Error getting user ID:', error);
+                    reject(error);
+                } else {
+                    console.log('User ID retrieved successfully:', results);
+                    resolve(results[0].id); // Assuming the user ID is in the 'id' column
                 }
-            }
-            parsedData = [...latestUserData]
-            console.log(parsedData)
-        }
+            });
+        });
 
-        for (let i = 0; i < latestUserData.length; i++) {
+        // Parse data
+        const parsedData = (req.body.rowsData || []).map(jsonString => {
+            try {
+                return JSON.parse(jsonString);
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                return null;
+            }
+        }).filter(parsed => parsed !== null);
+
+        console.log(parsedData);
+
+        // Insert items
+        for (let i = 0; i < parsedData.length; i++) {
             const result = await queryAsync(itemsQuery, [
-                latestUserData.id,
+                userID,
                 ...itemsData,
                 parsedData[i].item,
                 parsedData[i].date,
@@ -248,15 +236,36 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
                 parsedData[i].shippedTo,
                 parsedData[i].billable
             ]);
-            console.log(result)
+            console.log('Items Inserted Successfully.', result);
         }
-        // Success
-        res.json({ status: "files received." })
 
+        // Success
+        res.json({ status: "files received." });
     } catch (error) {
         console.log('Error:', error);
         res.status(500).json({ status: "Error" });
     }
+
+    console.log('rowsData NAME AND PATH:', filesData[0])
+
+    const userDataInsert = await new Promise((resolve, reject) => {
+
+        if (filesData.length >= 1) {
+            for (let i = 0; i < rowsData.length; i++) {
+                userDataModel.insertData([...data, filesData[i].filename, filesData[i].path], (error, results) => {
+                    if (error) {
+                        console.error('Error inserting user data:', error);
+                        reject(error);
+                    } else {
+                        console.log('User Data inserted successfully:', results);
+                        resolve(results);
+                    }
+                });
+
+            }
+        }
+    });
+
 });
 
 
@@ -372,7 +381,18 @@ app.get('/logout', (req, res) => {
 // ----------------------------------------------------
 
 
+// check for connection
+const auth = async function () {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+}
+auth()
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// app listen after sequelize sync
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => console.log('Now listening'));
 });
