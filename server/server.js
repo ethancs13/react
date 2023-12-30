@@ -13,9 +13,6 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const { promisify } = require('util');
 
-// sequelize
-const sequelize = require('./config/connection');
-
 // storage
 const multer = require('multer');
 const { parse } = require('path');
@@ -112,9 +109,9 @@ app.post("/login", async (req, res) => {
 
         if (match) {
             console.log('Password Matched Successfully');
-            const fn = user[0].fn;
-            const ln = user[0].ln;
-            const email = user[0].email;
+            const fn = user.fn;
+            const ln = user.ln;
+            const email = user.email;
             const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
             res.cookie('token', token);
             return res.send({ Status: "Success" });
@@ -152,9 +149,6 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         return;
     }
 
-    const itemData = req.body.items;
-    console.log('Item Data:', itemData);
-
     const rowsData = req.body.rowsData;
     console.log('Rows Data:', rowsData);
 
@@ -164,7 +158,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     // mysql query
     const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     // query for userData items           userData ID
-    const itemsQuery = `INSERT INTO items ( entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?) `;
+    const itemsQuery = `INSERT INTO items (entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     // -------------------------------
 
@@ -218,7 +212,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
             }
         }).filter(parsed => parsed !== null);
 
-        console.log(parsedData);
+        console.log('Parsed Data:', parsedData);
 
         // Insert items
         for (let i = 0; i < parsedData.length; i++) {
@@ -246,12 +240,11 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         res.status(500).json({ status: "Error" });
     }
 
-    console.log('rowsData NAME AND PATH:', filesData[0])
-
     const userDataInsert = await new Promise((resolve, reject) => {
 
         if (filesData.length >= 1) {
-            for (let i = 0; i < rowsData.length; i++) {
+
+            for (let i = 0; i < filesData.length; i++) {
                 userDataModel.insertData([...data, filesData[i].filename, filesData[i].path], (error, results) => {
                     if (error) {
                         console.error('Error inserting user data:', error);
@@ -263,6 +256,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
                 });
 
             }
+
         }
     });
 
@@ -381,18 +375,6 @@ app.get('/logout', (req, res) => {
 // ----------------------------------------------------
 
 
-// check for connection
-const auth = async function () {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-auth()
 
-// app listen after sequelize sync
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
-});
+
+app.listen(PORT, () => console.log('Now listening'));

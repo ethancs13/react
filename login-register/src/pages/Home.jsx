@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import AddDeleteTableRows from "./addDeleteTables";
 import Admin from "./Admin"
 import axios from 'axios';
-import './App.css';
+import '../css/App.css';
 
 
 const Home = () => {
@@ -65,9 +65,7 @@ const Home = () => {
 
 
   const updateRowsData = function (data) {
-    if (rowsData.length > 0) {
-      setRowsData(data);
-    }
+    setRowsData(data);
 
   }
   const updateAdminData = function (data) {
@@ -133,6 +131,7 @@ const Home = () => {
       try {
         uploadedFiles.forEach((file, index) => {
           formData.append(`files`, file);
+          console.log('appended file', file)
         })
       } catch (error) {
         console.log('Error getting uploadedFiles: ', error);
@@ -142,6 +141,7 @@ const Home = () => {
       try {
         // Append uploadedFile to formData
         formData.append(`files`, uploadedFiles)
+        console.log('appended file', uploadedFiles)
       } catch (error) {
         console.log('Error getting uploadedFile: ', error);
       }

@@ -20,12 +20,12 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                     <td className="bot-items"><input type="text" value={shippedTo} onChange={(evnt) => (handleChange(index, evnt))} name="shippedTo" className="form-control" required /></td>
 
                     {/* checkbox */}
-        <td className='checkbox__container'>
-          <input type='checkbox' className='billable' name='billable' onChange={(e) => setBillable(e.target.checked ? 1 : 0)} />
-        </td>
+                    <td className='checkbox__container'>
+                        <input type='checkbox' className='billable' name='billable' onChange={(e) => setBillable(e.target.checked ? 1 : 0)} />
+                    </td>
 
                     <td>
-                        <button className="btn btn_del" onClick={() => deleteTableRows(index)}>❌</button>
+                        <button className="btn btn_del" onClick={(evnt) => deleteTableRows(evnt, index)}>❌</button>
                     </td>
                 </tr>
             )

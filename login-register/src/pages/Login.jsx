@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import './App.css'
+import '../css/App.css'
 import { Register } from './Register'
 import Home from './Home';
 import { BrowserRouter as Router, useNavigate, Routes, Route, Link } from 'react-router-dom';
