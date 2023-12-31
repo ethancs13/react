@@ -190,11 +190,9 @@ const Home = () => {
               <div>
                 <header><h1>Welcome, David Sroka</h1></header>
                 <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
-                <table>
-                  <tbody>
-                    <Admin data={adminData} update={updateAdminData} />
-                  </tbody>
-                </table>
+                <div>
+                  <Admin data={adminData} update={updateAdminData} />
+                </div>
               </div>
 
               // else

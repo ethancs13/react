@@ -274,29 +274,26 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
 // FETCH DATA FROM BACKEND
 // ----------------------------------------------------
 
+// Fetch all users
 app.get('/fetch', (req, res) => {
-
-    const sql = `SELECT * FROM users;`;
-
+    const sql = 'SELECT * FROM users;';
+    
     db.query(sql, (err, result) => {
-
-        console.log(result);
-
-        res.send(result)
-
         if (err) {
-            console.error(err)
+            console.error(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            console.log(result);
+            res.json(result);
         }
-    })
-})
+    });
+});
 
-// initial fetch for users
-app.post('/fetch/info', (req, res) => {
-    console.log('Request Body:', req.body);
+// Fetch user information by email
+app.get('/fetch/info/:email', (req, res) => {
+    const userEmail = req.params.email;
 
-    const userId = req.body.email + 1;
-
-    db.query('SELECT * FROM users WHERE id = ?', [userId], (err, result) => {
+    db.query('SELECT * FROM userData WHERE email = ?', [userEmail], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -305,24 +302,7 @@ app.post('/fetch/info', (req, res) => {
             res.json(result);
         }
     });
-
-    // fetch data from specific user
-
-    app.get('/fetch/info/:email', (req, res) => {
-        console.log('Request Body:', req.body);
-
-        const userEmail = req.params.email;
-
-        db.query(`SELECT * FROM userData WHERE email=${userEmail}`, (err, result) => {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log('Query Result:', result);
-                res.json(result)
-            }
-        })
-    })
-})
+});
 
 
 // FETCH DATA FROM BACKEND

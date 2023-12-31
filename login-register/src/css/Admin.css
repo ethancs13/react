@@ -1,0 +1,15 @@
+.admin_userRows {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+}
+.admin_dataRow {
+    width: 100%;
+}
+.admin_userTable {
+    width: 100%;
+    text-align: right;
+}
+.admin_userInfo-btn tbody{
+    height: 100px;
+}
