@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import AddDeleteTableRows from "./addDeleteTables";
 import Admin from "./Admin"
 import axios from 'axios';
-import '../css/App.css';
+import '../css/Home.css'; // Import the Home CSS file
 
 
 const Home = () => {
@@ -326,7 +326,7 @@ const Home = () => {
               </div>
             :
             <div className='login_home'>
-              {/* <h3>{message}</h3> */}
+              <h3>{message}</h3>
               <Link to='/login' className='btn btn-primary login_home_btn'>Login</Link>
             </div>
         }

@@ -49,29 +49,27 @@ function Admin() {
                     const selectedUserData = selectedUserDataMap[email];
 
                     return (
-                        <tr>
-                            <tr className="admin_userRows" key={index}>
-                            <td>
-                                Name: {fn} {ln}
-                                <br></br>
-                                Email: {email}
-                            </td>
-                            <td className="admin_userInfo-btn">
-                                <button onClick={() => handleGetInfo(email)}>
-                                    {selectedUserData ? 'Hide Info' : 'View Info'}
-                                </button>
-                            </td>
-                            
-                        </tr>
-                        <tr className="admin_dataRow">
-                            {selectedUserData && <Info data={selectedUserData} />}
-                        </tr>
-                        </tr>
+                        <React.Fragment key={index}>
+                            <tr className="admin_userRows" onClick={() => handleGetInfo(email)}>
+                                <td className="user-name">
+                                    {fn} {ln}
+                                </td>
+                                <td className="user-email">
+                                    {email}
+                                </td>
+                            </tr>
+                            <tr className="admin_dataRow">
+                                <td colSpan="2">
+                                    {selectedUserData && <Info data={selectedUserData} />}
+                                </td>
+                            </tr>
+                        </React.Fragment>
                     );
                 })}
             </tbody>
         </table>
     );
+
 }
 
 export default Admin;

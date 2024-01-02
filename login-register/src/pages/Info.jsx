@@ -6,39 +6,37 @@ function Info(props) {
 
     useEffect(() => {
         if (data && Array.isArray(data)) {
-            let allRowData = [];
-            for (let i = 0; i < data.length; i++) {
-                if (typeof data[i] === 'object' && data[i] !== null) {
-                    allRowData.push(data[i]);
-                }
-            }
+            let allRowData = data.filter(item => typeof item === 'object' && item !== null);
             setRowData(allRowData);
         }
     }, [data]);
 
     return (
-        <tbody className='test'>
-            <tr className='header_row'>
-                <th>Name</th>
-                <th>Email</th>
+        <tbody className='additional-info'>
+            <tr className='table-header'>
+                <th className='name-header'>Name</th>
+                <th className='email-header'>Email</th>
                 <th>Cellphone</th>
                 <th></th>
-                <th>landline</th>
+                <th>Landline</th>
                 <th></th>
-                <th>longdist</th>
+                <th>Long Distance</th>
                 <th></th>
-                <th>broadband</th>
+                <th>Broadband</th>
                 <th></th>
-                <th>entertainment</th>
+                <th>Entertainment</th>
                 <th></th>
-                <th>doc_name</th>
-                <th>doc_path</th>
+                <th>Document</th>
             </tr>
             {rowData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
+                <tr className='data-row-container' key={rowIndex}>
                     {Object.entries(row).map(([key, value], entryIndex) => (
+                        key === 'doc_path' ? (
+                            null
+                        )
+                        :
                         key !== 'id' && key !== 'ln' && (
-                            <td key={entryIndex}>
+                            <td key={entryIndex} className='data-cell'>
                                 {value === 0 ? (
                                     <p>❌</p>
                                 ) : value === 1 ? (
@@ -51,7 +49,6 @@ function Info(props) {
                     ))}
                 </tr>
             ))}
-
         </tbody>
     );
 }

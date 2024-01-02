@@ -80,8 +80,10 @@ app.get('/', verifyUser, (req, res) => {
     const email = req.email;
     const fn = req.fn;
     const ln = req.ln;
+    let name = fn;
+    ln ? name += ' ' + ln : name += '';
 
-    console.log(`${fn} ${ln} has verified their password using ${email}.`)
+    console.log(`${name} has verified their password using ${email}.`)
 
     if (email === 'test@test.com') {
         console.log('root user logged in')
