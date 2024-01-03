@@ -209,54 +209,54 @@ const Home = () => {
                   <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
 
                     <div className="form__content">
-                      <div className="left_aside">
-                        <div className='cellphone__container top-items' >
+                      <div className="expense-section">
+                        <div className='top-items' >
                           <div className='input_wrapper'>
-                            <label htmlFor='cellphone' className='cellphone__header'>Cellphone</label>
+                            <label htmlFor='cellphone' className='form-header'>Cellphone</label>
                             <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container top-items'>
+                          <div className='checkbox__container'>
                             <label htmlFor='billable'>Billable </label>
                             <input type='checkbox' className='billable' name='billable' checked={cellBillable === 1} onChange={(e) => setCellBillable(e.target.checked ? 1 : 0)} />
                           </div>
                         </div>
 
-                        <div className='landline__container top-items' >
+                        <div className='top-items' >
                           <div className='input_wrapper'>
-                            <label htmlFor='business_landline' className='business_landline__header'>Business land line</label>
+                            <label htmlFor='business_landline' className='form-header'>Business land line</label>
                             <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container top-items'>
+                          <div className='checkbox__container'>
                             <label htmlFor='billable'>Billable </label>
                             <input type='checkbox' className='billable' name='billable' checked={landlineBillable === 1} onChange={(e) => setLandlineBillable(e.target.checked ? 1 : 0)} />
                           </div>
                         </div>
 
-                        <div className='longdist__container top-items'>
+                        <div className='top-items'>
                           <div className="input_wrapper">
-                            <label htmlFor='long_distance' className='long_distance__header'>Long distance</label>
+                            <label htmlFor='long_distance' className='form-header'>Long distance</label>
                             <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container top-items'>
+                          <div className='checkbox__container'>
                             <label htmlFor='billable'>Billable </label>
                             <input type='checkbox' className='billable' name='billable' checked={distBillable === 1} onChange={(e) => setDistBillable(e.target.checked ? 1 : 0)} />
                           </div>
                         </div>
 
-                        <div className='broadband__container top-items'>
+                        <div className='top-items'>
                           <div className="input_wrapper">
-                            <label htmlFor='broadband' className='broadband__header'>Broadband</label>
+                            <label htmlFor='broadband' className='form-header'>Broadband</label>
                             <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container top-items'>
+                          <div className='checkbox__container'>
                             <label htmlFor='billable'>Billable </label>
                             <input type='checkbox' className='billable' name='billable' checked={broadbandBillable === 1} onChange={(e) => setBroadbandBillable(e.target.checked ? 1 : 0)} />
                           </div>
@@ -264,22 +264,22 @@ const Home = () => {
 
 
 
-                        <div className='entertainment__container top-items'>
+                        <div className='top-items'>
                           <div className="input_wrapper">
-                            <label htmlFor='entertainment' className='entertainment__header'>Client Entertainment</label>
+                            <label htmlFor='entertainment' className='form-header'>Client Entertainment</label>
                             <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
                           </div>
 
                           {/* checkbox */}
-                          <div className='checkbox__container top-items'>
+                          <div className='checkbox__container'>
                             <label htmlFor='billable'>Billable </label>
-                            <input type='checkbox' className='billable' name='billable' checked={landlineBillable === 1} onChange={(e) => setEntertainmentBillable(e.target.checked ? 1 : 0)} />
+                            <input type='checkbox' className='billable' name='billable' checked={entertainmentBillable === 1} onChange={(e) => setEntertainmentBillable(e.target.checked ? 1 : 0)} />
                           </div>
                         </div>
                       </div>
 
 
-                      <div className="right_aside">
+                      <div className="items-section">
 
                         <table className='itemized__container'>
                           <AddDeleteTableRows data={rowsData || []} update={updateRowsData} onChange={

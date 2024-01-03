@@ -1,15 +1,12 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
   background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
   font-family: 'Roboto', sans-serif;
 }
-
 .nav {
   padding: 20px;
 }
-
 .user_name {
   color: #3498db;
 }
@@ -23,33 +20,11 @@ body {
   cursor: pointer;
   margin-top: 10px;
 }
-
-.form__wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.form__container {
-  width: 48%;
-}
-
-.input_wrapper {
-  margin-bottom: 15px;
-}
-
-.checkbox__container {
-  display: flex;
-  align-items: center;
-}
-
-.file-input {
-  display: none;
-}
-
 .file-area {
-  background-color: #2c3e50;
+  height: 20px;
+  width: 100%;
   padding: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
   margin-top: 15px;
 }

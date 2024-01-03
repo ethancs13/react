@@ -1,18 +1,7 @@
-html {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
-    font-family: 'Roboto', sans-serif;
-  }
   /* ----------------- Form Styling ------------------ */
   
   /* containers for inputs */
-  .cellphone__container,
-  .landline__container,
-  .longdist__container,
-  .broadband__container,
-  .entertainment__container {
+  .top-items {
     display: flex;
     width: 80%;
     align-items: center;
@@ -23,21 +12,17 @@ html {
   }
   
   /* inputs */
-  .cellphone__header,
-  .business_landline__header,
-  .long_distance__header,
-  .broadband__header,
-  .itemized_purchases__header,
-  .entertainment__header {
+  .form-header {
     padding: 0 20px;
   }
   
+  /* for header + input field */
   .input_wrapper {
     display: flex;
     flex-direction: row;
-    width: 80%;
-    align-items: center;
-    justify-content: space-between;
+  }
+  .form-control {
+    width: 30px;
   }
   
   
@@ -48,11 +33,12 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 14px;
+    width: 80px;
   }
   .checkbox__container label {
     padding: 0 10px;
-    font-size: 12px;
+    font-size: 16px;
   }
   input[type="checkbox"] {
     cursor: pointer;
@@ -63,14 +49,12 @@ html {
     background-color: var(--form-background);
     /* Not removed via appearance */
     margin: 0;
-  
-    font: inherit;
-    color: currentColor;
     width: 1.15em;
     height: 1.15em;
-    border: 0.15em solid currentColor;
+    /* Checkbox Border Color */
+    border: 0.15em solid white;
     border-radius: 0.15em;
-    transform: translateY(-0.075em);
+    transform: translateY(-0.4em);
   
     display: grid;
     place-content: center;
@@ -85,77 +69,67 @@ html {
     box-shadow: inset .5em .5em var(--form-control-color);
     /* Windows High Contrast Mode */
     background-color: CanvasText;
+    /* Checkmark Color */
+    background-color: white;
   }
   
   input[type="checkbox"]:checked::before {
-    transform: scale(1);
+    /* Checkmark size */
+    transform: scale(1.3);
   }
   
   input[type="checkbox"]:disabled {
     --form-control-color: var(--form-control-disabled);
-  
     color: var(--form-control-disabled);
     cursor: not-allowed;
   }
   
   
   /* ----------------- Itemized Form Styling ---------------- */
+  .bot-items {
+    width: 80px;
+  }
+  .bot-items input {
+    height: 4px;
+  }
+  
   .item__container {
     display: flex;
     flex-direction: row;
     width:100%
   }
-  .fields_container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 80%;
-  }
-  .table_row {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .table_row>* {
-    width: 80px;
-    text-align: center;
-  }
-  .checkbox__container {
-    width: 80px;
-  }
-  .billable_col {
-    width: 80px;
-  }
-  
-   /* input values for row */
-  td input {
-    width: 50px;
-  }
-  td > input {
-    width: 96px;
-  }
-  
   .itemized__content {
     display: flex;
     flex-direction: column;
     width: 100%;
     justify-content: space-between;
   }
-  .itemized__container {
+  .table_row {
     display: flex;
-    width:100%;
-    overflow: hidden;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
   }
-  .form-control {
-    border: none;
-    padding: 0;
-    margin: 0;
-    height: 20px;
-    margin: 2.25px;
+  .billable_col {
+    width: 50px;
   }
-  
+  .subtotal_col {
+    width: 50px;
+  }
+  .citytax_col {
+    width: 60px;
+  }
+  .total_col {
+    width: 50px;
+  }
+
+  /* -------------------------------------------------------------- */
+   /* input values for row */
+
+  .add-row {
+    width: 30px;
+  }
+
   /* Buttons */
   .btn_add, .btn_del {
     display: flex;
@@ -191,8 +165,6 @@ html {
   }
   
   
-  
-  
   .data_table {
     border-collapse: collapse;
     table-layout: auto; /* Set the table layout to auto */
@@ -207,16 +179,3 @@ html {
     width: auto; /* Set the width of each cell to auto */
     overflow: hidden;
   }
-  .form__wrapper {
-    width: 100%;
-  }
-  
-  .top-items {
-    width: auto;
-    padding: 10px;
-    margin: 10px;
-  }
-  .bot-items {
-    
-  }
-  

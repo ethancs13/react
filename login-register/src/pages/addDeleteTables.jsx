@@ -50,16 +50,16 @@ function AddDeleteTableRows({ update }) {
 
             <tr className="table_row">
                 <th>Item</th>
-                <th>Purchase Date</th>
+                <th>Date</th>
                 <th className="subtotal_col">Subtotal</th>
                 <th className="citytax_col">City Tax</th>
                 <th className="taxpercent_col">Tax %</th>
                 <th className="total_col">Total</th>
                 <th>Source</th>
-                <th>Retailer City/State or Internet</th>
-                <th>City, State shipped To</th>
+                <th>Address</th>
+                <th>Shipped To</th>
                 <th className="billable_col">Billable</th>
-                <th><button className="btn btn_add" onClick={(e) => addTableRows(e)} >+</button></th>
+                <th className="add-row"><button className="btn btn_add" onClick={(e) => addTableRows(e)} >+</button></th>
             </tr>
 
             <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
