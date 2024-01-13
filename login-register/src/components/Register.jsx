@@ -1,10 +1,8 @@
-// Register.jsx
 import React, { useState } from "react";
 import axios from 'axios';
 import '../css/Register.css'; // Import the register CSS file
 import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Login } from './Login';
 
 export const Register = () => {
     const navigate = useNavigate();

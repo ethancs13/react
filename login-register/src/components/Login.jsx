@@ -1,10 +1,7 @@
-// Login.jsx
 import React, { useState } from "react";
 import axios from 'axios';
 import '../css/Login.css'; // Import the login CSS file
-import { Register } from './Register'
-import Home from './Home';
-import { BrowserRouter as Router, useNavigate, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, useNavigate, Link } from 'react-router-dom';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -23,7 +20,7 @@ export const Login = () => {
         setLoading(true);
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // await new Promise(resolve => setTimeout(resolve, 1000));
             const response = await axios.post(`${apiBaseUrl}/login`, { email, password: pass });
             if (response.data.Status === "Success") {
                 setEmail('');

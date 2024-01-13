@@ -21,24 +21,24 @@ function AddDeleteTableRows({ update }) {
             source: source,
             shippedFrom: shippedFrom,
             shippedTo: shippedTo,
-            billable: 0,
+            billable: billable,
         }
         setRowsData([...rowsData, rowsInput])
     }
 
     const deleteTableRows = (evnt, index) => {
         evnt.preventDefault();
-        
+        console.log(rowsData)
         const rows = [...rowsData];
         rows.splice(index, 1);
         setRowsData(rows);
-
+        update(rowsData)
     }
 
     const handleChange = (index, evnt) => {
         evnt.preventDefault();
-        const { name, value, type } = evnt.target;
-        const newValue = type === 'checkbox' ? (evnt.target.checked ? 1 : 0) : value;
+        const { name, value } = evnt.target;
+        const newValue = value;
         const rowsInput = [...rowsData];
         rowsInput[index][name] = newValue;
         setRowsData(rowsInput);

@@ -1,10 +1,16 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: 'Roboto', sans-serif;
+  background: linear-gradient(100deg, #6926de, #d262c5 60%, #ee863c);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-.nav {
+
+.main {
   padding: 20px;
 }
 .user_name {

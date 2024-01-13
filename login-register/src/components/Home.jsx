@@ -15,7 +15,7 @@ const Home = () => {
   const [rowsData, setRowsData] = useState([])
   const [adminData, setAdminData] = useState([]);
 
-  const [cellphone, setCell] = useState('');
+  const [cell, setCell] = useState('');
   const [landline, setLandline] = useState('');
   const [dist, setDist] = useState('');
   const [broadband, setBroadband] = useState('');
@@ -23,11 +23,11 @@ const Home = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // billable
-  const [cellBillable, setCellBillable] = useState(0)
-  const [landlineBillable, setLandlineBillable] = useState(0)
-  const [distBillable, setDistBillable] = useState(0)
-  const [broadbandBillable, setBroadbandBillable] = useState(0)
-  const [entertainmentBillable, setEntertainmentBillable] = useState(0)
+  const [cellBillable, setCellBillable] = useState('')
+  const [landlineBillable, setLandlineBillable] = useState('')
+  const [distBillable, setDistBillable] = useState('')
+  const [broadbandBillable, setBroadbandBillable] = useState('')
+  const [entertainmentBillable, setEntertainmentBillable] = useState('')
 
   const [auth, setAuth] = useState(false)
   const [rootUser, setRootUser] = useState(false);
@@ -57,7 +57,7 @@ const Home = () => {
         } else {
           setRootUser(false)
           setAuth(false);
-          setMessage(res.data.Error)
+          setMessage('')
           navigate('/');
         }
       })
@@ -182,7 +182,7 @@ const Home = () => {
 
   return (
     <div>
-      <nav className='nav'>
+      <main className='main'>
         {
           auth ?
             // if root user
@@ -205,83 +205,57 @@ const Home = () => {
 
                 </div>
 
-                <div className='form__wrapper'>
+                <div className='form-wrapper'>
                   <form encType='multipart/form-data' className='form__container' onSubmit={handleSubmit}>
-
-                    <div className="form__content">
+                    <div className="form-content">
+                      <h2>Expense Data</h2>
                       <div className="expense-section">
                         <div className='top-items' >
+                          <label htmlFor='cell' className='form-header'>Cellphone</label>
                           <div className='input_wrapper'>
-                            <label htmlFor='cellphone' className='form-header'>Cellphone</label>
-                            <input className='cellphone' name='cellphone' value={cellphone} onChange={(e) => setCell(e.target.value)} required />
-                          </div>
-
-                          {/* checkbox */}
-                          <div className='checkbox__container'>
-                            <label htmlFor='billable'>Billable </label>
-                            <input type='checkbox' className='billable' name='billable' checked={cellBillable === 1} onChange={(e) => setCellBillable(e.target.checked ? 1 : 0)} />
+                            <input className='cell color-billable' name='cell' value={cell} onChange={(e) => setCell(e.target.value)} required />
+                            <input className='cellBillable color-notBillable' name='cellBillable' value={cellBillable} onChange={(e) => setCellBillable(e.target.value)} required />
                           </div>
                         </div>
 
                         <div className='top-items' >
+                          <label htmlFor='business_landline' className='form-header'>Business land line</label>
                           <div className='input_wrapper'>
-                            <label htmlFor='business_landline' className='form-header'>Business land line</label>
-                            <input className='business_landline' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
+                            <input className='business_landline color-billable' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
+                            <input className='landline_billable color-notBillable' name='landline_billable' value={landlineBillable} onChange={(e) => setLandlineBillable(e.target.value)} required />
                           </div>
 
-                          {/* checkbox */}
-                          <div className='checkbox__container'>
-                            <label htmlFor='billable'>Billable </label>
-                            <input type='checkbox' className='billable' name='billable' checked={landlineBillable === 1} onChange={(e) => setLandlineBillable(e.target.checked ? 1 : 0)} />
+                        </div>
+
+                        <div className='top-items'>
+                          <label htmlFor='long_distance' className='form-header'>Long distance</label>
+                          <div className="input_wrapper">
+                            <input className='long_distance color-billable' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
+                            <input className='dist_billable color-notBillable' name='dist_billable' value={distBillable} onChange={(e) => setDistBillable(e.target.value)} required />
                           </div>
                         </div>
 
                         <div className='top-items'>
+                          <label htmlFor='broadband' className='form-header'>Broadband</label>
                           <div className="input_wrapper">
-                            <label htmlFor='long_distance' className='form-header'>Long distance</label>
-                            <input className='long_distance' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
-                          </div>
-
-                          {/* checkbox */}
-                          <div className='checkbox__container'>
-                            <label htmlFor='billable'>Billable </label>
-                            <input type='checkbox' className='billable' name='billable' checked={distBillable === 1} onChange={(e) => setDistBillable(e.target.checked ? 1 : 0)} />
+                            <input className='broadband color-billable' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
+                            <input className='broadbandBillable color-notBillable' name='broadbandBillable' value={broadbandBillable} onChange={(e) => setBroadbandBillable(e.target.value)} required />
                           </div>
                         </div>
 
                         <div className='top-items'>
+                          <label htmlFor='entertainment' className='form-header'>Client Entertainment</label>
                           <div className="input_wrapper">
-                            <label htmlFor='broadband' className='form-header'>Broadband</label>
-                            <input className='broadband' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
-                          </div>
-
-                          {/* checkbox */}
-                          <div className='checkbox__container'>
-                            <label htmlFor='billable'>Billable </label>
-                            <input type='checkbox' className='billable' name='billable' checked={broadbandBillable === 1} onChange={(e) => setBroadbandBillable(e.target.checked ? 1 : 0)} />
-                          </div>
-                        </div>
-
-
-
-                        <div className='top-items'>
-                          <div className="input_wrapper">
-                            <label htmlFor='entertainment' className='form-header'>Client Entertainment</label>
-                            <input className='entertainment' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
-                          </div>
-
-                          {/* checkbox */}
-                          <div className='checkbox__container'>
-                            <label htmlFor='billable'>Billable </label>
-                            <input type='checkbox' className='billable' name='billable' checked={entertainmentBillable === 1} onChange={(e) => setEntertainmentBillable(e.target.checked ? 1 : 0)} />
+                            <input className='entertainment color-billable' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
+                            <input className='entertainmentBillable color-notBillable' name='entertainmentBillable' value={entertainmentBillable} onChange={(e) => setEntertainmentBillable(e.target.value)} required />
                           </div>
                         </div>
                       </div>
 
-
+                      <h2>Items</h2>
                       <div className="items-section">
-
-                        <table className='itemized__container'>
+                        
+                        <table className='items-table'>
                           <AddDeleteTableRows data={rowsData || []} update={updateRowsData} onChange={
                             (e) => {
                               // Log the FileList object
@@ -292,8 +266,7 @@ const Home = () => {
                               console.log('Files as Array:', filesArray);
                             }} />
                         </table>
-
-
+                        
                       </div>
                     </div>
 
@@ -330,7 +303,7 @@ const Home = () => {
               <Link to='/login' className='btn btn-primary login_home_btn'>Login</Link>
             </div>
         }
-      </nav>
+      </main>
 
     </div>
   );

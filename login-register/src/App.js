@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Home from "./pages/Home";
+import Home from "./components/Home";
 import './css/App.css';
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import Info from './pages/Info'
+import { Login } from "./components/Login";
+import { Register } from "./components/Register";
+import Info from './components/Info'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

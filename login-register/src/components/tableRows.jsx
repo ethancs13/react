@@ -24,7 +24,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
                         <input type='checkbox' className='billable' name='billable' onChange={(e) => setBillable(e.target.checked ? 1 : 0)} />
                     </td>
 
-                    <td>
+                    <td className="checkbox__del">
                         <button className="btn btn_del" onClick={(evnt) => deleteTableRows(evnt, index)}>❌</button>
                     </td>
                 </tr>
