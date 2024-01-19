@@ -26,8 +26,57 @@ CREATE TABLE userData (
     broadbandBillable BOOLEAN NOT NULL,
     entertainment VARCHAR(100) NOT NULL,
     entertainmentBillable BOOLEAN NOT NULL,
+	parking INTEGER NOT NULL,
+	parkingBillable BOOLEAN NOT NULL,
+	tolls INTEGER NOT NULL,
+	tollsBillable INTEGER NOT NULL,
+	mileage INTEGER NOT NULL,
+	mileageBillable INTEGER NOT NULL,
+	fbCC INTEGER NOT NULL,
+	fbCCBillable INTEGER NOT NULL,
+	fb INTEGER NOT NULL,
+	fbBillable INTEGER NOT NULL,
+	comments VARCHAR(500) NOT NULL,
 	doc_name VARCHAR(100) NOT NULL,
 	doc_path VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE mileage (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	entry_id INT NOT NULL,
+	date VARCHAR(100) NOT NULL,
+	purpose VARCHAR(200) NOT NULL,
+	miles INTEGER NOT NULL,
+	total INTEGER NOT NULL,
+	billable BOOLEAN NOT NULL,
+	FOREIGN KEY (entry_id)
+	REFERENCES userData(id)
+);
+
+CREATE TABLE billData (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	billOnCard INTEGER NOT NULL,
+	billOOP INTEGER NOT NULL,
+	nonBillOnCard INT NOT NULL,
+	nonBillOOP INT NOT NULL,
+	CCtotal INT NOT NULL,
+	OOPtotal INT NOT NULL
+);
+
+CREATE TABLE food (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    entry_id INT NOT NULL,
+    billData_id INT NOT NULL,
+    date VARCHAR(100) NOT NULL,
+    amount VARCHAR(200) NOT NULL,
+    restaurant VARCHAR(300) NOT NULL,
+    persons INTEGER NOT NULL,
+    title VARCHAR(200),
+    reason VARCHAR(400),
+    billable BOOLEAN NOT NULL,
+    PoRCC BOOLEAN NOT NULL,
+    FOREIGN KEY (billData_id) REFERENCES billData(id),
+    FOREIGN KEY (entry_id) REFERENCES userData(id)
 );
 
  CREATE TABLE items (

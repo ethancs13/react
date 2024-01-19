@@ -30,5 +30,4 @@ function insertData(data, callback) {
 module.exports = {
     getAllUserData,
     insertData
-    // Add other functions here...
 };

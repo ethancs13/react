@@ -158,7 +158,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     console.log('Files Data:', filesData);
 
     // mysql query
-    const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, parking, parkingBillable, mileage, mileageBillable, fbCC, fbCCBillable, comments, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     // query for userData items           userData ID
     const itemsQuery = `INSERT INTO items (entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
@@ -179,6 +179,17 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         req.body.broadbandBillable,
         req.body.entertainment,
         req.body.entertainmentBillable,
+        req.body.parking,
+        req.body.parkingBillable,
+        req.body.tolls,
+        req.body.tollsBillable,
+        req.body.mileage,
+        req.body.mileageBillable,
+        req.body.fbCC,
+        req.body.fbCCBillable,
+        req.body.fb,
+        req.body.fbBillable,
+        req.body.comments,
     ];
 
     // ------------------------------------------
@@ -218,7 +229,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
 
         // Insert items
         for (let i = 0; i < parsedData.length; i++) {
-            const result = await queryAsync(itemsQuery, [
+            const result = await itemsModel.insertItem([
                 userID,
                 ...itemsData,
                 parsedData[i].item,

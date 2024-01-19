@@ -1,15 +1,21 @@
-const pool = require('../config/connection');
+const { queryAsync } = require('../config/connection');
 
-function getAllItems(callback) {
-  pool.query('SELECT * FROM items', (error, results) => {
-    if (error) throw error;
-    callback(results);
-  });
+function insertItem(data, callback) {
+    // Adjust the SQL query accordingly
+    const sql = 'INSERT INTO items (entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?)';
+    const values = [data]; // Adjust this array based on your data structure
+
+    queryAsync(sql, values)
+        .then(results => {
+            callback(null, results);
+        })
+        .catch(error => {
+            console.error('Error executing query:', error);
+            callback(error, null);
+            throw error;
+        });
 }
 
-// Add more functions for items interactions as needed...
-
 module.exports = {
-  getAllItems,
-  // Add other functions here...
+    insertItem,
 };

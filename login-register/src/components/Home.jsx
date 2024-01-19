@@ -20,6 +20,15 @@ const Home = () => {
   const [dist, setDist] = useState('');
   const [broadband, setBroadband] = useState('');
   const [entertainment, setEntertainment] = useState('');
+  const [tolls, setTolls] = useState('');
+  const [itemized, setItemized] = useState('');
+  const [parking, setParking] = useState('');
+  const [mileage, setMileage] = useState('');
+
+  const [billableCC, setBillableCC] = useState('');
+
+
+  const [comments, setComments] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // billable
@@ -28,6 +37,10 @@ const Home = () => {
   const [distBillable, setDistBillable] = useState('')
   const [broadbandBillable, setBroadbandBillable] = useState('')
   const [entertainmentBillable, setEntertainmentBillable] = useState('')
+  const [tollsBillable, setTollsBillable] = useState('')
+  const [itemizedBillable, setItemizedBillable] = useState('')
+  const [parkingBillable, setParkingBillable] = useState('')
+  const [mileageBillable, setMileageBillable] = useState('')
 
   const [auth, setAuth] = useState(false)
   const [rootUser, setRootUser] = useState(false);
@@ -210,51 +223,94 @@ const Home = () => {
                     <div className="form-content">
                       <h2>Expense Data</h2>
                       <div className="expense-section">
-                        <div className='top-items' >
-                          <label htmlFor='cell' className='form-header'>Cellphone</label>
-                          <div className='input_wrapper'>
-                            <input className='cell color-billable' name='cell' value={cell} onChange={(e) => setCell(e.target.value)} required />
-                            <input className='cellBillable color-notBillable' name='cellBillable' value={cellBillable} onChange={(e) => setCellBillable(e.target.value)} required />
+                        <div className="left-aside">
+                          <div className='top-items' >
+                            <label htmlFor='cell' className='form-header'>Cellphone</label>
+                            <div className='input_wrapper'>
+                              <input className='cell color-billable' name='cell' value={cell} onChange={(e) => setCell(e.target.value)} required />
+                              <input className='cellBillable color-notBillable' name='cellBillable' value={cellBillable} onChange={(e) => setCellBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items'>
+                            <label htmlFor='broadband' className='form-header'>Broadband</label>
+                            <div className="input_wrapper">
+                              <input className='broadband color-billable' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
+                              <input className='broadbandBillable color-notBillable' name='broadbandBillable' value={broadbandBillable} onChange={(e) => setBroadbandBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items' >
+                            <label htmlFor='business_landline' className='form-header'>Business land line</label>
+                            <div className='input_wrapper'>
+                              <input className='business_landline color-billable' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
+                              <input className='landline_billable color-notBillable' name='landline_billable' value={landlineBillable} onChange={(e) => setLandlineBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items'>
+                            <label htmlFor='long_distance' className='form-header'>Long distance</label>
+                            <div className="input_wrapper">
+                              <input className='long_distance color-billable' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
+                              <input className='dist_billable color-notBillable' name='dist_billable' value={distBillable} onChange={(e) => setDistBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items'>
+                            <label htmlFor='itemized' className='form-header'>Itemized Purchases</label>
+                            <div className="input_wrapper">
+                              <input className='itemized color-billable' name='itemized' value={itemized} onChange={(e) => setItemized(e.target.value)} required />
+                              <input className='itemizedBillable color-notBillable' name='itemizedBillable' value={itemizedBillable} onChange={(e) => setItemizedBillable(e.target.value)} required />
+                            </div>
                           </div>
                         </div>
 
-                        <div className='top-items' >
-                          <label htmlFor='business_landline' className='form-header'>Business land line</label>
-                          <div className='input_wrapper'>
-                            <input className='business_landline color-billable' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
-                            <input className='landline_billable color-notBillable' name='landline_billable' value={landlineBillable} onChange={(e) => setLandlineBillable(e.target.value)} required />
+                        <div className="right-aside">
+                          <div className='top-items'>
+                            <label htmlFor='entertainment' className='form-header'>Client Entertainment</label>
+                            <div className="input_wrapper">
+                              <input className='entertainment color-billable' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
+                              <input className='entertainmentBillable color-notBillable' name='entertainmentBillable' value={entertainmentBillable} onChange={(e) => setEntertainmentBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items'>
+                            <label htmlFor='parking' className='form-header'>Parking</label>
+                            <div className="input_wrapper">
+                              <input className='parking color-billable' name='parking' value={parking} onChange={(e) => setParking(e.target.value)} required />
+                              <input className='parkingBillable color-notBillable' name='parkingBillable' value={parkingBillable} onChange={(e) => setParkingBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items'>
+                            <label htmlFor='tolls' className='form-header'>Tolls</label>
+                            <div className="input_wrapper">
+                              <input className='tolls color-billable' name='tolls' value={tolls} onChange={(e) => setTolls(e.target.value)} required />
+                              <input className='tollsBillable color-notBillable' name='tollsBillable' value={tollsBillable} onChange={(e) => setTollsBillable(e.target.value)} required />
+                            </div>
+                          </div>
+
+                          <div className='top-items'>
+                            <label htmlFor='mileage' className='form-header'>Mileage</label>
+                            <div className="input_wrapper">
+                              <input className='mileage color-billable' name='mileage' value={mileage} onChange={(e) => setMileage(e.target.value)} required />
+                              <input className='mileageBillable color-notBillable' name='mileageBillable' value={mileageBillable} onChange={(e) => setMileageBillable(e.target.value)} required />
+                            </div>
                           </div>
 
                         </div>
 
-                        <div className='top-items'>
-                          <label htmlFor='long_distance' className='form-header'>Long distance</label>
-                          <div className="input_wrapper">
-                            <input className='long_distance color-billable' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
-                            <input className='dist_billable color-notBillable' name='dist_billable' value={distBillable} onChange={(e) => setDistBillable(e.target.value)} required />
-                          </div>
-                        </div>
-
-                        <div className='top-items'>
-                          <label htmlFor='broadband' className='form-header'>Broadband</label>
-                          <div className="input_wrapper">
-                            <input className='broadband color-billable' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
-                            <input className='broadbandBillable color-notBillable' name='broadbandBillable' value={broadbandBillable} onChange={(e) => setBroadbandBillable(e.target.value)} required />
-                          </div>
-                        </div>
-
-                        <div className='top-items'>
-                          <label htmlFor='entertainment' className='form-header'>Client Entertainment</label>
-                          <div className="input_wrapper">
-                            <input className='entertainment color-billable' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
-                            <input className='entertainmentBillable color-notBillable' name='entertainmentBillable' value={entertainmentBillable} onChange={(e) => setEntertainmentBillable(e.target.value)} required />
-                          </div>
+                      </div>
+                      <div className='top-items'>
+                        <label htmlFor='billableCC' className='form-header'>F&B - billable, CC</label>
+                        <div className="input_wrapper">
+                          <input className='billableCC' type='checkbox' name='billableCC' value={billableCC} onChange={(e) => setBillableCC(e.target.value)} required />
                         </div>
                       </div>
 
                       <h2>Items</h2>
                       <div className="items-section">
-                        
+
                         <table className='items-table'>
                           <AddDeleteTableRows data={rowsData || []} update={updateRowsData} onChange={
                             (e) => {
@@ -266,7 +322,7 @@ const Home = () => {
                               console.log('Files as Array:', filesArray);
                             }} />
                         </table>
-                        
+
                       </div>
                     </div>
 
@@ -292,6 +348,12 @@ const Home = () => {
                         required
                       />
 
+                    </div>
+                    <div className='top-items'>
+                      <label htmlFor='comments' className='form-header'>Comments</label>
+                      <div className="input_wrapper">
+                        <textarea className='comments' type='text' name='comments' value={comments} onChange={(e) => setComments(e.target.value)} required></textarea>
+                      </div>
                     </div>
                     <button type='Submit' className='button' onSubmit={handleSubmit}>Submit</button>
                   </form>
