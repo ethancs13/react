@@ -1,8 +1,9 @@
 const { queryAsync } = require('../config/connection');
 
-function getUserID(email, callback) {
-    const sql = 'SELECT * FROM users WHERE email = ?';
-    const values = [email];
+function insertFood(data, callback) {
+
+    const sql = 'INSERT INTO food (entry_id, billData_id, date, amount, restaurant, persons, title, reason, billable, PoRCC) VALUES (?)';
+    const values = [data];
 
     queryAsync(sql, values)
         .then(results => {
@@ -16,5 +17,5 @@ function getUserID(email, callback) {
 }
 
 module.exports = {
-    getUserID,
+    insertFood,
 };

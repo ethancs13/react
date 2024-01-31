@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import '../css/Login.css'; // Import the login CSS file
-import { BrowserRouter as Router, useNavigate, Link } from 'react-router-dom';
+
+import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,9 +10,9 @@ export const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate()
-
     const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+
+    const navigate = useNavigate();
 
     axios.defaults.withCredentials = true;
 

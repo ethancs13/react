@@ -22,6 +22,7 @@ const { parse } = require('path');
 const userDataModel = require('./models/userDataModel');
 const itemsModel = require('./models/itemsModel');
 const userModel = require('./models/usersModel');
+const foodModel = require('./models/foodModel');
 
 // ------------- app_setup -------------
 const app = express();
@@ -126,7 +127,6 @@ app.post("/login", async (req, res) => {
         return res.status(500).send({ Status: "Error", Error: "Database error" });
     }
 });
-// LOGIN ROUTES
 // ----------------------------------------------------
 
 
@@ -156,11 +156,6 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
 
     const filesData = req.files;
     console.log('Files Data:', filesData);
-
-    // mysql query
-    const sql = `INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, parking, parkingBillable, mileage, mileageBillable, fbCC, fbCCBillable, comments, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    // query for userData items           userData ID
-    const itemsQuery = `INSERT INTO items (entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     // -------------------------------
 
@@ -192,7 +187,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         req.body.comments,
     ];
 
-    // ------------------------------------------
+    // -------------------- Items ------------------
     // data array for items
     const itemsData = [
         req.body.fn,
@@ -204,7 +199,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     try {
         // Fetch user ID
         const userID = await new Promise((resolve, reject) => {
-            userModel.getUserID('user@test.com', (error, results) => {
+            userModel.getUserID(req.body.email, (error, results) => {
                 if (error) {
                     console.error('Error getting user ID:', error);
                     reject(error);
@@ -253,25 +248,77 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         res.status(500).json({ status: "Error" });
     }
 
-    const userDataInsert = await new Promise((resolve, reject) => {
+    // ----------------- FoodData -------------------
 
-        if (filesData.length >= 1) {
+    // Perform 
+    try {
 
-            for (let i = 0; i < filesData.length; i++) {
-                userDataModel.insertData([...data, filesData[i].filename, filesData[i].path], (error, results) => {
-                    if (error) {
-                        console.error('Error inserting user data:', error);
-                        reject(error);
-                    } else {
-                        console.log('User Data inserted successfully:', results);
-                        resolve(results);
-                    }
-                });
+        // Fetch user ID
+        const userID = await new Promise((resolve, reject) => {
+            userModel.getUserID('user@test.com', (error, results) => {
+                if (error) {
+                    console.error('Error getting user ID:', error);
+                    reject(error);
+                } else {
+                    console.log('User ID retrieved successfully:', results);
+                    resolve(results[0].id); // Assuming the user ID is in the 'id' column
+                }
+            });
+        });
 
+        const foodDataInsert = await new Promise((resolve, reject) => {
+
+            if (foodData.length >= 1) {
+    
+                for (let i = 0; i < foodData.length; i++) {
+                    foodModel.insertFood([...data, foodData[i].filename, foodData[i].path], (error, results) => {
+                        if (error) {
+                            console.error('Error inserting food data:', error);
+                            reject(error);
+                        } else {
+                            console.log('Food Data inserted successfully:', results);
+                            resolve(results);
+                        }
+                    });
+                }
             }
+        });
 
+        // Parse data
+        const parsedData = (req.body.foodData || []).map(jsonString => {
+            try {
+                return JSON.parse(jsonString);
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                return null;
+            }
+        }).filter(parsed => parsed !== null);
+
+        console.log('Parsed Data:', parsedData);
+
+        // Insert food data
+        for (let i = 0; i < parsedData.length; i++) {
+            const result = await foodModel.insertFood([
+                userID,
+                ...itemsData,
+                parsedData[i].date,
+                parsedData[i].amount,
+                parsedData[i].restaurant,
+                parsedData[i].persons,
+                parsedData[i].title,
+                parsedData[i].reason,
+                parsedData[i].billable,
+                parsedData[i].PoRCC,
+            ]);
+            console.log('Items Inserted Successfully.', result);
         }
-    });
+
+        // Success
+        res.json({ status: "food data received." });
+    } catch (error) {
+        console.log('Error:', error);
+        res.status(500).json({ status: "Error" });
+    }
 
 });
 

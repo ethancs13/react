@@ -23,6 +23,13 @@
     word-spacing: -2px;
   }
 
+  .home-greeting {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .home-greeting>* {
+    padding: 0 8px;
+  }
   /* inputs */
   .form-header {
     padding: 0 20px;

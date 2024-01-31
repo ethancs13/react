@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AddDeleteTableRows from "./addDeleteTables";
+import AddDeleteTableRows_food from "./addDeleteTables_food";
 import Admin from "./Admin"
 import axios from 'axios';
 import '../css/Home.css'; // Import the Home CSS file
@@ -13,6 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [rowsData, setRowsData] = useState([])
+  const [rowsData_food, setRowsData_food] = useState([])
   const [adminData, setAdminData] = useState([]);
 
   const [cell, setCell] = useState('');
@@ -25,8 +27,14 @@ const Home = () => {
   const [parking, setParking] = useState('');
   const [mileage, setMileage] = useState('');
 
+  const [billableCC_amnt, setBillableCC_amnt] = useState('');
   const [billableCC, setBillableCC] = useState('');
-
+  const [nonBillableCC_amnt, setNonBillableCC_amnt] = useState('');
+  const [nonBillableCC, setNonBillableCC] = useState('');
+  const [billable_amnt, setBillable_amnt] = useState('');
+  const [billable, setBillable] = useState('');
+  const [nonBillable_amnt, setNonBillable_amnt] = useState('');
+  const [nonBillable, setNonBillable] = useState('');
 
   const [comments, setComments] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -75,7 +83,10 @@ const Home = () => {
         }
       })
   }, [])
+  const updateRowsData_food = function (data) {
+    setRowsData_food(data);
 
+  }
 
   const updateRowsData = function (data) {
     setRowsData(data);
@@ -117,7 +128,7 @@ const Home = () => {
       fn,
       ln,
       email,
-      cellphone,
+      cell,
       cellBillable,
       landline,
       landlineBillable,
@@ -213,7 +224,7 @@ const Home = () => {
 
               <div>
                 <div>
-                  <div><h3>Welcome, <span className='user_name'>{fn}</span></h3></div>
+                  <div><h3 className='home-greeting'>Welcome, <span>{fn}</span></h3></div>
                   <div><button className='btn btn-danger' onClick={handleLogout}>Logout</button></div>
 
                 </div>
@@ -301,11 +312,59 @@ const Home = () => {
                         </div>
 
                       </div>
-                      <div className='top-items'>
-                        <label htmlFor='billableCC' className='form-header'>F&B - billable, CC</label>
-                        <div className="input_wrapper">
-                          <input className='billableCC' type='checkbox' name='billableCC' value={billableCC} onChange={(e) => setBillableCC(e.target.value)} required />
+                      <div className="fb-block">
+                        <div className='top-items'>
+                          <label htmlFor='billableCC' className='form-header'>F&B - billable, CC</label>
+                          <div className="input_wrapper">
+                            <input className='billableCC-amnt color-billable' name='billableCC-amnt' value={billableCC_amnt} onChange={(e) => setBillableCC_amnt(e.target.value)} required />
+                            <input type="checkbox"
+                            onChange={(e) => setBillableCC(e.target.checked ? 1 : 0)}
+                            />
+                          </div>
                         </div>
+                        <div className='top-items'>
+                          <label htmlFor='nonBillableCC' className='form-header'>F&B - non-billable, CC</label>
+                          <div className="input_wrapper">
+                            <input className='nonBillableCC-amnt color-notBillable' name='nonBillableCC-amnt' value={nonBillableCC_amnt} onChange={(e) => setNonBillableCC_amnt(e.target.value)} required />
+                            <input type="checkbox" 
+                            onChange={(e) => setNonBillableCC(e.target.checked ? 1 : 0)} 
+                            />
+                          </div>
+                        </div>
+                        <div className='top-items'>
+                          <label htmlFor='billable' className='form-header'>F&B - billable</label>
+                          <div className="input_wrapper">
+                            <input className='billable-amnt color-billable' name='billable-amnt' value={billable_amnt} onChange={(e) => setBillable_amnt(e.target.value)} required />
+                            <input type="checkbox" 
+                            onChange={(e) => setBillable(e.target.checked ? 1 : 0)}                            />
+                          </div>
+                        </div>
+                        <div className='top-items'>
+                          <label htmlFor='nonBillable' className='form-header'>F&B - non-billable</label>
+                          <div className="input_wrapper">
+                            <input className='nonBillable-amnt color-notBillable' name='nonBillable-amnt' value={nonBillable_amnt} onChange={(e) => setNonBillable_amnt(e.target.value)} required />
+                            <input type="checkbox" 
+                            onChange={(e) => setNonBillable(e.target.checked ? 1 : 0)} 
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <h2>Food Expenditures</h2>
+                      <div className="food-section">
+
+                        <table className='food-table'>
+                          <AddDeleteTableRows_food data={rowsData_food || []} update={updateRowsData_food} onChange={
+                            (e) => {
+                              // Log the FileList object
+                              console.log('Selected food Data:', e.target.data);
+
+                              // Convert FileList to an array for easier inspection
+                              const foodArray = Array.from(e.target.data);
+                              console.log('Food data as Array:', foodArray);
+                            }} />
+                        </table>
+
                       </div>
 
                       <h2>Items</h2>
@@ -324,6 +383,7 @@ const Home = () => {
                         </table>
 
                       </div>
+
                     </div>
 
                     <label htmlFor='file-input'></label>
