@@ -17,7 +17,12 @@ export const Register = () => {
         axios.post('http://localhost:3001/signup', { fn: fn, ln: ln, email: email, password: password })
             .then((data) => {
                 if (data.data.Status === 'Success') {
-                    navigate('/login');
+                    console.log("Authenticated")
+                    // Authenticate the user upon successful registration
+                    localStorage.setItem('token', data.data.token);
+
+                    // Redirect to the appropriate page
+                    navigate('/');
                 } else {
                     alert('Error');
                 }

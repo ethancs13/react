@@ -1,36 +1,37 @@
 DROP DATABASE IF EXISTS por_db;
+
 CREATE DATABASE por_db;
 
- USE por_db;
+USE por_db;
 
- CREATE TABLE users (
+CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	fn VARCHAR(50) NOT NULL,
 	ln VARCHAR(50),
 	email VARCHAR(50) NOT NULL,
 	password VARCHAR(100) NOT NULL
- );
+);
 
 CREATE TABLE userData (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fn VARCHAR(50) NOT NULL,
-    ln VARCHAR(50),
+	fn VARCHAR(50) NOT NULL,
+	ln VARCHAR(50),
 	email VARCHAR(60) NOT NULL,
 	cellphone VARCHAR(100) NOT NULL,
-    cellBillable BOOLEAN NOT NULL,
-    landline VARCHAR(100) NOT NULL,
-    landlineBillable BOOLEAN NOT NULL,
-    longdist VARCHAR(100) NOT NULL,
-    longdistBillable BOOLEAN NOT NULL,
-    broadband VARCHAR(100) NOT NULL,
-    broadbandBillable BOOLEAN NOT NULL,
-    entertainment VARCHAR(100) NOT NULL,
-    entertainmentBillable BOOLEAN NOT NULL,
+	cellBillable BOOLEAN NOT NULL,
+	landline VARCHAR(100) NOT NULL,
+	landlineBillable BOOLEAN NOT NULL,
+	longdist VARCHAR(100) NOT NULL,
+	longdistBillable BOOLEAN NOT NULL,
+	broadband VARCHAR(100) NOT NULL,
+	broadbandBillable BOOLEAN NOT NULL,
+	entertainment VARCHAR(100) NOT NULL,
+	entertainmentBillable BOOLEAN NOT NULL,
 	doc_name VARCHAR(100) NOT NULL,
 	doc_path VARCHAR(100) NOT NULL
 );
 
- CREATE TABLE items (
+CREATE TABLE items (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	entry_id INT NOT NULL,
 	fn VARCHAR(50) NOT NULL,
@@ -46,6 +47,19 @@ CREATE TABLE userData (
 	shippedFrom VARCHAR(100) NOT NULL,
 	shippedTo VARCHAR(100) NOT NULL,
 	billable VARCHAR(100) NOT NULL,
-	FOREIGN KEY (entry_id)
-	REFERENCES userData(id)
- );
+	FOREIGN KEY (entry_id) REFERENCES userData(id)
+);
+
+CREATE TABLE foodData (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	entry_id INT NOT NULL,
+	date VARCHAR(50) NOT NULL,
+	amount VARCHAR(50) NOT NULL,
+	location VARCHAR(50) NOT NULL,
+	persons VARCHAR(100) NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	reason VARCHAR(400) NOT NULL,
+	billable BOOLEAN NOT NULL,
+	PoRCC BOOLEAN NOT NULL,
+	FOREIGN KEY (entry_id) REFERENCES userData(id)
+);

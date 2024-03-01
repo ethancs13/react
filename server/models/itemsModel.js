@@ -1,15 +1,14 @@
 const pool = require('../config/connection');
 
 function getAllItems(callback) {
+  console.log("Getting all items...");
+
   pool.query('SELECT * FROM items', (error, results) => {
     if (error) throw error;
     callback(results);
   });
 }
 
-// Add more functions for items interactions as needed...
-
 module.exports = {
   getAllItems,
-  // Add other functions here...
 };

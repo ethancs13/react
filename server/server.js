@@ -193,7 +193,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     try {
         // Fetch user ID
         const userID = await new Promise((resolve, reject) => {
-            userModel.getUserID('user@test.com', (error, results) => {
+            userModel.getUserID(req.body.email, (error, results) => {
                 if (error) {
                     console.error('Error getting user ID:', error);
                     reject(error);
@@ -203,6 +203,8 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
                 }
             });
         });
+        // If one item
+        
 
         // Parse data
         const parsedData = (req.body.rowsData || []).map(jsonString => {
@@ -279,7 +281,7 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
 // Fetch all users
 app.get('/fetch', (req, res) => {
     const sql = 'SELECT * FROM users;';
-    
+
     db.query(sql, (err, result) => {
         if (err) {
             console.error(err);
@@ -314,22 +316,22 @@ app.get('/fetch/info/:email', (req, res) => {
 
 
 
-// Sign up ROUTES
+/// Sign up ROUTES
 // ----------------------------------------------------
 app.post('/signup', (req, res) => {
-
     // store_email_and_password
     const fn = req.body.fn;
     const ln = req.body.ln;
     const email = req.body.email;
     const password = req.body.password;
-    // query_string
-    const sql = "INSERT INTO users (fn, ln, email, password) VALUES (?)";
+
     // hash_password
     bcrypt.hash(password, salt, (err, hash) => {
         if (err) {
             return res.json({ Error: "Error when hashing password --- " + err })
         }
+        // query_string
+        const sql = "INSERT INTO users (fn, ln, email, password) VALUES (?)";
         // query_values
         const values = [fn, ln, email, hash]
 
@@ -338,10 +340,16 @@ app.post('/signup', (req, res) => {
                 console.error(err)
                 return res.json({ Error: "Error when inserting data" })
             }
-            return res.json({ Status: "Success" });
-        })
-    })
-})
+
+            // Generate JWT token
+            const token = jwt.sign({ fn: fn, ln: ln, email: email }, "jwt-secret-key", { expiresIn: '1d' });
+
+            // Send token in response
+            res.cookie('token', token);
+            return res.json({ Status: "Success", token: token });
+        });
+    });
+});
 // Sign up ROUTES
 // ----------------------------------------------------
 

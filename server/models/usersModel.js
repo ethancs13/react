@@ -2,6 +2,8 @@ const { queryAsync } = require('../config/connection');
 
 function getUserID(email, callback) {
 
+  console.log("Getting user ID for: " + email);
+
   const sql = 'SELECT * FROM users WHERE email = ?';
   const values = [email];
 
@@ -18,5 +20,4 @@ function getUserID(email, callback) {
 
 module.exports = {
   getUserID,
-  // Add other functions here...
 };

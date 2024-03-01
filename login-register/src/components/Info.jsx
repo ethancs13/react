@@ -37,13 +37,7 @@ function Info(props) {
                         :
                         key !== 'id' && key !== 'ln' && (
                             <td key={entryIndex} className='data-cell'>
-                                {value === 0 ? (
-                                    <p>❌</p>
-                                ) : value === 1 ? (
-                                    <p>✔️</p>
-                                ) : (
-                                    <p>{value}</p>
-                                )}
+                                {value}
                             </td>
                         )
                     ))}

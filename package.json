@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "devDependencies": {},
   "scripts": {
-    "start": "concurrently \"cd login-register && npm start\" \"cd server && nodemon\" ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "cd login-register && npm i && cd ../server && npm i",
+    "start": "concurrently \"cd login-register && npm start\" \"cd server && nodemon\" "
   },
   "author": "",
   "license": "ISC"
