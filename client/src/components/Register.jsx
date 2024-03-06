@@ -5,8 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 export const Register = () => {
+
+    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
+
     const navigate = useNavigate();
 
+    const [error, setError] = useState('');
     const [fn, setFn] = useState('')
     const [ln, setLn] = useState('')
     const [email, setEmail] = useState('');
@@ -15,9 +19,24 @@ export const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3001/signup', { fn: fn, ln: ln, email: email, password: password })
-            .then((data) => {
+            .then(async (data) => {
                 if (data.data.Status === 'Success') {
-                    navigate('/login');
+                    try {
+                        // await new Promise(resolve => setTimeout(resolve, 1000));
+                        const response = await axios.post(`${apiBaseUrl}/login`, { email, password });
+                        if (response.data.Status === "Success") {
+                            setEmail('');
+                            setPass('');
+                            navigate('/')
+                        } else if (response.data.Status === "Unauthorized") {
+                            setError('Incorrect username or password. Please try again.');
+                        } else {
+                            setError('Unexpected result. Please try again.');
+                        }
+                    } catch (err) {
+                        console.error('Error during login request:', err);
+                        setError('An unexpected error occurred. Please try again.');
+                    }
                 } else {
                     alert('Error');
                 }
@@ -32,6 +51,7 @@ export const Register = () => {
     return (
         <div className="auth-form-container">
             <h2>Register</h2>
+            {error && <div className="error-message">{error}</div>}
             <form className="register-form" onSubmit={handleSubmit}>
                 <label htmlFor="fn">First Name</label>
                 <input value={fn} onChange={(e) => setFn(e.target.value)} type="text" placeholder="John" id="fn" name="fn" />
