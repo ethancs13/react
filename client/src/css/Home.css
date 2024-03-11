@@ -10,16 +10,24 @@
   /* containers for inputs */
   .items {
     display: flex;
-    width: 80%;
+    width: 100%;
     flex-direction: column;
     padding: 10px;
+    align-items: center;
   }
 
-  .comments {
+  .comments-wrapper {
+    display: flex;
+    justify-content: center;
     width: 100%;
-    height: auto;
+    margin: 0 40px 0 0;
+  }
+  .comments {
+    width: 80%;
+    height: 100px;
     padding: 20px;
-    font-size: 20px;
+    margin: 0 40px;
+    font-size: 12px;
     word-spacing: -2px;
   }
 
@@ -33,6 +41,8 @@
   /* inputs */
   .form-header {
     padding: 0 20px;
+    width: 50%;
+    text-align: left;
   }
 
   .form-wrapper {
@@ -84,6 +94,12 @@
     max-width: 600px;
     min-width: 500px;
   }
+  .por-section-left, .por-section-right, .left-aside, .right-aside {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 
   @media screen and (min-width: 1000px) {
     .expense-section {
@@ -94,8 +110,8 @@
     .por-section-container {
       flex-direction: row;
       min-width: 880px;
-      align-content: center;
     }
+
   }
   /* temporary */
   h2 {

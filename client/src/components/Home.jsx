@@ -527,7 +527,7 @@ const Home = () => {
                     {/* comment section */}
                     <h2>Comments</h2>
                     <div className='items'>
-                      <div className="input-wrapper">
+                      <div className="comments-wrapper">
                         <textarea className='comments' type='text' value={comments} onChange={(e) => setComments(e.target.value)} required></textarea>
                       </div>
                     </div>
