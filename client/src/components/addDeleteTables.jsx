@@ -46,7 +46,7 @@ function AddDeleteTableRows({ update }) {
     
     
     return (
-        <tbody className="itemized__content">
+        <tbody>
 
             <tr className="table_row">
                 <th>Item</th>

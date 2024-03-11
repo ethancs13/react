@@ -18,13 +18,21 @@ const Home = () => {
   const [adminData, setAdminData] = useState([]);
 
   const [cell, setCell] = useState('');
+  const [cellCC, setCellCC] = useState('');
   const [landline, setLandline] = useState('');
+  const [landlineCC, setLandlineCC] = useState('');
   const [dist, setDist] = useState('');
+  const [distCC, setDistCC] = useState('');
   const [broadband, setBroadband] = useState('');
+  const [broadbandCC, setBroadbandCC] = useState('');
   const [entertainment, setEntertainment] = useState('');
+  const [entertainmentCC, setEntertainmentCC] = useState('');
   const [tolls, setTolls] = useState('');
+  const [tollsCC, setTollsCC] = useState('');
   const [itemized, setItemized] = useState('');
+  const [itemizedCC, setItemizedCC] = useState('');
   const [parking, setParking] = useState('');
+  const [parkingCC, setParkingCC] = useState('');
   const [mileage, setMileage] = useState('');
 
   const [billableCC_amnt, setBillableCC_amnt] = useState('');
@@ -234,122 +242,209 @@ const Home = () => {
                     <div className="form-content">
                       <h2>Expense Data</h2>
                       <div className="expense-section">
+
+                        {/* Expense left side */}
                         <div className="left-aside">
-                          <div className='top-items' >
+                          <div className='items' >
                             <label htmlFor='cell' className='form-header'>Cellphone</label>
-                            <div className='input_wrapper'>
+                            <div className='input-wrapper'>
                               <input className='cell color-billable' name='cell' value={cell} onChange={(e) => setCell(e.target.value)} required />
                               <input className='cellBillable color-notBillable' name='cellBillable' value={cellBillable} onChange={(e) => setCellBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+                                <input type="checkbox" name='cell-box' className="expense-section-checkbox"
+                                  onChange={(e) => setCellCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
                             </div>
                           </div>
 
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='broadband' className='form-header'>Broadband</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='broadband color-billable' name='broadband' value={broadband} onChange={(e) => setBroadband(e.target.value)} required />
                               <input className='broadbandBillable color-notBillable' name='broadbandBillable' value={broadbandBillable} onChange={(e) => setBroadbandBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setBroadbandCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
 
-                          <div className='top-items' >
+                          <div className='items' >
                             <label htmlFor='business_landline' className='form-header'>Business land line</label>
-                            <div className='input_wrapper'>
+                            <div className='input-wrapper'>
                               <input className='business_landline color-billable' name='business_landline' value={landline} onChange={(e) => setLandline(e.target.value)} required />
                               <input className='landline_billable color-notBillable' name='landline_billable' value={landlineBillable} onChange={(e) => setLandlineBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setLandlineCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
 
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='long_distance' className='form-header'>Long distance</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='long_distance color-billable' name='long_distance' value={dist} onChange={(e) => setDist(e.target.value)} required />
                               <input className='dist_billable color-notBillable' name='dist_billable' value={distBillable} onChange={(e) => setDistBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setDistCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
 
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='itemized' className='form-header'>Itemized Purchases</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='itemized color-billable' name='itemized' value={itemized} onChange={(e) => setItemized(e.target.value)} required />
                               <input className='itemizedBillable color-notBillable' name='itemizedBillable' value={itemizedBillable} onChange={(e) => setItemizedBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setItemizedCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
                         </div>
 
+                        {/* Expense right side */}
                         <div className="right-aside">
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='entertainment' className='form-header'>Client Entertainment</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='entertainment color-billable' name='entertainment' value={entertainment} onChange={(e) => setEntertainment(e.target.value)} required />
                               <input className='entertainmentBillable color-notBillable' name='entertainmentBillable' value={entertainmentBillable} onChange={(e) => setEntertainmentBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setEntertainmentCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
 
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='parking' className='form-header'>Parking</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='parking color-billable' name='parking' value={parking} onChange={(e) => setParking(e.target.value)} required />
                               <input className='parkingBillable color-notBillable' name='parkingBillable' value={parkingBillable} onChange={(e) => setParkingBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setParkingCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
 
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='tolls' className='form-header'>Tolls</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='tolls color-billable' name='tolls' value={tolls} onChange={(e) => setTolls(e.target.value)} required />
                               <input className='tollsBillable color-notBillable' name='tollsBillable' value={tollsBillable} onChange={(e) => setTollsBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox"
+                                  onChange={(e) => setTollsCC(e.target.checked ? 1 : 0)}
+                                />
+                              </label>
+
                             </div>
                           </div>
 
-                          <div className='top-items'>
+                          <div className='items'>
                             <label htmlFor='mileage' className='form-header'>Mileage</label>
-                            <div className="input_wrapper">
+                            <div className="input-wrapper">
                               <input className='mileage color-billable' name='mileage' value={mileage} onChange={(e) => setMileage(e.target.value)} required />
                               <input className='mileageBillable color-notBillable' name='mileageBillable' value={mileageBillable} onChange={(e) => setMileageBillable(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox" className="expense-section-checkbox" checked />
+                              </label>
+
                             </div>
                           </div>
 
                         </div>
 
                       </div>
-                      <div className="fb-block">
-                        <div className='top-items'>
-                          <label htmlFor='billableCC' className='form-header'>F&B - billable, CC</label>
-                          <div className="input_wrapper">
-                            <input className='billableCC-amnt color-billable' name='billableCC-amnt' value={billableCC_amnt} onChange={(e) => setBillableCC_amnt(e.target.value)} required />
-                            <input type="checkbox"
-                            onChange={(e) => setBillableCC(e.target.checked ? 1 : 0)}
-                            />
+
+                      {/* section two (porCC...) */}
+                      <div className="por-section-container">
+                        <div className="por-section-left">
+                          <div className='items'>
+                            <label htmlFor='billableCC' className='form-header'>F&B - billable, CC</label>
+                            <div className="input-wrapper">
+                              <input className='billableCC-amnt color-billable' name='billableCC-amnt' value={billableCC_amnt} onChange={(e) => setBillableCC_amnt(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                              </label>
+                            </div>
+                          </div>
+                          <div className='items'>
+                            <label htmlFor='nonBillableCC' className='form-header'>F&B - non-billable, CC</label>
+                            <div className="input-wrapper">
+                              <input className='nonBillableCC-amnt color-notBillable' name='nonBillableCC-amnt' value={nonBillableCC_amnt} onChange={(e) => setNonBillableCC_amnt(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox"
+                                  disabled
+                                />
+                              </label>
+
+                            </div>
                           </div>
                         </div>
-                        <div className='top-items'>
-                          <label htmlFor='nonBillableCC' className='form-header'>F&B - non-billable, CC</label>
-                          <div className="input_wrapper">
-                            <input className='nonBillableCC-amnt color-notBillable' name='nonBillableCC-amnt' value={nonBillableCC_amnt} onChange={(e) => setNonBillableCC_amnt(e.target.value)} required />
-                            <input type="checkbox" 
-                            onChange={(e) => setNonBillableCC(e.target.checked ? 1 : 0)} 
-                            />
+                        <div className="por-section-right">
+                          <div className='items'>
+                            <label htmlFor='billable' className='form-header'>F&B - billable</label>
+                            <div className="input-wrapper">
+                              <input className='billable-amnt color-billable' name='billable-amnt' value={billable_amnt} onChange={(e) => setBillable_amnt(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox"
+                                  checked
+                                  disabled
+                                />
+                              </label>
+
+                            </div>
                           </div>
-                        </div>
-                        <div className='top-items'>
-                          <label htmlFor='billable' className='form-header'>F&B - billable</label>
-                          <div className="input_wrapper">
-                            <input className='billable-amnt color-billable' name='billable-amnt' value={billable_amnt} onChange={(e) => setBillable_amnt(e.target.value)} required />
-                            <input type="checkbox" 
-                            onChange={(e) => setBillable(e.target.checked ? 1 : 0)}                            />
-                          </div>
-                        </div>
-                        <div className='top-items'>
-                          <label htmlFor='nonBillable' className='form-header'>F&B - non-billable</label>
-                          <div className="input_wrapper">
-                            <input className='nonBillable-amnt color-notBillable' name='nonBillable-amnt' value={nonBillable_amnt} onChange={(e) => setNonBillable_amnt(e.target.value)} required />
-                            <input type="checkbox" 
-                            onChange={(e) => setNonBillable(e.target.checked ? 1 : 0)} 
-                            />
+                          <div className='items'>
+                            <label htmlFor='nonBillable' className='form-header'>F&B - non-billable</label>
+                            <div className="input-wrapper">
+                              <input className='nonBillable-amnt color-notBillable' name='nonBillable-amnt' value={nonBillable_amnt} onChange={(e) => setNonBillable_amnt(e.target.value)} required />
+                              <label className="CC" htmlFor="cell-box">CC
+
+                                <input type="checkbox"
+                                  disabled
+                                />
+                              </label>
+
+                            </div>
                           </div>
                         </div>
                       </div>
 
+                      {/* Food Section */}
                       <h2>Food Expenditures</h2>
                       <div className="food-section">
 
@@ -367,6 +462,7 @@ const Home = () => {
 
                       </div>
 
+                      {/* Items Section */}
                       <h2>Items</h2>
                       <div className="items-section">
 
@@ -386,7 +482,8 @@ const Home = () => {
 
                     </div>
 
-                    <label htmlFor='file-input'></label>
+                    {/* File Drop Area */}
+                    <h2>Upload Files</h2>
                     <div className='file-area'>
                       <input
                         type='file'
@@ -409,10 +506,12 @@ const Home = () => {
                       />
 
                     </div>
-                    <div className='top-items'>
-                      <label htmlFor='comments' className='form-header'>Comments</label>
-                      <div className="input_wrapper">
-                        <textarea className='comments' type='text' name='comments' value={comments} onChange={(e) => setComments(e.target.value)} required></textarea>
+
+                    {/* comment section */}
+                    <h2>Comments</h2>
+                    <div className='items'>
+                      <div className="input-wrapper">
+                        <textarea className='comments' type='text' value={comments} onChange={(e) => setComments(e.target.value)} required></textarea>
                       </div>
                     </div>
                     <button type='Submit' className='button' onSubmit={handleSubmit}>Submit</button>
@@ -420,7 +519,7 @@ const Home = () => {
                 </div>
               </div>
             :
-            <div className='login_home'>
+            <div>
               <h3>{message}</h3>
               <Link to='/login' className='btn btn-primary login_home_btn'>Login</Link>
             </div>

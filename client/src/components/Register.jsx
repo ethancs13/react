@@ -53,13 +53,13 @@ export const Register = () => {
             <h2>Register</h2>
             {error && <div className="error-message">{error}</div>}
             <form className="register-form" onSubmit={handleSubmit}>
-                <label htmlFor="fn">First Name</label>
+                <label className="register-label" htmlFor="fn">First Name</label>
                 <input value={fn} onChange={(e) => setFn(e.target.value)} type="text" placeholder="John" id="fn" name="fn" />
-                <label htmlFor="ln">Last Name</label>
+                <label className="register-label" htmlFor="ln">Last Name</label>
                 <input value={ln} onChange={(e) => setLn(e.target.value)} type="text" placeholder="Doe" id="ln" name="ln" />
-                <label htmlFor="email">Email</label>
+                <label className="register-label" htmlFor="email">Email</label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
-                <label htmlFor="password">Password</label>
+                <label className="register-label" htmlFor="password">Password</label>
                 <input value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <button type="submit">Register</button>
             </form>

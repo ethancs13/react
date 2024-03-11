@@ -45,9 +45,9 @@ export const Login = () => {
             <h2>Login</h2>
             {error && <div className="error-message">{error}</div>}
             <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
+                <label className="login-label" htmlFor="email">Email</label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
-                <label htmlFor="password">Password</label>
+                <label className="login-label" htmlFor="password">Password</label>
                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <button type="submit" disabled={loading}>
                     {loading ? 'Loading...' : 'Login'}

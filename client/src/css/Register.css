@@ -29,7 +29,7 @@ h2 {
   color: #000;
 }
 
-label {
+.register-label {
   text-align: left;
   margin-bottom: 8px;
 }

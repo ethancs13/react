@@ -28,7 +28,7 @@ h2 {
   margin: 0 auto;
 }
 
-label {
+.login-label {
   text-align: left;
   margin-bottom: 8px;
 }
