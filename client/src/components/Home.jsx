@@ -28,13 +28,13 @@ const Home = () => {
   const [mileage, setMileage] = useState('');
 
   const [billableCC_amnt, setBillableCC_amnt] = useState('');
-  const [billableCC, setBillableCC] = useState('');
+  const [billableCC, setBillableCC] = useState(true);
   const [nonBillableCC_amnt, setNonBillableCC_amnt] = useState('');
-  const [nonBillableCC, setNonBillableCC] = useState('');
+  const [nonBillableCC, setNonBillableCC] = useState(false);
   const [billable_amnt, setBillable_amnt] = useState('');
-  const [billable, setBillable] = useState('');
+  const [billable, setBillable] = useState(true);
   const [nonBillable_amnt, setNonBillable_amnt] = useState('');
-  const [nonBillable, setNonBillable] = useState('');
+  const [nonBillable, setNonBillable] = useState(false);
 
   const [comments, setComments] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -138,7 +138,24 @@ const Home = () => {
       broadbandBillable,
       entertainment,
       entertainmentBillable,
+      billableCC,
+      billableCC_amnt,
+      nonBillable,
+      nonBillable_amnt,
+      nonBillableCC,
+      nonBillableCC_amnt,
+      billable,
+      billable_amnt
     });
+
+    // Append foodData to formData
+    try {
+      rowsData_food.forEach((row, index) => {
+        formData.append('foodData', JSON.stringify(row))
+      });
+    } catch (error) {
+      console.log('Error getting food row data: ', error);
+    }
 
     // Append rowsData to formData
     try {

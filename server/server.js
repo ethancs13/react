@@ -153,6 +153,9 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
 
     const rowsData = req.body.rowsData;
     console.log('Rows Data:', rowsData);
+    
+    const foodData = req.body.foodData;
+    console.log('Food Data:', foodData);
 
     const filesData = req.files;
     console.log('Files Data:', filesData);
@@ -211,16 +214,22 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         });
 
         // Parse data
-        const parsedData = (req.body.rowsData || []).map(jsonString => {
-            try {
-                return JSON.parse(jsonString);
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-                return null;
-            }
-        }).filter(parsed => parsed !== null);
+        console.log()
+        if (req.body.rowsData[2] == Object) {
+            var parsedData = (req.body.rowsData).map(jsonString => {
+                try {
+                    return JSON.parse(jsonString);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    return null;
+                }
+            }).filter(parsed => parsed !== null);
+    
+            console.log('Parsed Data:', parsedData);
+        } else {
+            var parsedData = (JSON.parse(req.body.rowsData))
+        }
 
-        console.log('Parsed Data:', parsedData);
 
         // Insert items
         for (let i = 0; i < parsedData.length; i++) {
@@ -252,10 +261,9 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
 
     // Perform 
     try {
-
         // Fetch user ID
         const userID = await new Promise((resolve, reject) => {
-            userModel.getUserID('user@test.com', (error, results) => {
+            userModel.getUserID(req.body.email, (error, results) => {
                 if (error) {
                     console.error('Error getting user ID:', error);
                     reject(error);
