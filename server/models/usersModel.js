@@ -4,8 +4,10 @@ function getUserID(email, callback) {
     const sql = 'SELECT * FROM users WHERE email = ?';
     const values = [email];
 
+    console.log("query", sql, "values", values)
     queryAsync(sql, values)
         .then(results => {
+            console.log(results)
             callback(null, results);
         })
         .catch(error => {

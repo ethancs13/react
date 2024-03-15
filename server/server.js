@@ -214,7 +214,6 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         });
 
         // Parse data
-        console.log()
         if (req.body.rowsData[2] == Object) {
             var parsedData = (req.body.rowsData).map(jsonString => {
                 try {
