@@ -339,3 +339,8 @@
     width: auto;
     /* Set the width of each cell to auto */
   }
+
+  .billable-data, .nonBillable-data, .totals-data {
+    display: flex;
+    flex-direction: column;
+  }

@@ -144,6 +144,8 @@ const storage = multer.diskStorage({
 })
 // set_location_to_storage_config
 const uploads = multer({ storage: storage });
+
+
 // upload POST route to get files
 app.post("/upload", uploads.array('files'), async (req, res) => {
     if (!req.body.email) {
@@ -157,13 +159,19 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
     const foodData = req.body.foodData;
     console.log('Food Data:', foodData);
 
-    const filesData = req.files;
+    if (req.files) {
+        // for multiple files
+        var filesData = req.files;
+    } else {
+        // for one file
+        var filesData = req.body.files;
+    }
     console.log('Files Data:', filesData);
 
     // -------------------------------
 
     // data array
-    const data = [
+    const dataInsert = [
         req.body.fn,
         req.body.ln,
         req.body.email,
@@ -190,15 +198,22 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         req.body.comments,
     ];
 
+    // -------------------- Foods ------------------
+    const foodInsert = [
+        req.body.fn,
+        req.body.ln,
+        req.body.email
+    ];
+
     // -------------------- Items ------------------
     // data array for items
-    const itemsData = [
+    const itemsInsert = [
         req.body.fn,
         req.body.ln,
         req.body.email
     ]
 
-    // Perform SELECT query to get the user ID
+    // main logic for insert
     try {
         // Fetch user ID
         const userID = await new Promise((resolve, reject) => {
@@ -213,9 +228,11 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
             });
         });
 
-        // Parse data
+        // --------------- Parse rows data -------------
+
+        // Parse item data
         if (req.body.rowsData[2] == Object) {
-            var parsedData = (req.body.rowsData).map(jsonString => {
+            var items_ParsedData = (req.body.rowsData).map(jsonString => {
                 try {
                     return JSON.parse(jsonString);
                 } catch (error) {
@@ -224,29 +241,64 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
                 }
             }).filter(parsed => parsed !== null);
     
-            console.log('Parsed Data:', parsedData);
+            console.log('Parsed Data:', items_ParsedData);
         } else {
-            var parsedData = (JSON.parse(req.body.rowsData))
+            var items_ParsedData = (JSON.parse(req.body.rowsData));
         }
+
+        // Parse food data
+        if (req.body.foodData[2] == Object) {
+            var food_ParsedData = (req.body.foodData).map(jsonString => {
+                try {
+                    return JSON.parse(jsonString);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    return null;
+                }
+            }).filter(parsed => parsed !== null);
+    
+            console.log('Parsed Data:', food_ParsedData);
+        } else {
+            var food_ParsedData = (JSON.parse(req.body.foodData));
+        };
+
+
 
 
         // Insert items
-        for (let i = 0; i < parsedData.length; i++) {
+        for (let i = 0; i < items_ParsedData.length; i++) {
             const result = await itemsModel.insertItem([
                 userID,
-                ...itemsData,
-                parsedData[i].item,
-                parsedData[i].date,
-                parsedData[i].subTotal,
-                parsedData[i].cityTax,
-                parsedData[i].taxPercent,
-                parsedData[i].total,
-                parsedData[i].source,
-                parsedData[i].shippedFrom,
-                parsedData[i].shippedTo,
-                parsedData[i].billable
+                ...itemsInsert,
+                items_ParsedData[i].item,
+                items_ParsedData[i].date,
+                items_ParsedData[i].subTotal,
+                items_ParsedData[i].cityTax,
+                items_ParsedData[i].taxPercent,
+                items_ParsedData[i].total,
+                items_ParsedData[i].source,
+                items_ParsedData[i].shippedFrom,
+                items_ParsedData[i].shippedTo,
+                items_ParsedData[i].billable
             ]);
             console.log('Items Inserted Successfully.', result);
+        }
+
+        // Insert foods
+        for (let i = 0; i < food_ParsedData.length; i++) {
+            const result = await foodModel.insertFood([
+                userID,
+                ...foodInsert,
+                food_ParsedData[i].date,
+                food_ParsedData[i].amount,
+                food_ParsedData[i].restaurant,
+                food_ParsedData[i].persons,
+                food_ParsedData[i].title,
+                food_ParsedData[i].reason,
+                food_ParsedData[i].billable,
+                food_ParsedData[i].PoRCC
+            ]);
+            console.log('Food Inserted Successfully.', result);
         }
 
         // Success
@@ -256,76 +308,72 @@ app.post("/upload", uploads.array('files'), async (req, res) => {
         res.status(500).json({ status: "Error" });
     }
 
-    // ----------------- FoodData -------------------
+    // ----------------- insert -------------------
 
-    // Perform 
-    try {
-        // Fetch user ID
-        const userID = await new Promise((resolve, reject) => {
-            userModel.getUserID(req.body.email, (error, results) => {
-                if (error) {
-                    console.error('Error getting user ID:', error);
-                    reject(error);
-                } else {
-                    console.log('User ID retrieved successfully:', results);
-                    resolve(results[0].id); // Assuming the user ID is in the 'id' column
-                }
-            });
-        });
+    // // Perform 
+    // try {
+    //     // Fetch user ID
+    //     const userID = await new Promise((resolve, reject) => {
+    //         userModel.getUserID(req.body.email, (error, results) => {
+    //             if (error) {
+    //                 console.error('Error getting user ID:', error);
+    //                 reject(error);
+    //             } else {
+    //                 console.log('User ID retrieved successfully:', results);
+    //                 resolve(results[0].id); // Assuming the user ID is in the 'id' column
+    //             }
+    //         });
+    //     });
 
-        const foodDataInsert = await new Promise((resolve, reject) => {
 
-            if (foodData.length >= 1) {
+
+
+
+    //     // insert food data
+    //     const foodDataInsert = await new Promise((resolve, reject) => {
+    //         if (food_ParsedData.length >= 1) {
     
-                for (let i = 0; i < foodData.length; i++) {
-                    foodModel.insertFood([...data, foodData[i].filename, foodData[i].path], (error, results) => {
-                        if (error) {
-                            console.error('Error inserting food data:', error);
-                            reject(error);
-                        } else {
-                            console.log('Food Data inserted successfully:', results);
-                            resolve(results);
-                        }
-                    });
-                }
-            }
-        });
+    //             for (let i = 0; i < food_ParsedData.length; i++) {
+    //                 foodModel.insertFood([food_ParsedData, food_ParsedData[i].filename, food_ParsedData[i].path], (error, results) => {
+    //                     if (error) {
+    //                         console.error('Error inserting food data:', error);
+    //                         reject(error);
+    //                     } else {
+    //                         console.log('Food Data inserted successfully:', results);
+    //                         resolve(results);
+    //                     }
+    //                 });
+    //             }
+    //         }
+    //     });
 
-        // Parse data
-        const parsedData = (req.body.foodData || []).map(jsonString => {
-            try {
-                return JSON.parse(jsonString);
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-                return null;
-            }
-        }).filter(parsed => parsed !== null);
+    //     // Parse data
+    //     const parsedData = (req.body.data || []).map(jsonString => {
+    //         try {
+    //             return JSON.parse(jsonString);
+    //         } catch (error) {
+    //             console.error('Error parsing JSON:', error);
+    //             return null;
+    //         }
+    //     }).filter(parsed => parsed !== null);
 
-        console.log('Parsed Data:', parsedData);
+    //     console.log('Parsed Data:', parsedData);
 
-        // Insert food data
-        for (let i = 0; i < parsedData.length; i++) {
-            const result = await foodModel.insertFood([
-                userID,
-                ...itemsData,
-                parsedData[i].date,
-                parsedData[i].amount,
-                parsedData[i].restaurant,
-                parsedData[i].persons,
-                parsedData[i].title,
-                parsedData[i].reason,
-                parsedData[i].billable,
-                parsedData[i].PoRCC,
-            ]);
-            console.log('Items Inserted Successfully.', result);
-        }
+    //     // Insert food data
+    //     for (let i = 0; i < parsedData.length; i++) {
+    //         const result = await userDataModel.insertData([
+    //             userID,
+    //             ...data
+    //         ]);
+    //         console.log('Items Inserted Successfully.', result);
+    //     }
 
-        // Success
-        res.json({ status: "food data received." });
-    } catch (error) {
-        console.log('Error:', error);
-        res.status(500).json({ status: "Error" });
-    }
+    //     // Success
+    //     res.json({ status: "food data received." });
+    // } catch (error) {
+    //     console.log('Error:', error);
+    //     res.status(500).json({ status: "Error" });
+    // }
 
 });
 
