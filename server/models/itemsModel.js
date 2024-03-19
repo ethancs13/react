@@ -3,7 +3,7 @@ const { queryAsync } = require('../config/connection');
 function insertItem(data, callback) {
     // Adjust the SQL query accordingly
     const sql = 'INSERT INTO items (entry_id, fn, ln, email, item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable) VALUES (?)';
-    const values = [data]; // Adjust this array based on your data structure
+    const values = [...data]; // Adjust this array based on your data structure
 
     queryAsync(sql, values)
         .then(results => {

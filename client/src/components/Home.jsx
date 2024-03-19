@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Container, Form, Col, Row } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import AddDeleteTableRows from "./addDeleteTables";
 import AddDeleteTableRows_food from "./addDeleteTables_food";
@@ -56,6 +57,14 @@ const Home = () => {
   const [parkingBillable, setParkingBillable] = useState("");
   const [mileageBillable, setMileageBillable] = useState("");
 
+  // food section totals section
+  const [onCardBillable, setOnCardBillable] = useState("");
+  const [onCard, setOnCard] = useState("");
+  const [outPocket, setOutPocket] = useState("");
+  const [outPocketBillable, setOutPocketBillable] = useState("");
+  const [ccTotal, setCCTotal] = useState("");
+  const [oopTotal, setOOPTotal] = useState("");
+
   const [auth, setAuth] = useState(false);
   const [rootUser, setRootUser] = useState(false);
   const [message, setMessage] = useState("");
@@ -86,6 +95,7 @@ const Home = () => {
       }
     });
   }, []);
+
   const updateRowsData_food = function (data) {
     setRowsData_food(data);
   };
@@ -683,33 +693,84 @@ const Home = () => {
                             // Convert FileList to an array for easier inspection
                             const foodArray = Array.from(e.target.data);
                             console.log("Food data as Array:", foodArray);
+
+                            setRowsData_food
                           }}
                         />
                       </table>
 
-                      <div>
-                        <div className="billable-data">
-                          <h3>Billable</h3>
-                          <label htmlFor="onCardB">On PoR Card</label>
-                          <input type="text" name="onCardB" />
-                          <label htmlFor="outPocketB">Out of Pocket</label>
-                          <input type="text" name="outPocketB" />
-                        </div>
-                        <div className="nonBillable-data">
-                          <h3>Non-Billable</h3>
-                          <label htmlFor="onCard">On PoR Card</label>
-                          <input type="text" name="onCard" />
-                          <label htmlFor="outPocket">Out of Pocket</label>
-                          <input type="text" name="outPocket" />
-                        </div>
-                        <div className="totals-data">
-                          <span>Totals</span>
-                          <label htmlFor="ccTotal">CC Total</label>
-                          <input type="text" name="ccTotal" />
-                          <label htmlFor="ccTotal">OOP Total</label>
-                          <input type="text" name="oopTotal" />
-                        </div>
-                      </div>
+                      {
+                        rowsData_food ?
+                        <Container>
+                        <Row>
+                          <Col className="billable-data">
+                            <h3>Billable</h3>
+                            <label htmlFor="onCardB">On PoR Card</label>
+                            <input
+                              type="text"
+                              name="onCardB"
+                              value={onCardBillable}
+                              onChange={(e) =>
+                                setOnCardBillable(e.target.value)
+                              }
+                              required
+                            />
+                            <label htmlFor="outPocketB">Out of Pocket</label>
+                            <input
+                              type="text"
+                              name="outPocketB"
+                              value={outPocketBillable}
+                              onChange={(e) =>
+                                setOutPocketBillable(e.target.value)
+                              }
+                              required
+                            />
+                          </Col>
+                          <Col className="nonBillable-data">
+                            <h3>Non-Billable</h3>
+                            <label htmlFor="onCard">On PoR Card</label>
+                            <input
+                              type="text"
+                              name="onCard"
+                              value={onCard}
+                              onChange={(e) => setOnCard(e.target.value)}
+                              required
+                            />
+                            <label htmlFor="outPocket">Out of Pocket</label>
+                            <input
+                              type="text"
+                              name="outPocket"
+                              value={outPocket}
+                              onChange={(e) => setOutPocket(e.target.value)}
+                              required
+                            />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Row className="totals-data">
+                            <h3>Totals</h3>
+                            <label htmlFor="ccTotal">CC Total</label>
+                            <input
+                              type="text"
+                              name="ccTotal"
+                              value={ccTotal}
+                              onChange={(e) => setCCTotal(e.target.value)}
+                              required
+                            />
+                            <label htmlFor="oopTotal">OOP Total</label>
+                            <input
+                              type="text"
+                              name="oopTotal"
+                              value={oopTotal}
+                              onChange={(e) => setOOPTotal(e.target.value)}
+                              required
+                            />
+                          </Row>
+                        </Row>
+                      </Container>
+                      :
+                      <></>
+                      }
                     </div>
 
                     {/* Items Section */}

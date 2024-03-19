@@ -5,7 +5,7 @@ function AddDeleteTableRows_food({ update }) {
 
     const [rowsData, setRowsData] = useState([]);
 
-    update(rowsData)
+    // update(rowsData)
 
     const addTableRows_food= (e) => {
         e.preventDefault();
@@ -22,6 +22,7 @@ function AddDeleteTableRows_food({ update }) {
             PoRCC: PoRCC,
         }
         setRowsData([...rowsData, rowsInput])
+        update(rowsData)
     }
 
     const deleteTableRows_food = (evnt, index) => {
@@ -35,11 +36,13 @@ function AddDeleteTableRows_food({ update }) {
 
     const handleChange = (index, evnt) => {
         evnt.preventDefault();
+        console.log(rowsData)
         const { name, value } = evnt.target;
         const newValue = value;
         const rowsInput = [...rowsData];
         rowsInput[index][name] = newValue;
         setRowsData(rowsInput);
+        update(rowsData)
     };
     
     

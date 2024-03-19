@@ -5,7 +5,7 @@ function AddDeleteTableRows({ update }) {
 
     const [rowsData, setRowsData] = useState([]);
 
-    update(rowsData)
+    // update(rowsData)
 
     const addTableRows = (e) => {
         e.preventDefault();
@@ -24,6 +24,7 @@ function AddDeleteTableRows({ update }) {
             billable: billable,
         }
         setRowsData([...rowsData, rowsInput])
+        update(rowsData)
     }
 
     const deleteTableRows = (evnt, index) => {
@@ -42,6 +43,7 @@ function AddDeleteTableRows({ update }) {
         const rowsInput = [...rowsData];
         rowsInput[index][name] = newValue;
         setRowsData(rowsInput);
+        update(rowsData)
     };
     
     
