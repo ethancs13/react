@@ -178,6 +178,8 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
   }
   console.log("Files Data:", filesData);
 
+  console.log("Totals data: ", req.body)
+
   // -------------------------------
 
   // data array
@@ -214,6 +216,16 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
   // -------------------- Items ------------------
   // data array for items
   const itemsInsert = [req.body.fn, req.body.ln, req.body.email];
+
+  // -------------------- Totals -----------------
+  const totalsInsert = [
+    req.body.billableCC,
+    req.body.billableCC_amnt,
+    req.body.nonBillable,
+    req.body.nonBillable_amnt,
+    req.body.billable,
+    req.body.billable_amnt  
+  ];
 
   // main logic for insert
   try {
@@ -270,7 +282,7 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
       console.log("Parsed Data:", food_ParsedData);
     }
 
-    // insert food data
+    // insert items data
     const itemsDataInsert = await new Promise((resolve, reject) => {
       if (items_ParsedData.length >= 1) {
         for (let i = 0; i < items_ParsedData.length; i++) {

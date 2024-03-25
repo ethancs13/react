@@ -8,14 +8,18 @@ import axios from "axios";
 import "../css/Home.css"; // Import the Home CSS file
 
 const Home = () => {
+  // must have permissions
   axios.defaults.withCredentials = true;
 
+  // change route
   const navigate = useNavigate();
 
+  // row data - food data - admin data
   const [rowsData, setRowsData] = useState([]);
   const [rowsData_food, setRowsData_food] = useState([]);
   const [adminData, setAdminData] = useState([]);
 
+  // data useState's
   const [cell, setCell] = useState("");
   const [cellCC, setCellCC] = useState("");
   const [landline, setLandline] = useState("");
@@ -34,6 +38,7 @@ const Home = () => {
   const [parkingCC, setParkingCC] = useState("");
   const [mileage, setMileage] = useState("");
 
+  // billable Totals - useState
   const [billableCC_amnt, setBillableCC_amnt] = useState("");
   const [billableCC, setBillableCC] = useState(true);
   const [nonBillableCC_amnt, setNonBillableCC_amnt] = useState("");
@@ -43,10 +48,12 @@ const Home = () => {
   const [nonBillable_amnt, setNonBillable_amnt] = useState("");
   const [nonBillable, setNonBillable] = useState(false);
 
+  // comment section - useState
   const [comments, setComments] = useState("");
+  // file useState -  for uploading receipts to server
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
-  // billable
+  // billable - useState
   const [cellBillable, setCellBillable] = useState("");
   const [landlineBillable, setLandlineBillable] = useState("");
   const [distBillable, setDistBillable] = useState("");
@@ -57,7 +64,7 @@ const Home = () => {
   const [parkingBillable, setParkingBillable] = useState("");
   const [mileageBillable, setMileageBillable] = useState("");
 
-  // food section totals section
+  // Totals Section - useState
   const [onCardBillable, setOnCardBillable] = useState("");
   const [onCard, setOnCard] = useState("");
   const [outPocket, setOutPocket] = useState("");
@@ -73,13 +80,18 @@ const Home = () => {
   const [ln, setLn] = useState("");
 
   useEffect(() => {
+    // get user info from local storage if available. 
+    // If not redirect to login page
     axios.get("http://localhost:3001/").then((res) => {
       if (res.data.status === "Success") {
+        // update auth
         setAuth(true);
         setEmail(res.data.email);
         setFn(res.data.fn);
         setLn(res.data.ln);
+        // reload
         navigate("/");
+        // if  the user is a root user show additional fields
       } else if (res.data.status === "rootUser") {
         setRootUser(true);
         setAuth(true);
@@ -164,7 +176,7 @@ const Home = () => {
         formData.append("foodData", JSON.stringify(row));
       });
     } catch (error) {
-      console.log("Error getting food row data: ", error);
+      console.log("Error appending foodData to formData: ", error);
     }
 
     // Append rowsData to formData
@@ -173,7 +185,7 @@ const Home = () => {
         formData.append(`rowsData`, JSON.stringify(row));
       });
     } catch (error) {
-      console.log("Error getting rows data: ", error);
+      console.log("Error appending rowsData to formData: ", error);
     }
 
     // if more than one file
