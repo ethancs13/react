@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react"
+import { Container, Form, Col, Row } from "react-bootstrap";
 import TableRows_food from "./tableRows_food"
 
-function AddDeleteTableRows_food({ update }) {
+function AddDeleteTableRows_food({ update, updateTotals }) {
 
     const [rowsData, setRowsData] = useState([]);
+    const [totalsData, setTotalsData] = useState('');
+    // Totals Section - useState
+    const [onCardBillable, setOnCardBillable] = useState("");
+    const [onCard, setOnCard] = useState("");
+    const [outPocket, setOutPocket] = useState("");
+    const [outPocketBillable, setOutPocketBillable] = useState("");
+    const [ccTotal, setCCTotal] = useState("");
+    const [oopTotal, setOOPTotal] = useState("");
 
-    // update(rowsData)
-
-    const addTableRows_food= (e) => {
+    const addTableRows_food = (e) => {
         e.preventDefault();
         const { date, amount, restaurant, persons, title, reason, billable, PoRCC } = rowsData;
+
+        const { onCardBillable, onCard, outPocket, outPocketBillable, ccTotal, oopTotal } = totalsData;
 
         const rowsInput = {
             date: date,
@@ -23,6 +32,17 @@ function AddDeleteTableRows_food({ update }) {
         }
         setRowsData([...rowsData, rowsInput])
         update(rowsData)
+
+        const totalsInput = {
+            onCardBillable: onCardBillable,
+            onCard: onCard,
+            outPocket: outPocket,
+            outPocketBillable: outPocketBillable,
+            ccTotal: ccTotal,
+            oopTotal: oopTotal
+        }
+        setTotalsData([...totalsData, totalsInput])
+        updateTotals(totalsData)
     }
 
     const deleteTableRows_food = (evnt, index) => {
@@ -42,10 +62,11 @@ function AddDeleteTableRows_food({ update }) {
         const rowsInput = [...rowsData];
         rowsInput[index][name] = newValue;
         setRowsData(rowsInput);
-        update(rowsData)
+        update(rowsData);
+        updateTotals(totalsData);
     };
-    
-    
+
+
     return (
         <tbody>
 
@@ -63,7 +84,80 @@ function AddDeleteTableRows_food({ update }) {
 
             <TableRows_food rowsData={rowsData} deleteTableRows={deleteTableRows_food} handleChange={handleChange} />
 
+
+            {rowsData.length > 0 ?
+                <Container>
+                    <Row>
+                        <Col className="billable-data">
+                            <h3>Billable</h3>
+                            <label htmlFor="onCardB">On PoR Card</label>
+                            <input
+                                type="text"
+                                name="onCardB"
+                                value={onCardBillable}
+                                onChange={(e) =>
+                                    setOnCardBillable(e.target.value)
+                                }
+                                required
+                            />
+                            <label htmlFor="outPocketB">Out of Pocket</label>
+                            <input
+                                type="text"
+                                name="outPocketB"
+                                value={outPocketBillable}
+                                onChange={(e) =>
+                                    setOutPocketBillable(e.target.value)
+                                }
+                                required
+                            />
+                        </Col>
+                        <Col className="nonBillable-data">
+                            <h3>Non-Billable</h3>
+                            <label htmlFor="onCard">On PoR Card</label>
+                            <input
+                                type="text"
+                                name="onCard"
+                                value={onCard}
+                                onChange={(e) => setOnCard(e.target.value)}
+                                required
+                            />
+                            <label htmlFor="outPocket">Out of Pocket</label>
+                            <input
+                                type="text"
+                                name="outPocket"
+                                value={outPocket}
+                                onChange={(e) => setOutPocket(e.target.value)}
+                                required
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Row className="totals-data">
+                            <h3>Totals</h3>
+                            <label htmlFor="ccTotal">CC Total</label>
+                            <input
+                                type="text"
+                                name="ccTotal"
+                                value={ccTotal}
+                                onChange={(e) => setCCTotal(e.target.value)}
+                                required
+                            />
+                            <label htmlFor="oopTotal">OOP Total</label>
+                            <input
+                                type="text"
+                                name="oopTotal"
+                                value={oopTotal}
+                                onChange={(e) => setOOPTotal(e.target.value)}
+                                required
+                            />
+                        </Row>
+                    </Row>
+                </Container>
+                :
+                <></>
+            }
         </tbody>
+
     )
 
 }

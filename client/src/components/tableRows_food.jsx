@@ -1,8 +1,6 @@
 import { useState } from "react";
 function TableRows_food({ rowsData, deleteTableRows, handleChange }) {
 
-    const [billable, setBillable] = useState(0);
-
     return (
         rowsData.map((data, index) => {
             const { date, amount, restaurant, persons, title, reason, billable, PoRCC } = data;

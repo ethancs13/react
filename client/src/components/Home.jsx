@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Col, Row } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import AddDeleteTableRows from "./addDeleteTables";
 import AddDeleteTableRows_food from "./addDeleteTables_food";
@@ -18,6 +17,7 @@ const Home = () => {
   const [rowsData, setRowsData] = useState([]);
   const [rowsData_food, setRowsData_food] = useState([]);
   const [adminData, setAdminData] = useState([]);
+  const [totalsData, setTotalsData] = useState([]);
 
   // data useState's
   const [cell, setCell] = useState("");
@@ -64,14 +64,6 @@ const Home = () => {
   const [parkingBillable, setParkingBillable] = useState("");
   const [mileageBillable, setMileageBillable] = useState("");
 
-  // Totals Section - useState
-  const [onCardBillable, setOnCardBillable] = useState("");
-  const [onCard, setOnCard] = useState("");
-  const [outPocket, setOutPocket] = useState("");
-  const [outPocketBillable, setOutPocketBillable] = useState("");
-  const [ccTotal, setCCTotal] = useState("");
-  const [oopTotal, setOOPTotal] = useState("");
-
   const [auth, setAuth] = useState(false);
   const [rootUser, setRootUser] = useState(false);
   const [message, setMessage] = useState("");
@@ -110,10 +102,16 @@ const Home = () => {
 
   const updateRowsData_food = function (data) {
     setRowsData_food(data);
+    console.log(rowsData_food)
   };
+
+  const updateTotalsData = function (data) {
+    setTotalsData(data);
+  }
 
   const updateRowsData = function (data) {
     setRowsData(data);
+    console.log(rowsData)
   };
   const updateAdminData = function (data) {
     setAdminData(data);
@@ -698,6 +696,7 @@ const Home = () => {
                         <AddDeleteTableRows_food
                           data={rowsData_food || []}
                           update={updateRowsData_food}
+                          updateTotals={updateTotalsData}
                           onChange={(e) => {
                             // Log the FileList object
                             console.log("Selected food Data:", e.target.data);
@@ -710,79 +709,6 @@ const Home = () => {
                           }}
                         />
                       </table>
-
-                      {
-                        rowsData_food ?
-                        <Container>
-                        <Row>
-                          <Col className="billable-data">
-                            <h3>Billable</h3>
-                            <label htmlFor="onCardB">On PoR Card</label>
-                            <input
-                              type="text"
-                              name="onCardB"
-                              value={onCardBillable}
-                              onChange={(e) =>
-                                setOnCardBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label htmlFor="outPocketB">Out of Pocket</label>
-                            <input
-                              type="text"
-                              name="outPocketB"
-                              value={outPocketBillable}
-                              onChange={(e) =>
-                                setOutPocketBillable(e.target.value)
-                              }
-                              required
-                            />
-                          </Col>
-                          <Col className="nonBillable-data">
-                            <h3>Non-Billable</h3>
-                            <label htmlFor="onCard">On PoR Card</label>
-                            <input
-                              type="text"
-                              name="onCard"
-                              value={onCard}
-                              onChange={(e) => setOnCard(e.target.value)}
-                              required
-                            />
-                            <label htmlFor="outPocket">Out of Pocket</label>
-                            <input
-                              type="text"
-                              name="outPocket"
-                              value={outPocket}
-                              onChange={(e) => setOutPocket(e.target.value)}
-                              required
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Row className="totals-data">
-                            <h3>Totals</h3>
-                            <label htmlFor="ccTotal">CC Total</label>
-                            <input
-                              type="text"
-                              name="ccTotal"
-                              value={ccTotal}
-                              onChange={(e) => setCCTotal(e.target.value)}
-                              required
-                            />
-                            <label htmlFor="oopTotal">OOP Total</label>
-                            <input
-                              type="text"
-                              name="oopTotal"
-                              value={oopTotal}
-                              onChange={(e) => setOOPTotal(e.target.value)}
-                              required
-                            />
-                          </Row>
-                        </Row>
-                      </Container>
-                      :
-                      <></>
-                      }
                     </div>
 
                     {/* Items Section */}
