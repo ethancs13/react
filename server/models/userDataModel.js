@@ -9,9 +9,9 @@ function getAllUserData(callback) {
 
 function insertData(data, callback) {
 
-    console.log('userData:', data)
+    console.log('userData:', data);
 
-    const sql = 'INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, parking, parkingBillable, tolls, tollsBillable, mileage, mileageBillable, fbCC, fbCCBillable, fb, fbBillable, comments, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO userData (fn, ln, email, cellphone, cellBillable, landline, landlineBillable, longdist, longdistBillable, broadband, broadbandBillable, entertainment, entertainmentBillable, parking, parkingBillable, tolls, tollsBillable, mileage, mileageBillable, fbCC, fbCCBillable, fb, fbBillable, fbCCNonBillable, fbNonBillable, comments, doc_name, doc_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     const values = [
         ...data
     ];

@@ -35,15 +35,15 @@ function AddDeleteTableRows({ update }) {
         setRowsData(rows);
         update(rowsData)
     }
-
+    
     const handleChange = (index, evnt) => {
         evnt.preventDefault();
-        const { name, value } = evnt.target;
-        const newValue = value;
+        const { name, value, type, checked } = evnt.target;
+        const newValue = type === "checkbox" ? checked : value;
         const rowsInput = [...rowsData];
         rowsInput[index][name] = newValue;
         setRowsData(rowsInput);
-        update(rowsData)
+        update(rowsData);
     };
     
     

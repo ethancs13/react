@@ -158,6 +158,12 @@ const Home = () => {
       broadbandBillable,
       entertainment,
       entertainmentBillable,
+      parking,
+      parkingBillable,
+      tolls,
+      tollsBillable,
+      mileage,
+      mileageBillable,
       billableCC,
       billableCC_amnt,
       nonBillable,
@@ -166,6 +172,7 @@ const Home = () => {
       nonBillableCC_amnt,
       billable,
       billable_amnt,
+      comments
     });
 
     // Append foodData to formData
@@ -592,7 +599,6 @@ const Home = () => {
                               <input
                                 type="checkbox"
                                 className="expense-section-checkbox"
-                                checked
                               />
                             </label>
                           </div>

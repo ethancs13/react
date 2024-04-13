@@ -2,7 +2,7 @@ const { queryAsync } = require('../config/connection');
 
 function insertBillData(data, callback) {
 
-    const sql = 'INSERT INTO billData (id, billOnCard, billOOP, CCtotal, OOPtotal) VALUES (?)';
+    const sql = 'INSERT INTO billData (id, FBCC, FBCCBILLABLE, FB, FBBILLABLE, billOnCard, billOOP, CCtotal, OOPtotal) VALUES (?)';
     const values = [data];
 
     queryAsync(sql, values)

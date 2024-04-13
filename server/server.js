@@ -178,7 +178,7 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
   }
   console.log("Files Data:", filesData);
 
-  console.log("Totals data: ", req.body)
+  console.log("Totals data: ", req.body);
 
   // -------------------------------
 
@@ -203,10 +203,6 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
     req.body.tollsBillable,
     req.body.mileage,
     req.body.mileageBillable,
-    req.body.fbCC,
-    req.body.fbCCBillable,
-    req.body.fb,
-    req.body.fbBillable,
     req.body.comments,
   ];
 
@@ -219,12 +215,14 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
 
   // -------------------- Totals -----------------
   const totalsInsert = [
-    req.body.billableCC,
-    req.body.billableCC_amnt,
-    req.body.nonBillable,
-    req.body.nonBillable_amnt,
-    req.body.billable,
-    req.body.billable_amnt  
+    req.body.fbCC,
+    req.body.fbCCBillable,
+    req.body.fb,
+    req.body.fbBillable,
+    req.body.billOnCard,
+    req.body.billOOP,
+    req.body.CCtotal,
+    req.body.OOPtotal,
   ];
 
   // main logic for insert
@@ -245,7 +243,9 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
     // --------------- Parse rows data -------------
 
     // Parse item data
-    if (JSON.parse(rowsData)[1]) {
+    console.log(JSON.parse(rowsData));
+    // if more than one
+    if (JSON.parse(rowsData)[0]) {
       var items_ParsedData = req.body.rowsData
         .map((jsonString) => {
           try {
@@ -258,12 +258,14 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
         .filter((parsed) => parsed !== null);
 
       console.log("Parsed Data:", items_ParsedData);
+      // if one
     } else {
       var items_ParsedData = JSON.parse(rowsData);
       console.log("Parsed Data:", items_ParsedData);
     }
 
     // Parse food data
+    // if more than one
     if (JSON.parse(foodData)[1]) {
       var food_ParsedData = req.body.foodData
         .map((jsonString) => {
@@ -277,6 +279,7 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
         .filter((parsed) => parsed !== null);
 
       console.log("Parsed Data:", food_ParsedData);
+      // if one
     } else {
       var food_ParsedData = JSON.parse(foodData);
       console.log("Parsed Data:", food_ParsedData);
@@ -284,7 +287,9 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
 
     // insert items data
     const itemsDataInsert = await new Promise((resolve, reject) => {
-      if (items_ParsedData.length >= 1) {
+      console.log("data hh insert: ", items_ParsedData);
+      console.log(items_ParsedData);
+      if (items_ParsedData.length) {
         for (let i = 0; i < items_ParsedData.length; i++) {
           itemsModel.insertItem(
             [
@@ -312,8 +317,35 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
             }
           );
         }
+      } else {
+        itemsModel.insertItem(
+          [
+            userID,
+            ...itemsInsert,
+            items_ParsedData.item,
+            items_ParsedData.date,
+            items_ParsedData.subTotal,
+            items_ParsedData.cityTax,
+            items_ParsedData.taxPercent,
+            items_ParsedData.total,
+            items_ParsedData.source,
+            items_ParsedData.shippedFrom,
+            items_ParsedData.shippedTo,
+            items_ParsedData.billable,
+          ],
+          (error, results) => {
+            if (error) {
+              console.error("Error inserting food data:", error);
+              reject(error);
+            } else {
+              console.log("Food Data inserted successfully:", results);
+              resolve(results);
+            }
+          }
+        );
       }
     });
+    console.log("data insert: ", itemsDataInsert);
 
     // insert food data
     const foodDataInsert = await new Promise((resolve, reject) => {
@@ -361,11 +393,9 @@ app.post("/upload", uploads.array("files"), async (req, res) => {
 
     // Insert data
     for (let i = 0; i < parsedData.length; i++) {
-      const result = userDataModel.insertData([userID, ...data]);
+      const result = userDataModel.insertData([userID, ...parsedData]);
       console.log("Items Inserted Successfully.", result);
     }
-
-
 
     // Success
     res.json({ status: "received." });

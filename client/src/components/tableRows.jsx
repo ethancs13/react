@@ -1,11 +1,12 @@
-import { useState } from "react";
-function TableRows({ rowsData, deleteTableRows, handleChange }) {
+import React, { useState } from "react";
 
-    const [billable, setBillable] = useState(0);
+function TableRows({ rowsData, deleteTableRows, handleChange }) {
+    // State for billable checkbox
+    const [billable, setBillable] = useState(false);
 
     return (
         rowsData.map((data, index) => {
-            const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable } = data;
+            const { item, date, subTotal, cityTax, taxPercent, total, source, shippedFrom, shippedTo, billable: initialBillable } = data;
 
             return (
                 <tr key={index} className="table_row">
@@ -21,7 +22,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
 
                     {/* checkbox */}
                     <td className='checkbox__container'>
-                        <input type='checkbox' className='billable' name='billable' onChange={(e) => setBillable(e.target.checked ? 1 : 0)} />
+                    <input type='checkbox' className='billable' name='billable' value={billable} checked={initialBillable} onChange={(e) => handleChange(index, e)} />
                     </td>
 
                     <td className="checkbox__del">

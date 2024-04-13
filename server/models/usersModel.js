@@ -7,7 +7,6 @@ function getUserID(email, callback) {
     console.log("query", sql, "values", values)
     queryAsync(sql, values)
         .then(results => {
-            console.log(results)
             callback(null, results);
         })
         .catch(error => {
