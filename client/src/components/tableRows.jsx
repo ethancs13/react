@@ -2,7 +2,10 @@ import React, { useState } from "react";
 
 function TableRows({ rowsData, deleteTableRows, handleChange }) {
     // State for billable checkbox
-    const [billable, setBillable] = useState(false);
+    const handleBillableChange = (index, e) => {
+        const newBillableValue = e.target.checked;
+        handleChange(index, { target: { name: 'billable', value: newBillableValue } });
+    };
 
     return (
         rowsData.map((data, index) => {
@@ -22,7 +25,7 @@ function TableRows({ rowsData, deleteTableRows, handleChange }) {
 
                     {/* checkbox */}
                     <td className='checkbox__container'>
-                    <input type='checkbox' className='billable' name='billable' value={billable} checked={initialBillable} onChange={(e) => handleChange(index, e)} />
+                        <input type='checkbox' className='billable' name='billable' checked={initialBillable} onChange={(e) => handleBillableChange(index, e)} />
                     </td>
 
                     <td className="checkbox__del">
