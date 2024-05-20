@@ -22,6 +22,7 @@
     width: 100%;
     margin: 0 40px 0 0;
   }
+
   .comments {
     width: 80%;
     height: 100px;
@@ -35,9 +36,11 @@
     display: flex;
     justify-content: flex-end;
   }
+
   .home-greeting>* {
     padding: 0 8px;
   }
+
   /* inputs */
   .form-header {
     padding: 0 20px;
@@ -79,9 +82,11 @@
     padding: 10px;
     margin: 5px;
   }
+
   .CC {
     text-align: center;
   }
+
   .por-section-container {
     display: flex;
     flex-direction: column;
@@ -94,7 +99,11 @@
     max-width: 600px;
     min-width: 500px;
   }
-  .por-section-left, .por-section-right, .left-aside, .right-aside {
+
+  .por-section-left,
+  .por-section-right,
+  .left-aside,
+  .right-aside {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -107,12 +116,14 @@
       flex-direction: row;
       min-width: 880px;
     }
+
     .por-section-container {
       flex-direction: row;
       min-width: 880px;
     }
 
   }
+
   /* temporary */
   h2 {
     color: white;
@@ -185,6 +196,7 @@
     width: 875px;
     justify-content: space-between;
   }
+
   .table_row th {
     width: 60px;
   }
@@ -216,6 +228,7 @@
     font-size: 14px;
     width: 60px;
   }
+
   .checkbox__del {
     width: 60px;
   }
@@ -340,7 +353,51 @@
     /* Set the width of each cell to auto */
   }
 
-  .billable-data, .nonBillable-data, .totals-data {
+  .billable-data,
+  .nonBillable-data,
+  .totals-data {
     display: flex;
     flex-direction: column;
+  }
+
+  .user_name_container,
+  .expense_period_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 15rem;
+  }
+
+  .expense_navigation_container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .expense_navigation_container button {
+    border: solid black 1px;
+    padding: 1rem 2rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .expense_navigation_container button:hover {
+    background-color: white;
+  }
+
+  .expense_navigation_container button:active {
+    background-color: lightgrey;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 6 columns */
+    grid-gap: 0;
+    /* gap between cells */
+  }
+
+  .grid-item,
+  .grid-header {
+    padding: 10px;
   }

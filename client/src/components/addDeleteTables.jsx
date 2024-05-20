@@ -64,7 +64,7 @@ function AddDeleteTableRows({ update }) {
                 <th className="add-row"><button className="btn btn_add" onClick={(e) => addTableRows(e)} >+</button></th>
             </tr>
 
-            <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} />
+            <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={(e) => handleChange} />
 
         </tbody>
     )

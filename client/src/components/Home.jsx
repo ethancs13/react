@@ -289,498 +289,68 @@ const Home = () => {
                   className="form__container"
                   onSubmit={handleSubmit}
                 >
-                  <div className="form-content">
-                    <h2>Expense Data</h2>
-                    <div className="expense-section">
-                      {/* Expense left side */}
-                      <div className="left-aside">
-                        <div className="items">
-                          <label htmlFor="cell" className="form-header">
-                            Cellphone
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="cell color-billable"
-                              name="cell"
-                              value={cell}
-                              onChange={(e) => setCell(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="cellBillable color-notBillable"
-                              name="cellBillable"
-                              value={cellBillable}
-                              onChange={(e) => setCellBillable(e.target.value)}
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                name="cell-box"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setCellCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label htmlFor="broadband" className="form-header">
-                            Broadband
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="broadband color-billable"
-                              name="broadband"
-                              value={broadband}
-                              onChange={(e) => setBroadband(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="broadbandBillable color-notBillable"
-                              name="broadbandBillable"
-                              value={broadbandBillable}
-                              onChange={(e) =>
-                                setBroadbandBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setBroadbandCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label
-                            htmlFor="business_landline"
-                            className="form-header"
-                          >
-                            Business land line
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="business_landline color-billable"
-                              name="business_landline"
-                              value={landline}
-                              onChange={(e) => setLandline(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="landline_billable color-notBillable"
-                              name="landline_billable"
-                              value={landlineBillable}
-                              onChange={(e) =>
-                                setLandlineBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setLandlineCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label
-                            htmlFor="long_distance"
-                            className="form-header"
-                          >
-                            Long distance
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="long_distance color-billable"
-                              name="long_distance"
-                              value={dist}
-                              onChange={(e) => setDist(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="dist_billable color-notBillable"
-                              name="dist_billable"
-                              value={distBillable}
-                              onChange={(e) => setDistBillable(e.target.value)}
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setDistCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label htmlFor="itemized" className="form-header">
-                            Itemized Purchases
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="itemized color-billable"
-                              name="itemized"
-                              value={itemized}
-                              onChange={(e) => setItemized(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="itemizedBillable color-notBillable"
-                              name="itemizedBillable"
-                              value={itemizedBillable}
-                              onChange={(e) =>
-                                setItemizedBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setItemizedCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Expense right side */}
-                      <div className="right-aside">
-                        <div className="items">
-                          <label
-                            htmlFor="entertainment"
-                            className="form-header"
-                          >
-                            Client Entertainment
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="entertainment color-billable"
-                              name="entertainment"
-                              value={entertainment}
-                              onChange={(e) => setEntertainment(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="entertainmentBillable color-notBillable"
-                              name="entertainmentBillable"
-                              value={entertainmentBillable}
-                              onChange={(e) =>
-                                setEntertainmentBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setEntertainmentCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label htmlFor="parking" className="form-header">
-                            Parking
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="parking color-billable"
-                              name="parking"
-                              value={parking}
-                              onChange={(e) => setParking(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="parkingBillable color-notBillable"
-                              name="parkingBillable"
-                              value={parkingBillable}
-                              onChange={(e) =>
-                                setParkingBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setParkingCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label htmlFor="tolls" className="form-header">
-                            Tolls
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="tolls color-billable"
-                              name="tolls"
-                              value={tolls}
-                              onChange={(e) => setTolls(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="tollsBillable color-notBillable"
-                              name="tollsBillable"
-                              value={tollsBillable}
-                              onChange={(e) => setTollsBillable(e.target.value)}
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                                onChange={(e) =>
-                                  setTollsCC(e.target.checked ? 1 : 0)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="items">
-                          <label htmlFor="mileage" className="form-header">
-                            Mileage
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="mileage color-billable"
-                              name="mileage"
-                              value={mileage}
-                              onChange={(e) => setMileage(e.target.value)}
-                              required
-                            />
-                            <input
-                              className="mileageBillable color-notBillable"
-                              name="mileageBillable"
-                              value={mileageBillable}
-                              onChange={(e) =>
-                                setMileageBillable(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input
-                                type="checkbox"
-                                className="expense-section-checkbox"
-                              />
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* section two (porCC...) */}
-                    <div className="por-section-container">
-                      <div className="por-section-left">
-                        <div className="items">
-                          <label htmlFor="billableCC" className="form-header">
-                            F&B - billable, CC
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="billableCC-amnt color-billable"
-                              name="billableCC-amnt"
-                              value={billableCC_amnt}
-                              onChange={(e) =>
-                                setBillableCC_amnt(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input type="checkbox" checked disabled />
-                            </label>
-                          </div>
-                        </div>
-                        <div className="items">
-                          <label
-                            htmlFor="nonBillableCC"
-                            className="form-header"
-                          >
-                            F&B - non-billable, CC
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="nonBillableCC-amnt color-notBillable"
-                              name="nonBillableCC-amnt"
-                              value={nonBillableCC_amnt}
-                              onChange={(e) =>
-                                setNonBillableCC_amnt(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input type="checkbox" disabled />
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="por-section-right">
-                        <div className="items">
-                          <label htmlFor="billable" className="form-header">
-                            F&B - billable
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="billable-amnt color-billable"
-                              name="billable-amnt"
-                              value={billable_amnt}
-                              onChange={(e) => setBillable_amnt(e.target.value)}
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input type="checkbox" checked disabled />
-                            </label>
-                          </div>
-                        </div>
-                        <div className="items">
-                          <label htmlFor="nonBillable" className="form-header">
-                            F&B - non-billable
-                          </label>
-                          <div className="input-wrapper">
-                            <input
-                              className="nonBillable-amnt color-notBillable"
-                              name="nonBillable-amnt"
-                              value={nonBillable_amnt}
-                              onChange={(e) =>
-                                setNonBillable_amnt(e.target.value)
-                              }
-                              required
-                            />
-                            <label className="CC" htmlFor="cell-box">
-                              CC
-                              <input type="checkbox" disabled />
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Food Section */}
-                    <h2>Food Expenditures</h2>
-                    <div className="food-section">
-                      <table className="food-table">
-                        <AddDeleteTableRows_food
-                          data={rowsData_food || []}
-                          update={updateRowsData_food}
-                          updateTotals={updateTotalsData}
-                          onChange={(e) => {
-                            // Log the FileList object
-                            console.log("Selected food Data:", e.target.data);
-
-                            // Convert FileList to an array for easier inspection
-                            const foodArray = Array.from(e.target.data);
-                            console.log("Food data as Array:", foodArray);
-
-                            setRowsData_food
-                          }}
-                        />
-                      </table>
-                    </div>
-
-                    {/* Items Section */}
-                    <h2>Items</h2>
-                    <div className="items-section">
-                      <table className="items-table">
-                        <AddDeleteTableRows
-                          data={rowsData || []}
-                          update={updateRowsData}
-                          onChange={(e) => {
-                            // Log the FileList object
-                            console.log("Selected Files:", e.target.data);
-
-                            // Convert FileList to an array for easier inspection
-                            const filesArray = Array.from(e.target.data);
-                            console.log("Files as Array:", filesArray);
-                          }}
-                        />
-                      </table>
-                    </div>
+                  <div class="user_name_container">
+                    <p>Name</p>
+                    <p>{fn}</p>
                   </div>
-
-                  {/* File Drop Area */}
-                  <h2>Upload Files</h2>
-                  <div className="file-area">
-                    <input
-                      type="file"
-                      className="file-input"
-                      name="file-input"
-                      id="file-input"
-                      onChange={(e) => {
-                        // Log the FileList object
-                        console.log("Selected Files:", e.target.files);
-
-                        // Convert FileList to an array for easier inspection
-                        if (e.target.files[1]) {
-                          var filesArray = Array.from(e.target.files);
-
-                          console.log("Files as Array:", filesArray);
-
-                          // Update state with the files
-                          setUploadedFiles(filesArray);
-                        } else {
-                          console.log("Single File:", e.target.files);
-
-                          // Update state with the files
-                          setUploadedFiles(e.target.files);
-                        }
-                      }}
-                      multiple
-                      required
-                    />
+                  <div class="expense_period_container">
+                    <p>Expense Period</p>
+                    <input type="month"></input>
                   </div>
-
-                  {/* comment section */}
-                  <h2>Comments</h2>
-                  <div className="items">
-                    <div className="comments-wrapper">
-                      <textarea
-                        className="comments"
-                        type="text"
-                        value={comments}
-                        onChange={(e) => setComments(e.target.value)}
-                        required
-                      ></textarea>
+                  <div class="grid-container">
+                    {/* <!-- Header Row  */}
+                    <div></div>
+                    <div class="grid-header">
+                      <p>Billable?</p>
                     </div>
+                    <div class="grid-header">
+                      <p>PoR CC used?</p>
+                    </div>
+                    <div class="grid-header">
+                      <p>Amount</p>
+                    </div>
+                    {/* <!-- First Row  */}
+                    <div class="grid-item">
+                      <p>Cell Phone</p>
+                    </div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text" readonly></input></div>
+                    {/* <!-- Second Row  */}
+                    <div class="grid-item">
+                      <p>Broadband</p>
+                    </div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text" readonly></input></div>
+                    {/* <!-- Third Row  */}
+                    <div class="grid-item">
+                      <p>Parking</p>
+                    </div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text" readonly></input></div>
+                    {/* <!-- Fourth Row  */}
+                    <div class="grid-item">
+                      <p>Food & Beverage</p>
+                    </div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text" readonly></input></div>
+                    {/* <!-- Fifth Row  */}
+                    <div class="grid-item">
+                      <p>Mileage</p>
+                    </div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text" readonly></input></div>
+                    {/* <!-- Sixth Row  */}
+                    <div class="grid-item">
+                      <p>Itemized Purchases</p>
+                    </div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text"></input></div>
+                    <div class="grid-item"><input type="text" readonly></input></div>
                   </div>
                   <button
                     type="Submit"
